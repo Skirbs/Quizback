@@ -7,18 +7,21 @@
 @layer base {
   * {
     font-family: "Poppins", sans-serif;
-    @apply box-border outline-stone-400 border-none;
+    @apply box-border outline-neutral-400 border-none dark:text-white;
   }
   p,
   h1,
   h2,
   h3,
   h4 {
-    @apply m-0 text-base text-slate-900;
+    @apply m-0 text-base text-neutral-900;
   }
 }
 @layer components {
   .flex-center {
     @apply flex justify-center items-center;
+  }
+  .material-symbols-outlined {
+    user-select: none;
   }
 }
