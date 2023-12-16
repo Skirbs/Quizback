@@ -7,11 +7,13 @@ function App() {
   return (
     <>
       <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/list" element={<CardList />} />
-        <Route path="/quiz" element={<CardQuiz />} />
-      </Routes>
+      <main className="w-11/12">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/list" element={<CardList />} />
+          <Route path="/quiz" element={<CardQuiz />} />
+        </Routes>
+      </main>
     </>
   );
 }
