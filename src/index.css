@@ -7,7 +7,7 @@
 @layer base {
   * {
     font-family: "Poppins", sans-serif;
-    @apply box-border;
+    @apply box-border outline-stone-400 border-none;
   }
   p,
   h1,
