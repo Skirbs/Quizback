@@ -23,5 +23,6 @@
   }
   .material-symbols-outlined {
     user-select: none;
+    @apply flex justify-center items-center;
   }
 }

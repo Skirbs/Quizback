@@ -25,7 +25,7 @@ export default function Nav() {
         </Link>
 
         <button onClick={toggleDark} className="relative overflow-hidden h-7 w-7">
-          <div className="flex flex-col items-center px-0 gap-1 inset-x-0 absolute top-0 pt-[2px] transition-all delay-150 dark:-top-7">
+          <div className="flex flex-col items-center px-0 gap-1 inset-x-0 absolute top-0 pt-[2px] transition-all ease-out duration-150 dark:-top-7">
             <span className="material-symbols-outlined flex-center w-fit">light_mode</span>
             <span className="material-symbols-outlined flex-center w-fit">dark_mode</span>
           </div>
