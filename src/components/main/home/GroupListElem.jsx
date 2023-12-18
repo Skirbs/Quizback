@@ -32,7 +32,7 @@ export default function GroupListElem({sideColor = "bg-black"}) {
       </button>
       <Card
         ref={settingRef}
-        className="absolute -right-16 top-1 h-fit z-20 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
+        className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
         onMouseLeave={(e) => {
           settingRef.current.classList.remove("opacity-100");
           settingRef.current.classList.add("opacity-0");
