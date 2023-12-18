@@ -24,23 +24,25 @@ export default function GroupListElem({sideColor = "bg-black"}) {
         className="absolute right-2 top-2 z-10"
         onClick={(e) => {
           e.stopPropagation();
-          settingRef.current.classList.remove("hidden");
-          settingRef.current.classList.add("flex");
+          settingRef.current.classList.add("opacity-100");
+          settingRef.current.classList.remove("opacity-0");
+          settingRef.current.classList.remove("pointer-events-none");
         }}>
         <span className="material-symbols-outlined">settings</span>
       </button>
       <Card
         ref={settingRef}
-        className="absolute -right-16 top-1 z-20 drop-shadow-2xl flex-col hidden !px-0"
+        className="absolute -right-16 top-1 h-fit z-20 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
         onMouseLeave={(e) => {
-          settingRef.current.classList.remove("flex");
-          settingRef.current.classList.add("hidden");
+          settingRef.current.classList.remove("opacity-100");
+          settingRef.current.classList.add("opacity-0");
+          settingRef.current.classList.add("pointer-events-none");
         }}>
-        <Button className="!drop-shadow-none flex-1 flex justify-center">
+        <Button className="!drop-shadow-none flex-1 flex justify-center mt-2">
           <span className="material-symbols-outlined">edit</span>
           edit
         </Button>
-        <Button className="!drop-shadow-none flex-1 flex justify-center">
+        <Button className="!drop-shadow-none flex-1 flex justify-center mb-2">
           <span className="material-symbols-outlined">delete</span>
           delete
         </Button>
