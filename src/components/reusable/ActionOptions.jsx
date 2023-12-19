@@ -1,5 +1,5 @@
-import Sort from "./Sort";
-import Filter from "./filter";
+import Sort from "../main/home/Sort";
+import Filter from "../main/home/filter";
 
 export default function ActionOptions() {
   return (

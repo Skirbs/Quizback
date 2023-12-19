@@ -13,6 +13,15 @@ export default {
           "2xl": "1536px",
         },
       },
+      keyframes: {
+        "fade-up-bounce": {
+          "0%": {transform: "translateY(25px)", opacity: "0"},
+          "100%": {transform: "translateY(0px)", opacity: "1"},
+        },
+      },
+      animation: {
+        "fade-up-bounce": "fade-up-bounce 0.2s cubic-bezier(.34,.79,.42,1.24) both",
+      },
       colors: {
         neutral: {
           925: "rgb(15, 15, 15)",
