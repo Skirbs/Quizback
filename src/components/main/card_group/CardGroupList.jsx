@@ -5,7 +5,7 @@ const testArray = [1, 2, 3, 4, 5, 6, 7];
 
 export default function CardGroupList() {
   return (
-    <div className="flex flex-wrap justify-center lg:justify-start gap-2 ">
+    <div className="flex flex-wrap justify-center items-start gap-2 ">
       {testArray.map((elem, i) => {
         return (
           <CardGroupElem

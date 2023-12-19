@@ -19,7 +19,7 @@ export default function Nav() {
   }
   return (
     <>
-      <nav className="flex justify-between px-12 py-2 bg-white dark:bg-neutral-800 w-screen drop-shadow-md relative">
+      <nav className="flex justify-between px-12 py-2 bg-white dark:bg-neutral-800 w-screen drop-shadow-md fixed top-0 inset-x-0 z-50">
         <Link to="/" className="outline-none">
           <img alt="Logo" />
         </Link>

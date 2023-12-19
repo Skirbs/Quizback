@@ -18,9 +18,14 @@ export default {
           "0%": {transform: "translateY(25px)", opacity: "0"},
           "100%": {transform: "translateY(0px)", opacity: "1"},
         },
+        "scale-in-out-vertical": {
+          "0%,100%": {scale: "1 1"},
+          "50%": {scale: "1 0"},
+        },
       },
       animation: {
         "fade-up-bounce": "fade-up-bounce 0.2s cubic-bezier(.34,.79,.42,1.24) both",
+        "scale-in-out-vertical": "scale-in-out-vertical 0.2s cubic-bezier(.34,.79,.42,1.24) both",
       },
       colors: {
         neutral: {
