@@ -49,4 +49,6 @@ export default function CardGroupElem({sideColor = "bg-black", ...props}) {
       </Card>
     </Card>
   );
+
+  // TODO: stop setting from executing url changes
 }

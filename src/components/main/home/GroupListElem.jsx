@@ -51,4 +51,6 @@ export default function GroupListElem({sideColor = "bg-black", ...props}) {
       </Card>
     </Link>
   );
+
+  // TODO: stop setting from executing url changes
 }

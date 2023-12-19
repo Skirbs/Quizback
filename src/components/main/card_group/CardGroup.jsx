@@ -1,12 +1,16 @@
 import Header from "../../reusable/Header";
-import ActionOptions from "../../reusable/ActionOptions";
+import CardOptions from "../../reusable/CardOptions";
 import CardGroupList from "./CardGroupList";
+import PageActions from "../../reusable/PageActions";
 export default function CardGroup() {
   return (
     <main className="w-[95%] p-3">
       <Header title={`${"Title"} Cards`} />
-      <ActionOptions />
+      <CardOptions />
+      <PageActions />
       <CardGroupList />
     </main>
   );
+
+  //TODO: Dynamically Change Header Title name
 }
