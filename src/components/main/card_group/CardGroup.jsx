@@ -7,7 +7,7 @@ export default function CardGroup() {
     <main className="w-[95%] p-3">
       <Header title={`${"Title"} Cards`} />
       <CardOptions />
-      <PageActions />
+      <PageActions isCardGroup />
       <CardGroupList />
     </main>
   );

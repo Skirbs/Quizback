@@ -11,6 +11,7 @@ export default function CardGroupList() {
           <CardGroupElem
             style={{animationDelay: `${i * 0.05}s`}}
             sideColor="cornflowerblue"
+            index={i}
             key={i}
           />
         );

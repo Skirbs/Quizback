@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
-export default function CardGroupElem({sideColor = "bg-black", ...props}) {
+export default function CardGroupElem({sideColor = "bg-black", index, ...props}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
@@ -27,8 +27,9 @@ export default function CardGroupElem({sideColor = "bg-black", ...props}) {
 
   useEffect(() => {
     setTimeout(() => {
+      cardRef.current.style.animationDelay = "0s";
       cardRef.current.classList.remove("animate-fade-up-bounce");
-    }, 1000);
+    }, 200 * (index + 1));
   });
 
   return (
