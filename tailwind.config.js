@@ -27,6 +27,9 @@ export default {
         "fade-up-bounce": "fade-up-bounce 0.2s cubic-bezier(.34,.79,.42,1.24) both",
         "scale-in-out-vertical": "scale-in-out-vertical 0.2s cubic-bezier(.34,.79,.42,1.24) both",
       },
+      transitionTimingFunction: {
+        bounce: "cubic-bezier(.34,.57,.07,1.73)",
+      },
       colors: {
         neutral: {
           925: "rgb(15, 15, 15)",
