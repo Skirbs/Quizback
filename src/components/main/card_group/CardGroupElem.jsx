@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
-export default function CardGroupElem({sideColor = "bg-black", index, ...props}) {
+export default function CardGroupElem({sideColor = "black", index, ...props}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
