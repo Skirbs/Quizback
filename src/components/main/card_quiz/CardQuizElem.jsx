@@ -22,7 +22,7 @@ export default function CardQuizElem({sideColor = "black", index, ...props}) {
   return (
     <Card
       ref={cardRef}
-      className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[80vw] lg:w-[800px] min-h-[250px] py-5 px-8 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce rounded-full`}
+      className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[80vw] max-[720px]: lg:w-[800px] min-h-[320px] py-5 px-8 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce rounded-full`}
       onClick={(e) => {
         e.stopPropagation();
         showAnswerHandler();
@@ -33,16 +33,20 @@ export default function CardQuizElem({sideColor = "black", index, ...props}) {
         className="absolute w-1 left-0 inset-y-0 rounded-full"
       />
 
-      <div className="flex-1 flex-col flex-center gap-4">
+      <div className="flex-1 flex-col flex-center gap-1 sm:gap-4">
         {!showAnswer ? (
           <>
-            <h2 className="break-words text-5xl text-center font-semibold">Question</h2>
-            <p className="font-medium h-fit flex-center text-center text-2xl">Lorem, ipsum</p>
+            <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Question</h2>
+            <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
+              Lorem, ipsum
+            </p>
           </>
         ) : (
           <>
-            <h2 className="break-words text-5xl text-center font-semibold">Answer</h2>
-            <p className="font-medium h-fit flex-center text-center text-2xl">Lorem, ipsum</p>
+            <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Answer</h2>
+            <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
+              Lorem, ipsum
+            </p>
           </>
         )}
       </div>
