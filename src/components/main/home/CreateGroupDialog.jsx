@@ -7,7 +7,7 @@ export default forwardRef(function CreateGroupDialog(props, ref) {
   return (
     <Dialog ref={ref} header="Create Study Group">
       <form className="flex flex-col gap-2">
-        <Card className="!bg-neutral-200 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
+        <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
           <FormInput inputId="group-name" labelTitle="Group Name" isRequired />
           <label htmlFor="group-category">Category</label>
@@ -15,6 +15,7 @@ export default forwardRef(function CreateGroupDialog(props, ref) {
             <select className="flex-[0.5] rounded-lg dark:bg-neutral-800" id="group-category">
               <option className="text-center" value="1">
                 1
+                
               </option>
               <option className="text-center" value="2">
                 2
