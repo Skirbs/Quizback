@@ -3,34 +3,39 @@ import Dialog from "../../reusable/Dialog";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
-export default forwardRef(function CreateGroupDialog(props, ref) {
+export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
   return (
     <Dialog ref={ref} header="Create Study Group">
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
           <FormInput inputId="group-name" labelTitle="Group Name" isRequired />
-          <label htmlFor="group-category">Category</label>
-          <div className="flex gap-1">
-            <select className="flex-[0.5] rounded-lg dark:bg-neutral-800" id="group-category">
-              <option className="text-center" value="1">
-                1
-                
-              </option>
-              <option className="text-center" value="2">
-                2
-              </option>
-              <option className="text-center" value="3">
-                Lorem, ipsum.
-              </option>
-            </select>
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-              }}>
-              +
-            </Button>
-          </div>
+          <Card>
+            <label htmlFor="group-category">Category</label>
+            <div className="flex gap-1">
+              <select
+                className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700"
+                id="group-category">
+                <option className="text-center" value="1">
+                  1
+                </option>
+                <option className="text-center" value="2">
+                  2
+                </option>
+                <option className="text-center" value="3">
+                  Lorem, ipsum.
+                </option>
+              </select>
+              <Button
+                className="!bg-neutral-300 dark:!bg-neutral-700"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onCategory();
+                }}>
+                +
+              </Button>
+            </div>
+          </Card>
         </Card>
 
         <Button
@@ -44,3 +49,5 @@ export default forwardRef(function CreateGroupDialog(props, ref) {
 });
 
 // TODO: Limit Inputs Text Length, (Name, Category)
+// TODO: For categories, make sure they dont repeat
+// TODO: For categories, have "N/A" as default category

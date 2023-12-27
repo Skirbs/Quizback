@@ -16,7 +16,7 @@ export default forwardRef(function Dialog({header, children}, ref) {
   });
   return createPortal(
     <dialog
-      className="bg-transparent rounded-3xl outline-none backdrop:bg-neutral-950 backdrop:opacity-30 relative animate-fade-up-bounce"
+      className="bg-transparent rounded-3xl outline-none backdrop:bg-black backdrop:opacity-50 relative animate-fade-up-bounce"
       ref={dialogRef}>
       <form className="absolute right-2 top-0.5 z-10" method="dialog">
         <button className="outline-none text-2xl font-semibold" type="submit">
