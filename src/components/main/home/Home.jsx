@@ -19,13 +19,15 @@ export default function Home() {
   }
 
   return (
-    <main className="w-[95%] p-3">
+    <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
       <CreateCategoryDialog ref={createCategoryRef} />
-      <Header title="Your Card Groups" />
-      <PageActions onCreate={openCreateHandler} />
-      <CardOptions />
-      <GroupList />
-    </main>
+      <main className="w-[95%] p-3">
+        <Header title="Your Card Groups" />
+        <PageActions onCreate={openCreateHandler} />
+        <CardOptions />
+        <GroupList />
+      </main>
+    </>
   );
 }

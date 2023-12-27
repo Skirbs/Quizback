@@ -25,7 +25,7 @@ export default forwardRef(function Dialog({header, children}, ref) {
       </form>
       <Card className="!px-6">
         {header && (
-          <h2 className="font-semibold text-3xl text-left border-b-2 border-neutral-500 pb-1 px-2 mb-1">
+          <h2 className="font-semibold text-3xl text-left border-b-2 border-neutral-500 pb-1 px-2 mb-1 text-center">
             {header}
           </h2>
         )}
