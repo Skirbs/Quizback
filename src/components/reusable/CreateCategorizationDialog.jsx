@@ -12,9 +12,9 @@ export default forwardRef(function CreateCategorizationDialog({header, type}, re
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="group-category" labelTitle={type} isRequired />
+          <FormInput inputId="group-category" labelTitle={`${type}:`} isRequired />
           <Card className="flex items-center flex-col !gap-0 p-1">
-            <p className="self-start">Color</p>
+            <p className="self-start">Color:</p>
             <div className="bg-neutral-400 dark:bg-neutral-900 p-2 rounded-md overflow-x-scroll whitespace-nowrap w-56">
               <ColorButton color="black" />
               <ColorButton color="grey" />

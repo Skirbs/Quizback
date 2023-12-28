@@ -2,7 +2,7 @@ import {useRef} from "react";
 import Button from "./Button";
 import {Link} from "react-router-dom";
 
-export default function PageActions({children, isCardGroup, onCreate}) {
+export default function PageActions({children, isCardGroup, onCreate, onList}) {
   const actionsRef = useRef();
 
   function toggleView() {
@@ -24,9 +24,17 @@ export default function PageActions({children, isCardGroup, onCreate}) {
             Create Card
           </p>
         </Button>
+        <Button
+          onClick={onList}
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100 ">
+          <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
+          <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
+            Tag Lists
+          </p>
+        </Button>
         <Link
           to="/quiz"
-          className="bg-white dark:bg-neutral-800 drop-shadow-md rounded-full flex-center w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100">
+          className="bg-white dark:bg-neutral-800 drop-shadow-md rounded-full flex-center w-[3rem] h-[3rem] absolute inset-x-0 -top-[9.6rem] [&>p]:opacity-0 [&>p]:hover:opacity-100">
           <span className="material-symbols-outlined text-3xl">quiz</span>
           <p className="absolute h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center">
             Quiz
@@ -45,6 +53,14 @@ export default function PageActions({children, isCardGroup, onCreate}) {
           <span className="material-symbols-outlined text-3xl">add</span>
           <p className="absolute h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Create Group
+          </p>
+        </Button>
+        <Button
+          onClick={onList}
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100 ">
+          <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
+          <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
+            Category Lists
           </p>
         </Button>
       </>
