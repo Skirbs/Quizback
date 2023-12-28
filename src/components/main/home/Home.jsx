@@ -5,7 +5,7 @@ import PageActions from "../../reusable/PageActions";
 import GroupList from "./GroupList";
 import Filter from "./filter";
 import CreateGroupDialog from "./CreateGroupDialog";
-import CreateCategoryDialog from "./CreateCategoryDialog";
+import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 export default function Home() {
   const createDialogRef = useRef();
   const createCategoryRef = useRef();
@@ -21,7 +21,11 @@ export default function Home() {
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
-      <CreateCategoryDialog ref={createCategoryRef} />
+      <CreateCategorizationDialog
+        ref={createCategoryRef}
+        header="Create Category"
+        type="Category"
+      />
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} />

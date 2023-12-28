@@ -4,7 +4,7 @@ import CardGroupList from "./CardGroupList";
 import PageActions from "../../reusable/PageActions";
 import GoBack from "../../reusable/GoBack";
 import CreateCardDialog from "./CreateCardDialog";
-import CreateTagDialog from "./CreateTagDialog";
+import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import {useRef} from "react";
 export default function CardGroup() {
   const createDialogRef = useRef();
@@ -19,7 +19,7 @@ export default function CardGroup() {
   return (
     <>
       <CreateCardDialog ref={createDialogRef} onTag={createTagHandler} />
-      <CreateTagDialog ref={createTagRef} />
+      <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="tag" />
       <main className="w-[95%] p-3">
         <Header title={`${"Title"} Cards`} />
         <CardOptions />
