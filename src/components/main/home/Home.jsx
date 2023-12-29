@@ -6,7 +6,7 @@ import GroupList from "./GroupList";
 import Filter from "./filter";
 import CreateGroupDialog from "./CreateGroupDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
-import CategorizationListDialog from "../../reusable/CategorizationLIstDialog";
+import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 export default function Home() {
   const createDialogRef = useRef();
   const createCategoryRef = useRef();

@@ -5,7 +5,7 @@ import PageActions from "../../reusable/PageActions";
 import GoBack from "../../reusable/GoBack";
 import CreateCardDialog from "./CreateCardDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
-import CategorizationListDialog from "../../reusable/CategorizationLIstDialog";
+import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 import {useRef} from "react";
 export default function CardGroup() {
   const createDialogRef = useRef();

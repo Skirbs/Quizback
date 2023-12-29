@@ -1,10 +1,31 @@
-import {useRef} from "react";
+import {useRef, useEffect} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import {Link} from "react-router-dom";
 // ? sideColor should be any css-compatible color
 export default function GroupListElem({sideColor = "bg-black", ...props}) {
   const settingRef = useRef();
+
+  function setSettingVisibility(visible) {
+    if (visible) {
+      settingRef.current.classList.add("opacity-100");
+      settingRef.current.classList.remove("opacity-0");
+      settingRef.current.classList.remove("pointer-events-none");
+    } else {
+      settingRef.current.classList.remove("opacity-100");
+      settingRef.current.classList.add("opacity-0");
+      settingRef.current.classList.add("pointer-events-none");
+    }
+  }
+
+  useEffect(() => {
+    function clickOutsideHandler(event) {
+      if (settingRef.current && !settingRef.current.contains(event.target)) {
+        setSettingVisibility(false);
+      }
+    }
+    document.addEventListener("click", clickOutsideHandler, true);
+  });
 
   return (
     <Link to="/list">
@@ -25,20 +46,13 @@ export default function GroupListElem({sideColor = "bg-black", ...props}) {
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            settingRef.current.classList.add("opacity-100");
-            settingRef.current.classList.remove("opacity-0");
-            settingRef.current.classList.remove("pointer-events-none");
+            setSettingVisibility(true);
           }}>
           <span className="material-symbols-outlined">settings</span>
         </button>
         <Card
           ref={settingRef}
-          className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
-          onMouseLeave={(e) => {
-            settingRef.current.classList.remove("opacity-100");
-            settingRef.current.classList.add("opacity-0");
-            settingRef.current.classList.add("pointer-events-none");
-          }}>
+          className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none">
           <Button className="!drop-shadow-none flex-1 flex justify-center mt-2">
             <span className="material-symbols-outlined">edit</span>
             edit
