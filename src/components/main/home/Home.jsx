@@ -31,7 +31,7 @@ export default function Home() {
         header="Create Category"
         type="Category"
       />
-      <CategorizationListDialog ref={categoryListRef} header="Category List" />
+      <CategorizationListDialog ref={categoryListRef} header="Category List" type="Category" />
 
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />

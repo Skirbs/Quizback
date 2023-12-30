@@ -17,7 +17,7 @@ export default forwardRef(function ConfirmationDelete({type, index, onDelete, on
 
   return (
     <Card
-      className="flex-center flex-col absolute right-0 -bottom-11 w-2/3 z-50 !bg-neutral-200 dark:!bg-neutral-800 animate-fade-up-bounce"
+      className="flex-center flex-col absolute right-0 -bottom-16 w-2/3 z-50 !bg-neutral-200 dark:!bg-neutral-800 animate-fade-up-bounce"
       ref={dialogRef}
       style={{zIndex: index}}>
       <p className="text-center text-xs font-semibold">Are you sure you want to remove {type}</p>

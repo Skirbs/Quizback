@@ -25,7 +25,7 @@ export default function CardGroup() {
     <>
       <CreateCardDialog ref={createDialogRef} onTag={createTagHandler} />
       <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="tag" />
-      <CategorizationListDialog ref={tagListRef} header="Tag Lists" />
+      <CategorizationListDialog ref={tagListRef} header="Tag Lists" type="Tag" />
       <main className="w-[95%] p-3">
         <Header title={`${"Title"} Cards`} />
         <CardOptions />

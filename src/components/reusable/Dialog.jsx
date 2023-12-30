@@ -2,7 +2,7 @@ import {useRef, forwardRef, useImperativeHandle} from "react";
 import {createPortal} from "react-dom";
 import Card from "./Card";
 
-export default forwardRef(function Dialog({header, children}, ref) {
+export default forwardRef(function Dialog({header, children, ...props}, ref) {
   const dialogRef = useRef();
   useImperativeHandle(ref, () => {
     return {
@@ -17,7 +17,8 @@ export default forwardRef(function Dialog({header, children}, ref) {
   return createPortal(
     <dialog
       className="bg-transparent rounded-3xl outline-none backdrop:bg-black backdrop:opacity-50 fixed animate-fade-up-bounce"
-      ref={dialogRef}>
+      ref={dialogRef}
+      {...props}>
       <form className="absolute right-2 top-0.5 z-10" method="dialog">
         <button className="outline-none text-2xl font-semibold" type="submit">
           x

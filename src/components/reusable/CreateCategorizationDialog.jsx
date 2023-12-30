@@ -5,10 +5,13 @@ import Button from "./Button";
 import FormInput from "./FormInput";
 import ColorButton from "./ColorButton";
 import Header from "./Header";
-export default forwardRef(function CreateCategorizationDialog({header, type}, ref) {
+export default forwardRef(function CreateCategorizationDialog(
+  {header, type, editMode, ...props},
+  ref
+) {
   // TODO make dafault color black
   return (
-    <Dialog ref={ref} header={header}>
+    <Dialog ref={ref} header={header} {...props}>
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
