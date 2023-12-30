@@ -6,12 +6,13 @@ import FormInput from "./FormInput";
 import ColorButton from "./ColorButton";
 import Header from "./Header";
 export default forwardRef(function CreateCategorizationDialog(
-  {header, type, editMode, ...props},
+  {header, type, editMode, onClose, ...props},
   ref
 ) {
-  // TODO make dafault color black
+  // TODO make dafault color black on color selection
+  // ? onClose is a function for CategorizationListDialog. Used for edit mode. make sure this is executed when submitting
   return (
-    <Dialog ref={ref} header={header} {...props}>
+    <Dialog ref={ref} header={header} onClose={onClose} {...props}>
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
@@ -46,7 +47,7 @@ export default forwardRef(function CreateCategorizationDialog(
         <Button
           className="border-2 border-neutral-300 dark:!border-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-75"
           type="submit">
-          Create
+          {editMode ? "Edit" : "Create"}
         </Button>
       </form>
     </Dialog>
