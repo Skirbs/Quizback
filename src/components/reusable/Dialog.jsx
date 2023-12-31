@@ -1,16 +1,16 @@
-import {useRef, forwardRef, useImperativeHandle} from "react";
+import {useRef, forwardRef, useImperativeHandle, useEffect} from "react";
 import {createPortal} from "react-dom";
 import Card from "./Card";
 
 export default forwardRef(function Dialog({header, children, onClose, ...props}, ref) {
   const dialogRef = useRef();
+
   function closeDialog() {
+    // ? try catch is required because "onClose" function dont exist on other dialogs
     try {
-      onClose();
-    } catch {
-    } finally {
       dialogRef.current.close();
-    }
+      onClose();
+    } catch (e) {}
   }
   useImperativeHandle(ref, () => {
     return {
@@ -21,6 +21,13 @@ export default forwardRef(function Dialog({header, children, onClose, ...props},
         closeDialog();
       },
     };
+  });
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeDialog();
+      }
+    });
   });
   return createPortal(
     <dialog
