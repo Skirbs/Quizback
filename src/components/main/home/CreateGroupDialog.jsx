@@ -1,16 +1,22 @@
-import {forwardRef} from "react";
+import {forwardRef, useContext, useRef} from "react";
 import Dialog from "../../reusable/Dialog";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
 export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
+  const nameRef = useRef();
+  const categoryRef = useRef();
+  function submitHandler(e) {
+    e.preventDefault();
+    // TODO: useContext
+  }
   return (
     <Dialog ref={ref} header="Create Study Group">
-      <form className="flex flex-col gap-2">
+      <form className="flex flex-col gap-2" onSubmit={submitHandler}>
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="group-name" labelTitle="Group Name" isRequired />
+          <FormInput inputId="group-name" labelTitle="Group Name" isRequired ref={nameRef} />
           <Card>
             <label htmlFor="group-category">Category</label>
             <div className="flex gap-1">

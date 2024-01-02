@@ -7,7 +7,10 @@ import Filter from "./filter";
 import CreateGroupDialog from "./CreateGroupDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
+import {useContext} from "react";
+import {DataContext} from "../../../store/DataContext";
 export default function Home() {
+  // ? Dialog Handlers
   const createDialogRef = useRef();
   const createCategoryRef = useRef();
   const categoryListRef = useRef();
@@ -23,6 +26,8 @@ export default function Home() {
     categoryListRef.current.open();
   }
 
+  // ? Data Context Functions
+  const dataCtx = useContext(DataContext);
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />

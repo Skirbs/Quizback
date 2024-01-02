@@ -10,7 +10,8 @@ export default forwardRef(function CreateCardDialog({onTag}, ref) {
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="card-name" labelTitle="Card Name" isRequired />
+          <FormInput inputId="card-question" labelTitle="Card Question" isRequired />
+          <FormInput inputId="card-answer" labelTitle="Card Answer" isRequired />
           <Card>
             <label htmlFor="group-category">Tag</label>
             <div className="flex gap-1">
