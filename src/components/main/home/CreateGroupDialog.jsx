@@ -1,15 +1,30 @@
 import {forwardRef, useContext, useRef} from "react";
+import {DataContext} from "../../../store/DataContext";
 import Dialog from "../../reusable/Dialog";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
 export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
+  const dataCtx = useContext(DataContext);
   const nameRef = useRef();
+  const colorRef = useRef();
   const categoryRef = useRef();
+
   function submitHandler(e) {
     e.preventDefault();
-    // TODO: useContext
+    const current_date = new Date().toLocaleDateString();
+
+    dataCtx.addCardGroup(
+      nameRef.current.value,
+      categoryRef.current.value,
+      current_date,
+      current_date,
+      [],
+      "sideColor"
+    );
+    // TODO: Side Color Changes depending on the category
+    // TODO: Find category value (string) on tag database
   }
   return (
     <Dialog ref={ref} header="Create Study Group">
@@ -22,7 +37,8 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
             <div className="flex gap-1">
               <Select
                 className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700"
-                id="group-category">
+                id="group-category"
+                ref={categoryRef}>
                 <option className="text-center" value="1">
                   1
                 </option>
