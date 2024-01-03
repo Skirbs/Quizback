@@ -1,31 +1,22 @@
 import {createContext, useReducer} from "react";
 import {json} from "react-router-dom";
-export const DataContext = createContext({addCardGroup: () => {}});
+export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
 class CardGroup {
-  constructor(name, category, dateCreated, dateModified, cardsStored, sideColor, key) {
+  constructor(name, category, dateCreated, dateModified, cardsStored, key) {
     this.name = name;
     this.category = category;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.cardsStored = cardsStored;
-    this.sideColor = sideColor;
+    this.sideColor = "red";
     this.key = key;
+    console.log(key);
   }
 }
 class Card {
-  constructor(
-    question,
-    answer,
-    tag,
-    dateCreated,
-    dateModified,
-    dateNextStudy,
-    cardsStored,
-    sideColor,
-    key
-  ) {
+  constructor(question, answer, tag, dateCreated, dateModified, dateNextStudy, cardsStored, key) {
     this.question = question;
     this.answer = answer;
     this.tag = tag;
@@ -33,7 +24,7 @@ class Card {
     this.dateModified = dateModified;
     this.dateNextStudy = dateNextStudy;
     this.cardsStored = cardsStored;
-    this.sideColor = sideColor;
+    this.sideColor = "red";
     this.key = key;
   }
 }
@@ -54,7 +45,7 @@ class Tag {
 
 // ? Reducer
 function mainDataReducer(state, action) {
-  const stateCopy = [...state];
+  const stateCopy = {...state};
   const payload = action.payload;
 
   function save(data) {
@@ -68,7 +59,6 @@ function mainDataReducer(state, action) {
         payload.dateCreated,
         payload.dateModified,
         payload.cardsStored,
-        payload.sideColor,
         payload.key
       );
       stateCopy.cardGroups.push(newCardGroup);
@@ -77,20 +67,13 @@ function mainDataReducer(state, action) {
   }
   return stateCopy;
 }
-function cardGroupReducer(state, action) {
-  return state;
-}
-function cardReducer(state, action) {
-  return state;
-}
-
 // ? Main Component
 export default function DataContextComponent({children}) {
   const [dataState, dataDispatch] = useReducer(
     mainDataReducer,
     JSON.parse(localStorage.getItem("mainData")) || {categories: [], tags: [], cardGroups: []}
   );
-  function addCardGroup(name, category, dateCreated, dateModified, cardsStored, sideColor) {
+  function addCardGroup(name, category, dateCreated, dateModified, cardsStored) {
     const key = Math.random().toString(36).slice(2, -1);
     dataDispatch({
       type: "ADDCARDGROUP",
@@ -100,7 +83,6 @@ export default function DataContextComponent({children}) {
         dateCreated,
         dateModified,
         cardsStored,
-        sideColor,
         key,
       },
     });
@@ -110,4 +92,7 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
+// TODO: create card elements using form
+// TODO: render group elements (NOT THE GROUP ITSELF) using the data inside dataState
+// TODO: create tag and category function (make it one reducer)
 // TODO: state reducer for cardgroup and cards function

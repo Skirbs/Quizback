@@ -7,14 +7,7 @@ export default function CardGroupList() {
   return (
     <div className="flex flex-wrap justify-center items-start gap-2 ">
       {testArray.map((elem, i) => {
-        return (
-          <CardGroupElem
-            style={{animationDelay: `${i * 0.05}s`}}
-            sideColor="cornflowerblue"
-            index={i}
-            key={i}
-          />
-        );
+        return <CardGroupElem style={{animationDelay: `${i * 0.05}s`}} index={i} key={i} />;
       })}
     </div>
   );

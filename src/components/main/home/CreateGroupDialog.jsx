@@ -20,8 +20,7 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
       categoryRef.current.value,
       current_date,
       current_date,
-      [],
-      "sideColor"
+      []
     );
     // TODO: Side Color Changes depending on the category
     // TODO: Find category value (string) on tag database

@@ -3,7 +3,7 @@ import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import {Link} from "react-router-dom";
 // ? sideColor should be any css-compatible color
-export default function GroupListElem({sideColor = "bg-black", ...props}) {
+export default function GroupListElem({data, ...props}) {
   const settingRef = useRef();
 
   function setSettingVisibility(visible) {
@@ -33,13 +33,13 @@ export default function GroupListElem({sideColor = "bg-black", ...props}) {
         className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 pr-16 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
         {...props}>
         <span
-          style={{backgroundColor: `${sideColor}`}}
+          style={{backgroundColor: `${data.sideColor}`}}
           className="absolute w-1 left-0 inset-y-0 rounded-full"
         />
-        <h2 className="text-left w-full text-4xl font-semibold">Title</h2>
+        <h2 className="text-left w-full text-4xl font-semibold">{data.name}</h2>
         <div>
-          <p className="text-base opacity-80">Date Modified: 12/12/12 12:12</p>
-          <p className="text-base opacity-80">Date Added: 12/12/12 12:12</p>
+          <p className="text-base opacity-80">Date Modified: {data.dateCreated}</p>
+          <p className="text-base opacity-80">Date Added: {data.dateModified}</p>
         </div>
         <button
           className="absolute right-2 top-2 z-10"
