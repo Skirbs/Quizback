@@ -4,26 +4,25 @@ export const DataContext = createContext({dataState: {}, addCardGroup: () => {}}
 
 // ? classes
 class CardGroup {
-  constructor(name, category, dateCreated, dateModified, cardsStored, key) {
+  constructor(name, category, dateCreated, dateModified, key) {
     this.name = name;
     this.category = category;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
-    this.cardsStored = cardsStored;
+    this.cardsStored = [];
     this.sideColor = "red";
     this.key = key;
     console.log(key);
   }
 }
 class Card {
-  constructor(question, answer, tag, dateCreated, dateModified, dateNextStudy, cardsStored, key) {
+  constructor(question, answer, tag, dateCreated, dateModified, dateNextStudy, key) {
     this.question = question;
     this.answer = answer;
     this.tag = tag;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.dateNextStudy = dateNextStudy;
-    this.cardsStored = cardsStored;
     this.sideColor = "red";
     this.key = key;
   }
@@ -58,22 +57,36 @@ function mainDataReducer(state, action) {
         payload.category,
         payload.dateCreated,
         payload.dateModified,
-        payload.cardsStored,
         payload.key
       );
       stateCopy.cardGroups.push(newCardGroup);
       save(stateCopy);
       break;
+    case "ADDCARD":
+      const newCard = new Card(
+        question,
+        payload.answer,
+        payload.tag,
+        payload.dateCreated,
+        payload.dateModified,
+        payload.dateNextStudy,
+        payload.key
+      );
+      stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
+      save(stateCopy);
+      break;
   }
   return stateCopy;
 }
+
 // ? Main Component
 export default function DataContextComponent({children}) {
   const [dataState, dataDispatch] = useReducer(
     mainDataReducer,
     JSON.parse(localStorage.getItem("mainData")) || {categories: [], tags: [], cardGroups: []}
   );
-  function addCardGroup(name, category, dateCreated, dateModified, cardsStored) {
+  let selectedGroup = 0;
+  function addCardGroup(name, category, dateCreated, dateModified) {
     const key = Math.random().toString(36).slice(2, -1);
     dataDispatch({
       type: "ADDCARDGROUP",
@@ -82,13 +95,28 @@ export default function DataContextComponent({children}) {
         category,
         dateCreated,
         dateModified,
-        cardsStored,
         key,
       },
     });
   }
-  const contextData = {dataState, addCardGroup};
 
+  function addCard(question, answer, tag, dateCreated, dateModified, dateNextStudy) {
+    const key = Math.random().toString(36).slice(2, -1);
+    dataDispatch({
+      type: "ADDCARD",
+      payload: {
+        question,
+        answer,
+        tag,
+        dateCreated,
+        dateModified,
+        dateNextStudy,
+        selectedGroup,
+        key,
+      },
+    });
+  }
+  const contextData = {dataState, addCardGroup, selectedGroup, addCard};
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
@@ -96,3 +124,4 @@ export default function DataContextComponent({children}) {
 // TODO: render group elements (NOT THE GROUP ITSELF) using the data inside dataState
 // TODO: create tag and category function (make it one reducer)
 // TODO: state reducer for cardgroup and cards function
+// TODO: truncate long names, question, and answer

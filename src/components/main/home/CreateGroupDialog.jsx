@@ -8,7 +8,6 @@ import Select from "../../reusable/Select";
 export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
   const dataCtx = useContext(DataContext);
   const nameRef = useRef();
-  const colorRef = useRef();
   const categoryRef = useRef();
 
   function submitHandler(e) {
@@ -19,8 +18,7 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
       nameRef.current.value,
       categoryRef.current.value,
       current_date,
-      current_date,
-      []
+      current_date
     );
     // TODO: Side Color Changes depending on the category
     // TODO: Find category value (string) on tag database

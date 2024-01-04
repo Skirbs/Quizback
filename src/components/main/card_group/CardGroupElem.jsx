@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
-export default function CardGroupElem({sideColor = "black", index, ...props}) {
+export default function CardGroupElem({data, index, ...props}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
@@ -63,7 +63,7 @@ export default function CardGroupElem({sideColor = "black", index, ...props}) {
       }}
       {...props}>
       <span
-        style={{backgroundColor: `${sideColor}`}}
+        style={{backgroundColor: `${data.sideColor}`}}
         className="absolute w-1 left-0 inset-y-0 rounded-full"
       />
 
@@ -71,22 +71,12 @@ export default function CardGroupElem({sideColor = "black", index, ...props}) {
         {!showAnswer ? (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-            <p className="font-medium">
-              {truncateString(
-                `(question) Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem in quod alias molestias cumque veniam!`,
-                50
-              )}
-            </p>
+            <p className="font-medium">{truncateString(`${data.question}`, 50)}</p>
           </>
         ) : (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-            <p className="font-medium">
-              {truncateString(
-                `(answer) Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem in quod alias molestias cumque veniam!`,
-                50
-              )}
-            </p>
+            <p className="font-medium">{truncateString(`${data.answer}`, 50)}</p>
           </>
         )}
       </div>

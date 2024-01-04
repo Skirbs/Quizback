@@ -1,3 +1,4 @@
+import {useRef, useContext} from "react";
 import Header from "../../reusable/Header";
 import CardOptions from "../../reusable/CardOptions";
 import CardGroupList from "./CardGroupList";
@@ -6,8 +7,9 @@ import GoBack from "../../reusable/GoBack";
 import CreateCardDialog from "./CreateCardDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
-import {useRef} from "react";
+import {DataContext} from "../../../store/DataContext";
 export default function CardGroup() {
+  const dataCtx = useContext(DataContext);
   const createDialogRef = useRef();
   const createTagRef = useRef();
   const tagListRef = useRef();
@@ -27,7 +29,7 @@ export default function CardGroup() {
       <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="tag" />
       <CategorizationListDialog ref={tagListRef} header="Tag Lists" type="Tag" />
       <main className="w-[95%] p-3">
-        <Header title={`${"Title"} Cards`} />
+        <Header title={`${dataCtx.dataState.cardGroups[dataCtx.selectedGroup].name} Cards`} />
         <CardOptions />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
