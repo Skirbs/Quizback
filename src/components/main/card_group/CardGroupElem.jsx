@@ -71,12 +71,12 @@ export default function CardGroupElem({data, index, ...props}) {
         {!showAnswer ? (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-            <p className="font-medium">{truncateString(`${data.question}`, 50)}</p>
+            <p className="font-medium text-center">{truncateString(`${data.question}`, 50)}</p>
           </>
         ) : (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-            <p className="font-medium">{truncateString(`${data.answer}`, 50)}</p>
+            <p className="font-medium text-center">{truncateString(`${data.answer}`, 50)}</p>
           </>
         )}
       </div>

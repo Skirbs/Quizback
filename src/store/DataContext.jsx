@@ -64,7 +64,7 @@ function mainDataReducer(state, action) {
       break;
     case "ADDCARD":
       const newCard = new Card(
-        question,
+        payload.question,
         payload.answer,
         payload.tag,
         payload.dateCreated,
@@ -74,6 +74,7 @@ function mainDataReducer(state, action) {
       );
       stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
       save(stateCopy);
+      console.log(stateCopy);
       break;
   }
   return stateCopy;
