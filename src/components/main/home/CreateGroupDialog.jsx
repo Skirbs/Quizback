@@ -7,6 +7,7 @@ import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
 export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
   const dataCtx = useContext(DataContext);
+  const formRef = useRef();
   const nameRef = useRef();
   const categoryRef = useRef();
 
@@ -20,12 +21,14 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
       current_date,
       current_date
     );
+    formRef.current.reset();
+
     // TODO: Side Color Changes depending on the category
     // TODO: Find category value (string) on tag database
   }
   return (
     <Dialog ref={ref} header="Create Study Group">
-      <form className="flex flex-col gap-2" onSubmit={submitHandler}>
+      <form className="flex flex-col gap-2" onSubmit={submitHandler} ref={formRef}>
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
           <FormInput inputId="group-name" labelTitle="Group Name" isRequired ref={nameRef} />

@@ -121,8 +121,6 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: create card elements using form
-// TODO: render group elements (NOT THE GROUP ITSELF) using the data inside dataState
 // TODO: create tag and category function (make it one reducer)
 // TODO: state reducer for cardgroup and cards function
 // TODO: truncate long names, question, and answer
