@@ -51,6 +51,7 @@ function mainDataReducer(state, action) {
     localStorage.setItem("mainData", JSON.stringify(data));
   }
   switch (action.type) {
+    // ? Adding methods
     case "ADDCARDGROUP":
       const newCardGroup = new CardGroup(
         payload.name,
@@ -76,6 +77,18 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       console.log(stateCopy);
       break;
+    case "ADDCATEGORY":
+      const newCategory = new Category(payload.name, payload.sideColor);
+      stateCopy.categories.push(newCategory);
+      save(stateCopy);
+      console.log(stateCopy);
+      break;
+    case "ADDTAG":
+      const newTag = new Tag(payload.name, payload.sideColor);
+      stateCopy.tags.push(newTag);
+      save(stateCopy);
+      console.log(stateCopy);
+      break;
   }
   return stateCopy;
 }
@@ -87,6 +100,7 @@ export default function DataContextComponent({children}) {
     JSON.parse(localStorage.getItem("mainData")) || {categories: [], tags: [], cardGroups: []}
   );
   let selectedGroup = 0;
+
   function addCardGroup(name, category, dateCreated, dateModified) {
     const key = Math.random().toString(36).slice(2, -1);
     dataDispatch({
@@ -117,10 +131,31 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-  const contextData = {dataState, addCardGroup, selectedGroup, addCard};
+
+  function addCategory(name, sideColor) {
+    const key = Math.random().toString(36).slice(2, -1);
+    dataDispatch({
+      type: "ADDCATEGORY",
+      payload: {
+        name,
+        sideColor,
+      },
+    });
+  }
+
+  function addTag(name, sideColor) {
+    const key = Math.random().toString(36).slice(2, -1);
+    dataDispatch({
+      type: "ADDTAG",
+      payload: {
+        name,
+        sideColor,
+      },
+    });
+  }
+  const contextData = {dataState, selectedGroup, addCardGroup, addCard, addCategory, addTag};
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: create tag and category function (make it one reducer)
 // TODO: state reducer for cardgroup and cards function
 // TODO: truncate long names, question, and answer
