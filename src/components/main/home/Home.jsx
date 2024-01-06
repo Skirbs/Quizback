@@ -14,6 +14,8 @@ export default function Home() {
   const createDialogRef = useRef();
   const createCategoryRef = useRef();
   const categoryListRef = useRef();
+
+  // ? Dialog UI Methods
   function openCreateHandler() {
     createDialogRef.current.open();
   }
@@ -28,6 +30,11 @@ export default function Home() {
 
   // ? Data Context Functions
   const dataCtx = useContext(DataContext);
+
+  // ? Form Method
+  function submitHandler(e) {
+    e.preventDefault();
+  }
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />

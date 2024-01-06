@@ -26,7 +26,7 @@ export default function CardGroup() {
   return (
     <>
       <CreateCardDialog ref={createDialogRef} onTag={createTagHandler} />
-      <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="tag" />
+      <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="Tag" />
       <CategorizationListDialog ref={tagListRef} header="Tag Lists" type="Tag" />
       <main className="w-[95%] p-3">
         <Header title={`${dataCtx.dataState.cardGroups[dataCtx.selectedGroup].name} Cards`} />
