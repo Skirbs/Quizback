@@ -1,4 +1,4 @@
-import {forwardRef} from "react";
+import {forwardRef, useEffect, useRef} from "react";
 import Dialog from "./Dialog";
 import Card from "./Card";
 import Button from "./Button";
@@ -10,7 +10,10 @@ export default forwardRef(function CreateCategorizationDialog(
   {header, type, editMode, onClose, ...props},
   ref
 ) {
-  const currentColor = "Black";
+  const currentColor = useRef();
+  let colorList;
+  currentColor.current = currentColor.current || "black";
+
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
@@ -18,12 +21,26 @@ export default forwardRef(function CreateCategorizationDialog(
     }
     console.log(type); // Tag or Category
   }
+
   function changeColor(e) {
     e.preventDefault();
-    console.log(e.target);
+    colorList = colorList || document.querySelectorAll("#categorization-color-choices *");
+    for (const colorElem of colorList) {
+      if (colorElem.style.backgroundColor === currentColor.current) {
+        colorElem.classList.remove(
+          "border-2",
+          "border-neutral-800",
+          "rounded-xl",
+          "dark:border-black"
+        );
+        break;
+      }
+    }
 
-    // TODO: Get all children of the div containing colorbutton
-    // TODO: Get color attribute somethng
+    e.target.classList.add("border-2", "border-neutral-800", "rounded-xl", "dark:border-black");
+    console.log(currentColor);
+    currentColor.current = e.target.style.backgroundColor;
+    console.log(currentColor);
   }
   // ? onClose is a function for CategorizationListDialog. Used for edit mode. make sure this is executed when submitting
   return (
@@ -34,7 +51,9 @@ export default forwardRef(function CreateCategorizationDialog(
           <FormInput inputId="group-category" labelTitle={`${type}:`} isRequired />
           <Card className="flex items-center flex-col !gap-0 p-1">
             <p className="self-start">Color:</p>
-            <div className="bg-neutral-400 dark:bg-neutral-900 p-2 rounded-md overflow-x-scroll whitespace-nowrap w-56">
+            <div
+              id="categorization-color-choices"
+              className="bg-neutral-400 dark:bg-neutral-900 p-2 rounded-md overflow-x-scroll whitespace-nowrap w-56">
               <ColorButton onClick={changeColor} color="black" />
               <ColorButton onClick={changeColor} color="grey" />
               <ColorButton onClick={changeColor} color="cornsilk" />
