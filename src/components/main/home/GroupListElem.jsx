@@ -27,16 +27,23 @@ export default function GroupListElem({data, ...props}) {
     document.addEventListener("click", clickOutsideHandler, true);
   });
 
+  function truncateString(str, max) {
+    if (str.length >= max) {
+      return str.slice(0, max) + "...";
+    }
+    return str;
+  }
+
   return (
     <Link to="/list">
       <Card
-        className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 pr-16 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
+        className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 w-[300px] dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
         {...props}>
         <span
           style={{backgroundColor: `${data.sideColor}`}}
           className="absolute w-1 left-0 inset-y-0 rounded-full"
         />
-        <h2 className="text-left w-full text-4xl font-semibold">{data.name}</h2>
+        <h2 className="text-left w-full text-4xl font-semibold">{truncateString(data.name, 10)}</h2>
         <div>
           <p className="text-base opacity-80">Date Modified: {data.dateCreated}</p>
           <p className="text-base opacity-80">Date Added: {data.dateModified}</p>
