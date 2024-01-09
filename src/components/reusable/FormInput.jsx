@@ -2,7 +2,7 @@ import {forwardRef} from "react";
 import Card from "./Card";
 
 export default forwardRef(function FormInput(
-  {inputId, labelTitle, labelClass = "", inputClass = "", isTextArea, isRequired},
+  {inputId, labelTitle, labelClass = "", inputClass = "", max = 20, isTextArea, isRequired},
   ref
 ) {
   return (
@@ -15,12 +15,14 @@ export default forwardRef(function FormInput(
           id={inputId}
           className={`px-2 py-1 text-sm bg-neutral-200 dark:!bg-neutral-700 rounded-md outline-neutral-200 dark:!outline-neutral-600 resize-none focus:bg-neutral-100 focus:outline-1 transition-all ${inputClass}`}
           required={isRequired}
-          ref={ref}></textarea>
+          ref={ref}
+          maxLength={max}></textarea>
       ) : (
         <input
           type="text"
           id={inputId}
           className={`px-2 py-1 text-sm bg-neutral-200 dark:!bg-neutral-700 rounded-md outline-neutral-200  focus:bg-neutral-100 transition-all ${inputClass}`}
+          maxLength={max}
           required={isRequired}
           ref={ref}
         />

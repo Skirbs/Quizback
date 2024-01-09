@@ -89,5 +89,6 @@ export default forwardRef(function CreateCategorizationDialog(
 });
 
 // TODO: Limit Inputs Text Length, (Name, Category)
+// TODO: Now Change sideColor Dynamically when submitting form
 // TODO: For categories, make sure they dont repeat
 // TODO: For categories, have "N/A" as default category

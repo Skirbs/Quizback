@@ -56,7 +56,7 @@ export default function CardGroupElem({data, index, ...props}) {
   return (
     <Card
       ref={cardRef}
-      className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[300px] py-3 px-8 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
+      className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[300px] py-3 !px-2 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
       onClick={(e) => {
         e.stopPropagation();
         showAnswerHandler();
@@ -67,16 +67,20 @@ export default function CardGroupElem({data, index, ...props}) {
         className="absolute w-1 left-0 inset-y-0 rounded-full"
       />
 
-      <div className="flex-1">
+      <div className="flex-1 flex-center flex-col">
         {!showAnswer ? (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-            <p className="font-medium text-center">{truncateString(`${data.question}`, 50)}</p>
+            <p className="font-medium text-center w-full break-all flex-1 flex-center">
+              {truncateString(`${data.question}`, 40)}
+            </p>
           </>
         ) : (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-            <p className="font-medium text-center">{truncateString(`${data.answer}`, 50)}</p>
+            <p className="font-medium text-center w-full break-all flex-1 flex-center">
+              {truncateString(`${data.question}`, 45)}
+            </p>
           </>
         )}
       </div>
