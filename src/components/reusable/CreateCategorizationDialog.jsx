@@ -1,4 +1,5 @@
-import {forwardRef, useEffect, useRef} from "react";
+import {forwardRef, useEffect, useRef, useContext} from "react";
+import {DataContext} from "../../store/DataContext";
 import Dialog from "./Dialog";
 import Card from "./Card";
 import Button from "./Button";
@@ -10,6 +11,9 @@ export default forwardRef(function CreateCategorizationDialog(
   {header, type, editMode, onClose, ...props},
   ref
 ) {
+  const dataCtx = useContext(DataContext);
+
+  const nameRef = useRef();
   const currentColor = useRef();
   let colorList;
   currentColor.current = currentColor.current || "black";
@@ -19,7 +23,12 @@ export default forwardRef(function CreateCategorizationDialog(
     if (editMode) {
       return;
     }
-    console.log(type); // Tag or Category
+    if (type === "Tag") {
+      dataCtx.addTag(nameRef.current.value, currentColor.current);
+    } else if (type === "Category") {
+      dataCtx.addCategory(nameRef.current.value, currentColor.current);
+    }
+    ref.current.close();
   }
 
   function changeColor(e) {
@@ -48,7 +57,7 @@ export default forwardRef(function CreateCategorizationDialog(
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="group-category" labelTitle={`${type}:`} isRequired />
+          <FormInput inputId="group-category" labelTitle={`${type}:`} ref={nameRef} isRequired />
           <Card className="flex items-center flex-col !gap-0 p-1">
             <p className="self-start">Color:</p>
             <div
