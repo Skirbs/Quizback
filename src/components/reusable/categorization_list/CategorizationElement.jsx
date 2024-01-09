@@ -3,7 +3,7 @@ import ConfirmationDelete from "./ConfirmationDelete";
 import CreateCategorizationDialog from "../CreateCategorizationDialog";
 
 // TODO: change edit dialog header from "Edit Tag" to "Edit {name}"
-export default forwardRef(function CategorizationElement({color = "black", type}, ref) {
+export default forwardRef(function CategorizationElement({data, type}, ref) {
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -36,8 +36,8 @@ export default forwardRef(function CategorizationElement({color = "black", type}
     <>
       {editMode && <EditDialog />}
       <div className="bg-neutral-300 dark:bg-neutral-800 w-64 flex-shrink-0 flex rounded gap-1 relative">
-        <span className="min-w-[3px] " style={{backgroundColor: color}} />
-        <p className="text-lg">Tag Name</p>
+        <span className="min-w-[3px] " style={{backgroundColor: data.sideColor}} />
+        <p className="text-lg">{data.name}</p>
         <div className=" flex justify-end items-center flex-1 gap-1">
           <button
             onClick={() => {

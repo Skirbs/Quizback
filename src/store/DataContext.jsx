@@ -29,16 +29,18 @@ class Card {
 }
 
 class Category {
-  constructor(name, sideColor) {
+  constructor(name, sideColor, key) {
     this.name = name;
     this.sideColor = sideColor;
+    this.key = key;
   }
 }
 
 class Tag {
-  constructor(name, sideColor) {
+  constructor(name, sideColor, key) {
     this.name = name;
     this.sideColor = sideColor;
+    this.key = key;
   }
 }
 
@@ -78,13 +80,13 @@ function mainDataReducer(state, action) {
       console.log(stateCopy);
       break;
     case "ADDCATEGORY":
-      const newCategory = new Category(payload.name, payload.sideColor);
+      const newCategory = new Category(payload.name, payload.sideColor, payload.key);
       stateCopy.categories.push(newCategory);
       save(stateCopy);
       console.log(stateCopy);
       break;
     case "ADDTAG":
-      const newTag = new Tag(payload.name, payload.sideColor);
+      const newTag = new Tag(payload.name, payload.sideColor, payload.key);
       stateCopy.tags.push(newTag);
       save(stateCopy);
       console.log(stateCopy);
@@ -139,6 +141,7 @@ export default function DataContextComponent({children}) {
       payload: {
         name,
         sideColor,
+        key,
       },
     });
   }
@@ -150,6 +153,7 @@ export default function DataContextComponent({children}) {
       payload: {
         name,
         sideColor,
+        key,
       },
     });
   }
@@ -157,6 +161,7 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
+// TODO: Dynamic List
 // TODO: Date modified changes
 // TODO: state reducer for cardgroup and cards function
 // TODO: truncate long names, question, and answer
