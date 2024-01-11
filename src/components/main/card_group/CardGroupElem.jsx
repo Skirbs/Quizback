@@ -71,15 +71,15 @@ export default function CardGroupElem({data, index, ...props}) {
         {!showAnswer ? (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-            <p className="font-medium text-center w-full break-all flex-1 flex-center">
+            <p className="font-medium text-center w-full break-words inline-block flex-1 flex-center">
               {truncateString(`${data.question}`, 40)}
             </p>
           </>
         ) : (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-            <p className="font-medium text-center w-full break-all flex-1 flex-center">
-              {truncateString(`${data.question}`, 45)}
+            <p className="font-medium text-center w-full break-all inline-block flex-1 flex-center">
+              {truncateString(`${data.answer}`, 45)}
             </p>
           </>
         )}
