@@ -34,20 +34,18 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
           <FormInput inputId="group-name" labelTitle="Group Name" isRequired ref={nameRef} />
           <Card>
             <label htmlFor="group-category">Category</label>
-            <div className="flex gap-1">
+            <div className="flex gap-1w-full">
               <Select
-                className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700"
+                className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700 !w-full"
                 id="group-category"
                 ref={categoryRef}>
-                <option className="text-center" value="1">
-                  1
-                </option>
-                <option className="text-center" value="2">
-                  2
-                </option>
-                <option className="text-center" value="3">
-                  Lorem, ipsum.
-                </option>
+                {dataCtx.dataState.categories.map((elem) => {
+                  return (
+                    <option className="text-center" key={elem.key} value={elem.name}>
+                      {elem.name}
+                    </option>
+                  );
+                })}
               </Select>
               <Button
                 className="!bg-neutral-300 dark:!bg-neutral-700"

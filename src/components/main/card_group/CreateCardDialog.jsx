@@ -51,20 +51,18 @@ export default forwardRef(function CreateCardDialog({onTag}, ref) {
           />
           <Card>
             <label htmlFor="group-category">Tag</label>
-            <div className="flex gap-1">
+            <div className="flex gap-1 w-full">
               <Select
-                className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700"
+                className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700 !w-full"
                 ref={tagRef}
                 id="group-category">
-                <option className="text-center" value="1">
-                  1
-                </option>
-                <option className="text-center" value="2">
-                  2
-                </option>
-                <option className="text-center" value="3">
-                  Lorem, ipsum.
-                </option>
+                {dataCtx.dataState.cardGroups[dataCtx.selectedGroup].tags.map((elem) => {
+                  return (
+                    <option className="text-center" key={elem.key} value={elem.name}>
+                      {elem.name}
+                    </option>
+                  );
+                })}
               </Select>
               <Button
                 className="!bg-neutral-300 dark:!bg-neutral-700"
