@@ -14,7 +14,8 @@ export default forwardRef(function CategorizationListDialog({header, type}, ref)
   return (
     <Dialog ref={ref} header={header}>
       <Card className="!w-72 flex flex-col !bg-neutral-400 dark:!bg-neutral-900 h-[50vh] max-h-[250px]">
-        {currentData.map((elem) => {
+        {currentData.map((elem, i) => {
+          if (i === 0) return; // ? Since index 0 is a categorization called "None"
           return <CategorizationElement type={type} key={elem.key} data={elem} />;
         })}
       </Card>

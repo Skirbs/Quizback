@@ -1,30 +1,30 @@
-import {createContext, useReducer} from "react";
+import {createContext, useReducer, useRef} from "react";
 import {json} from "react-router-dom";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
 class CardGroup {
-  constructor(name, category, dateCreated, dateModified, key) {
+  constructor(name, category, dateCreated, dateModified, sideColor, key) {
     this.name = name;
     this.category = category;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.cardsStored = [];
-    this.tags = [];
-    this.sideColor = "red";
+    this.tags = [{name: "None", sideColor: "transparent", key: "N"}];
+    this.sideColor = sideColor;
     this.key = key;
     console.log(key);
   }
 }
 class Card {
-  constructor(question, answer, tag, dateCreated, dateModified, dateNextStudy, key) {
+  constructor(question, answer, tag, dateCreated, dateModified, dateNextStudy, sideColor, key) {
     this.question = question;
     this.answer = answer;
     this.tag = tag;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.dateNextStudy = dateNextStudy;
-    this.sideColor = "red";
+    this.sideColor = sideColor;
     this.key = key;
   }
 }
@@ -61,6 +61,7 @@ function mainDataReducer(state, action) {
         payload.category,
         payload.dateCreated,
         payload.dateModified,
+        payload.sideColor,
         payload.key
       );
       stateCopy.cardGroups.push(newCardGroup);
@@ -74,6 +75,7 @@ function mainDataReducer(state, action) {
         payload.dateCreated,
         payload.dateModified,
         payload.dateNextStudy,
+        payload.sideColor,
         payload.key
       );
       stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
@@ -100,36 +102,55 @@ function mainDataReducer(state, action) {
 export default function DataContextComponent({children}) {
   const [dataState, dataDispatch] = useReducer(
     mainDataReducer,
-    JSON.parse(localStorage.getItem("mainData")) || {categories: [], cardGroups: []}
+    JSON.parse(localStorage.getItem("mainData")) || {
+      categories: [{name: "None", sideColor: "transparent", key: "N"}],
+      cardGroups: [],
+    }
   );
-  let selectedGroup = 0;
+  let selectedGroup = useRef(0);
 
-  function addCardGroup(name, category, dateCreated, dateModified) {
+  function getCategoryObjectByName(categoryName) {
+    const tagObject = dataState.categories.find((elem) => elem.name === categoryName);
+    return tagObject;
+  }
+
+  function getTagObjectByName(tagName) {
+    const tagObject = dataState.cardGroups[selectedGroup.current].tags.find(
+      (elem) => elem.name === tagName
+    );
+    return tagObject;
+  }
+
+  function addCardGroup(name, categoryName, dateCreated, dateModified) {
     const key = Math.random().toString(36).slice(2, -1);
+    const category = getCategoryObjectByName(categoryName);
     dataDispatch({
       type: "ADDCARDGROUP",
       payload: {
         name,
-        category,
+        categoryName,
         dateCreated,
         dateModified,
+        sideColor: category.sideColor,
         key,
       },
     });
   }
 
-  function addCard(question, answer, tag, dateCreated, dateModified, dateNextStudy) {
+  function addCard(question, answer, tagName, dateCreated, dateModified, dateNextStudy) {
     const key = Math.random().toString(36).slice(2, -1);
+    const tag = getTagObjectByName(tagName);
     dataDispatch({
       type: "ADDCARD",
       payload: {
         question,
         answer,
-        tag,
+        tagName,
         dateCreated,
         dateModified,
         dateNextStudy,
-        selectedGroup,
+        selectedGroup: selectedGroup.current,
+        sideColor: tag.sideColor,
         key,
       },
     });
@@ -154,17 +175,23 @@ export default function DataContextComponent({children}) {
       payload: {
         name,
         sideColor,
-        selectedGroup,
+        selectedGroup: selectedGroup.current,
         key,
       },
     });
   }
-  const contextData = {dataState, selectedGroup, addCardGroup, addCard, addCategory, addTag};
+  const contextData = {
+    dataState,
+    selectedGroup: selectedGroup.current,
+    addCardGroup,
+    addCard,
+    addCategory,
+    addTag,
+  };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Create Group / Card, Make Category / Tag select dynamic
-//    TODO: Create None At first
 // TODO: Make the side color dynamic
-// TODO: When tag / category gets deleted, set card to taglass or something
+// TODO: Make sure "new Category | new Tag" name cannot be repeated
+// TODO: When tag / category gets deleted, set card to None
 // TODO: Date modified changes
