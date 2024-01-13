@@ -1,9 +1,11 @@
-import {useRef, useEffect} from "react";
+import {useRef, useEffect, useContext} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import {Link} from "react-router-dom";
+import {utilContext} from "../../../store/UtilContext";
 // ? sideColor should be any css-compatible color
 export default function GroupListElem({data, ...props}) {
+  const utilCtx = useContext(utilContext);
   const settingRef = useRef();
 
   function setSettingVisibility(visible) {
@@ -27,13 +29,6 @@ export default function GroupListElem({data, ...props}) {
     document.addEventListener("click", clickOutsideHandler, true);
   });
 
-  function truncateString(str, max) {
-    if (str.length >= max) {
-      return str.slice(0, max) + "...";
-    }
-    return str;
-  }
-
   return (
     <Link to="/list">
       <Card
@@ -43,7 +38,9 @@ export default function GroupListElem({data, ...props}) {
           style={{backgroundColor: `${data.sideColor}`}}
           className="absolute w-1 left-0 inset-y-0 rounded-full"
         />
-        <h2 className="text-left w-full text-4xl font-semibold">{truncateString(data.name, 10)}</h2>
+        <h2 className="text-left w-full text-4xl font-semibold">
+          {utilCtx.truncateString(data.name, 10)}
+        </h2>
         <div>
           <p className="text-base opacity-80">Date Modified: {data.dateCreated}</p>
           <p className="text-base opacity-80">Date Added: {data.dateModified}</p>

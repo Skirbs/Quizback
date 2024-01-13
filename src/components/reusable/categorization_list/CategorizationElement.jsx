@@ -1,9 +1,12 @@
-import {forwardRef, useEffect, useRef, useState} from "react";
+import {forwardRef, useContext, useEffect, useRef, useState} from "react";
 import ConfirmationDelete from "./ConfirmationDelete";
 import CreateCategorizationDialog from "../CreateCategorizationDialog";
+import {utilContext} from "../../../store/UtilContext";
 
 // TODO: change edit dialog header from "Edit Tag" to "Edit {name}"
 export default forwardRef(function CategorizationElement({data, type}, ref) {
+  const utilCtx = useContext(utilContext);
+
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
@@ -35,9 +38,9 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
   return (
     <>
       {editMode && <EditDialog />}
-      <div className="bg-neutral-300 dark:bg-neutral-800 w-64 flex-shrink-0 flex rounded gap-1 relative">
+      <div className="bg-neutral-300 dark:bg-neutral-800 w-full flex-shrink-0 flex rounded gap-1 relative">
         <span className="min-w-[3px] " style={{backgroundColor: data.sideColor}} />
-        <p className="text-lg">{data.name}</p>
+        <p className="text-lg">{utilCtx.truncateString(data.name, 10)}</p>
         <div className=" flex justify-end items-center flex-1 gap-1">
           <button
             onClick={() => {

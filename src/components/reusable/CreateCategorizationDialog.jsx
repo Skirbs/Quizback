@@ -47,9 +47,7 @@ export default forwardRef(function CreateCategorizationDialog(
     }
 
     e.target.classList.add("border-2", "border-neutral-800", "rounded-xl", "dark:border-black");
-    console.log(currentColor);
     currentColor.current = e.target.style.backgroundColor;
-    console.log(currentColor);
   }
   // ? onClose is a function for CategorizationListDialog. Used for edit mode. make sure this is executed when submitting
   return (
@@ -57,13 +55,23 @@ export default forwardRef(function CreateCategorizationDialog(
       <form className="flex flex-col gap-2">
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="group-category" labelTitle={`${type}:`} ref={nameRef} isRequired />
+          <FormInput
+            inputId="group-category"
+            labelTitle={`${type}:`}
+            ref={nameRef}
+            isRequired
+            max={15}
+          />
           <Card className="flex items-center flex-col !gap-0 p-1">
             <p className="self-start">Color:</p>
             <div
               id="categorization-color-choices"
               className="bg-neutral-400 dark:bg-neutral-900 p-2 rounded-md overflow-x-scroll whitespace-nowrap w-56">
-              <ColorButton onClick={changeColor} color="black" />
+              <ColorButton
+                onClick={changeColor}
+                className="border-2 border-neutral-800 rounded-xl dark:border-black"
+                color="black"
+              />
               <ColorButton onClick={changeColor} color="grey" />
               <ColorButton onClick={changeColor} color="cornsilk" />
               <ColorButton onClick={changeColor} color="white" />

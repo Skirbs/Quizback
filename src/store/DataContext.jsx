@@ -10,6 +10,7 @@ class CardGroup {
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.cardsStored = [];
+    this.tags = [];
     this.sideColor = "red";
     this.key = key;
     console.log(key);
@@ -87,9 +88,9 @@ function mainDataReducer(state, action) {
       break;
     case "ADDTAG":
       const newTag = new Tag(payload.name, payload.sideColor, payload.key);
-      stateCopy.tags.push(newTag);
-      save(stateCopy);
       console.log(stateCopy);
+      stateCopy.cardGroups[payload.selectedGroup].tags.push(newTag);
+      save(stateCopy);
       break;
   }
   return stateCopy;
@@ -99,7 +100,7 @@ function mainDataReducer(state, action) {
 export default function DataContextComponent({children}) {
   const [dataState, dataDispatch] = useReducer(
     mainDataReducer,
-    JSON.parse(localStorage.getItem("mainData")) || {categories: [], tags: [], cardGroups: []}
+    JSON.parse(localStorage.getItem("mainData")) || {categories: [], cardGroups: []}
   );
   let selectedGroup = 0;
 
@@ -153,6 +154,7 @@ export default function DataContextComponent({children}) {
       payload: {
         name,
         sideColor,
+        selectedGroup,
         key,
       },
     });
@@ -161,7 +163,8 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Dynamic List
+// TODO: Create Group / Card, Make Category / Tag select dynamic
+//    TODO: Create None At first
+// TODO: Make the side color dynamic
+// TODO: When tag / category gets deleted, set card to taglass or something
 // TODO: Date modified changes
-// TODO: state reducer for cardgroup and cards function
-// TODO: truncate long names, question, and answer

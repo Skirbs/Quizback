@@ -1,7 +1,9 @@
-import {useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
+import {utilContext} from "../../../store/UtilContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 export default function CardGroupElem({data, index, ...props}) {
+  const utilCtx = useContext(utilContext);
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
@@ -39,13 +41,6 @@ export default function CardGroupElem({data, index, ...props}) {
     }, 10);
   }
 
-  function truncateString(str, max = 50) {
-    if (str.length >= max) {
-      return str.slice(0, max) + "...";
-    }
-    return str;
-  }
-
   useEffect(() => {
     setTimeout(() => {
       cardRef.current.style.animationDelay = "0s";
@@ -72,14 +67,14 @@ export default function CardGroupElem({data, index, ...props}) {
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
             <p className="font-medium text-center w-full break-words inline-block flex-1 flex-center">
-              {truncateString(`${data.question}`, 40)}
+              {utilCtx.truncateString(`${data.question}`, 40)}
             </p>
           </>
         ) : (
           <>
             <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
             <p className="font-medium text-center w-full break-all inline-block flex-1 flex-center">
-              {truncateString(`${data.answer}`, 45)}
+              {utilCtx.truncateString(`${data.answer}`, 45)}
             </p>
           </>
         )}
