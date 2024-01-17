@@ -30,7 +30,7 @@ export default function GroupListElem({data, ...props}) {
   });
 
   return (
-    <Link to="/list">
+    <Link to={`/list?id=${data.key}`}>
       <Card
         className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 w-[300px] dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
         {...props}>

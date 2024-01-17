@@ -1,4 +1,4 @@
-import {useRef, useContext} from "react";
+import {useRef, useContext, useState, useEffect} from "react";
 import Header from "../../reusable/Header";
 import CardOptions from "../../reusable/CardOptions";
 import CardGroupList from "./CardGroupList";
@@ -13,6 +13,11 @@ export default function CardGroup() {
   const createDialogRef = useRef();
   const createTagRef = useRef();
   const tagListRef = useRef();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  const selectedGroup = dataCtx.getGroupIndexById(id);
+
   function createDialogHandler() {
     createDialogRef.current.open();
   }
@@ -25,15 +30,29 @@ export default function CardGroup() {
 
   return (
     <>
-      <CreateCardDialog ref={createDialogRef} onTag={createTagHandler} />
-      <CreateCategorizationDialog ref={createTagRef} header="Create Tag" type="Tag" />
-      <CategorizationListDialog ref={tagListRef} header="Tag Lists" type="Tag" />
+      <CreateCardDialog
+        ref={createDialogRef}
+        selectedGroup={selectedGroup}
+        onTag={createTagHandler}
+      />
+      <CreateCategorizationDialog
+        ref={createTagRef}
+        selectedGroup={selectedGroup}
+        header="Create Tag"
+        type="Tag"
+      />
+      <CategorizationListDialog
+        ref={tagListRef}
+        selectedGroup={selectedGroup}
+        header="Tag Lists"
+        type="Tag"
+      />
       <main className="w-[95%] p-3">
-        <Header title={`${dataCtx.dataState.cardGroups[dataCtx.selectedGroup].name} Cards`} />
+        <Header title={`${dataCtx.dataState.cardGroups[selectedGroup].name} Cards`} />
         <CardOptions />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
-        <CardGroupList />
+        <CardGroupList selectedGroup={selectedGroup} />
       </main>
     </>
   );

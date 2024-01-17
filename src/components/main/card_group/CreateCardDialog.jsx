@@ -5,7 +5,7 @@ import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
 import {DataContext} from "../../../store/DataContext";
-export default forwardRef(function CreateCardDialog({onTag}, ref) {
+export default forwardRef(function CreateCardDialog({onTag, selectedGroup}, ref) {
   const dataCtx = useContext(DataContext);
   const formRef = useRef();
   const questionRef = useRef();
@@ -56,7 +56,7 @@ export default forwardRef(function CreateCardDialog({onTag}, ref) {
                 className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700 !w-full"
                 ref={tagRef}
                 id="group-category">
-                {dataCtx.dataState.cardGroups[dataCtx.selectedGroup].tags.map((elem) => {
+                {dataCtx.dataState.cardGroups[selectedGroup].tags.map((elem) => {
                   return (
                     <option className="text-center" key={elem.key} value={elem.name}>
                       {elem.name}

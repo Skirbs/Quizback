@@ -8,7 +8,7 @@ import ColorButton from "./ColorButton";
 import Header from "./Header";
 // TODO: Future feature: make sure name doesnt repeat
 export default forwardRef(function CreateCategorizationDialog(
-  {header, type, editMode, onClose, ...props},
+  {header, type, editMode, onClose, selectedGroup, ...props},
   ref
 ) {
   const dataCtx = useContext(DataContext);

@@ -12,7 +12,7 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/list" element={<CardGroup />} />
+          <Route path="/list?" element={<CardGroup />} />
           <Route path="/quiz" element={<CardQuiz />} />
         </Routes>
       </UtilContextComponent>

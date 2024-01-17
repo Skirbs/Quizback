@@ -1,5 +1,5 @@
 import {createContext, useReducer, useRef} from "react";
-import {json} from "react-router-dom";
+import {json, useParams} from "react-router-dom";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
@@ -107,7 +107,11 @@ export default function DataContextComponent({children}) {
       cardGroups: [],
     }
   );
-  let selectedGroup = useRef(0);
+
+  function getGroupIndexById(key) {
+    const groupIndex = dataState.cardGroups.findIndex((elem) => elem.key === key);
+    return groupIndex;
+  }
 
   function getCategoryObjectByName(categoryName) {
     const tagObject = dataState.categories.find((elem) => elem.name === categoryName);
@@ -115,9 +119,10 @@ export default function DataContextComponent({children}) {
   }
 
   function getTagObjectByName(tagName) {
-    const tagObject = dataState.cardGroups[selectedGroup.current].tags.find(
-      (elem) => elem.name === tagName
-    );
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+    const tagObject = dataState.cardGroups[groupIndex].tags.find((elem) => elem.name === tagName);
     return tagObject;
   }
 
@@ -140,6 +145,10 @@ export default function DataContextComponent({children}) {
   function addCard(question, answer, tagName, dateCreated, dateModified, dateNextStudy) {
     const key = Math.random().toString(36).slice(2, -1);
     const tag = getTagObjectByName(tagName);
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+
     dataDispatch({
       type: "ADDCARD",
       payload: {
@@ -149,7 +158,7 @@ export default function DataContextComponent({children}) {
         dateCreated,
         dateModified,
         dateNextStudy,
-        selectedGroup: selectedGroup.current,
+        selectedGroup: groupIndex,
         sideColor: tag.sideColor,
         key,
       },
@@ -170,19 +179,22 @@ export default function DataContextComponent({children}) {
 
   function addTag(name, sideColor) {
     const key = Math.random().toString(36).slice(2, -1);
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
     dataDispatch({
       type: "ADDTAG",
       payload: {
         name,
         sideColor,
-        selectedGroup: selectedGroup.current,
+        selectedGroup: groupIndex,
         key,
       },
     });
   }
   const contextData = {
     dataState,
-    selectedGroup: selectedGroup.current,
+    getGroupIndexById,
     addCardGroup,
     addCard,
     addCategory,
@@ -191,7 +203,8 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Make the side color dynamic
+// TODO: Delete Groups
+// TODO: Delete Cards
 // TODO: Make sure "new Category | new Tag" name cannot be repeated
 // TODO: When tag / category gets deleted, set card to None
 // TODO: Date modified changes
