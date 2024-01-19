@@ -52,7 +52,14 @@ function mainDataReducer(state, action) {
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
+    console.log(stateCopy);
   }
+
+  function getGroupIndexById(key) {
+    const groupIndex = stateCopy.cardGroups.findIndex((elem) => elem.key === key);
+    return groupIndex;
+  }
+
   switch (action.type) {
     // ? Adding methods
     case "ADDCARDGROUP":
@@ -86,12 +93,17 @@ function mainDataReducer(state, action) {
       const newCategory = new Category(payload.name, payload.sideColor, payload.key);
       stateCopy.categories.push(newCategory);
       save(stateCopy);
-      console.log(stateCopy);
       break;
     case "ADDTAG":
       const newTag = new Tag(payload.name, payload.sideColor, payload.key);
-      console.log(stateCopy);
       stateCopy.cardGroups[payload.selectedGroup].tags.push(newTag);
+      save(stateCopy);
+      break;
+
+    // ? Removing methods
+    case "REMOVECARDGROUP":
+      const groupIndex = getGroupIndexById(payload.key);
+      stateCopy.cardGroups.splice(groupIndex, 1);
       save(stateCopy);
       break;
   }
@@ -192,6 +204,16 @@ export default function DataContextComponent({children}) {
       },
     });
   }
+
+  function removeCardGroup(key) {
+    dataDispatch({
+      type: "REMOVECARDGROUP",
+      payload: {
+        key,
+      },
+    });
+  }
+
   const contextData = {
     dataState,
     getGroupIndexById,
@@ -199,6 +221,7 @@ export default function DataContextComponent({children}) {
     addCard,
     addCategory,
     addTag,
+    removeCardGroup,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }

@@ -1,5 +1,5 @@
 import {createContext} from "react";
-export const utilContext = createContext({truncateString: () => {}});
+export const UtilContext = createContext({truncateString: () => {}});
 
 export default function UtilContextComponent({children}) {
   function truncateString(str, max = 50) {
@@ -11,5 +11,5 @@ export default function UtilContextComponent({children}) {
 
   const utils = {truncateString};
 
-  return <utilContext.Provider value={utils}>{children}</utilContext.Provider>;
+  return <UtilContext.Provider value={utils}>{children}</UtilContext.Provider>;
 }

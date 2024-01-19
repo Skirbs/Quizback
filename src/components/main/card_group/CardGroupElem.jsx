@@ -1,9 +1,11 @@
 import {useContext, useEffect, useRef, useState} from "react";
-import {utilContext} from "../../../store/UtilContext";
+import {UtilContext} from "../../../store/UtilContext";
+import {DataContext} from "../../../store/DataContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 export default function CardGroupElem({data, index, ...props}) {
-  const utilCtx = useContext(utilContext);
+  const utilCtx = useContext(UtilContext);
+  const dataCtx = useContext(DataContext);
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();

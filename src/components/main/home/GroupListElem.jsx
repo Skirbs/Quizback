@@ -1,11 +1,13 @@
 import {useRef, useEffect, useContext} from "react";
+import {UtilContext} from "../../../store/UtilContext";
+import {DataContext} from "../../../store/DataContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import {Link} from "react-router-dom";
-import {utilContext} from "../../../store/UtilContext";
 // ? sideColor should be any css-compatible color
-export default function GroupListElem({data, ...props}) {
-  const utilCtx = useContext(utilContext);
+export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
+  const utilCtx = useContext(UtilContext);
+  const dataCtx = useContext(DataContext);
   const settingRef = useRef();
 
   function setSettingVisibility(visible) {
@@ -61,7 +63,12 @@ export default function GroupListElem({data, ...props}) {
             <span className="material-symbols-outlined">edit</span>
             edit
           </Button>
-          <Button className="!drop-shadow-none flex-1 flex justify-center mb-2">
+          <Button
+            className="!drop-shadow-none flex-1 flex justify-center mb-2"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenDeleteDialog(data.name, data.key);
+            }}>
             <span className="material-symbols-outlined">delete</span>
             delete
           </Button>
