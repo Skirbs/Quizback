@@ -15,7 +15,7 @@ export default function GroupList() {
   return (
     <>
       <DeleteDialog ref={deleteDialog} />
-      <div className="flex flex-wrap justify-center lg:justify-start gap-2 ">
+      <div className="flex flex-wrap justify-center lg:justify-start gap-2 pb-5">
         {dataCtx.dataState.cardGroups.map((elem, i) => {
           return (
             <GroupListElem

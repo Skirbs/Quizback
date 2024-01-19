@@ -34,11 +34,11 @@ export default forwardRef(function DeleteDialog({isCard, ...props}, ref) {
     <Dialog ref={dialogRef} header={`Delete ${isCard ? "card" : "card group"}?`} {...props}>
       <p>Are you sure you want to delete {selectedName}?</p>
 
-      <div className="flex-center gap-1">
-        <Button className="text-sm" onClick={onCancel}>
+      <div className="flex-center gap-4 my-1">
+        <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-900" onClick={onCancel}>
           No
         </Button>
-        <Button className="text-sm" onClick={onDelete}>
+        <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-900" onClick={onDelete}>
           Yes
         </Button>
       </div>
