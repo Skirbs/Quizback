@@ -56,6 +56,4 @@ export default function CardGroup() {
       </main>
     </>
   );
-
-  //TODO: Dynamically Change Header Title name
 }

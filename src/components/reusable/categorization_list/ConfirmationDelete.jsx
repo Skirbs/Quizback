@@ -20,9 +20,7 @@ export default forwardRef(function ConfirmationDelete({type, index, onDelete, on
       className="flex-center flex-col absolute right-0 -bottom-16 w-5/6 z-50 !bg-neutral-200 dark:!bg-neutral-800 animate-fade-up-bounce"
       ref={dialogRef}
       style={{zIndex: index}}>
-      <p className="text-center text-xs font-semibold">
-        Are you sure you want to remove this {type}?
-      </p>
+      <p className="text-center text-xs font-semibold">Are you sure you want to remove {type}?</p>
       <div className="flex-center gap-1">
         <Button className="text-sm" onClick={onCancel}>
           No

@@ -15,12 +15,40 @@ export default forwardRef(function CreateCategorizationDialog(
 
   const nameRef = useRef();
   const currentColor = useRef();
+  const existsWarning = useRef();
   let colorList;
   currentColor.current = currentColor.current || "black";
+
+  function categorizationExists(c_name) {
+    if (type === "Tag") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      const groupIndex = dataCtx.getGroupIndexById(id);
+      if (
+        dataCtx.dataState.cardGroups[groupIndex].tags.findIndex((elem) => elem.name === c_name) !=
+        -1
+      ) {
+        existsWarning.current.style.display = "block";
+        existsWarning.current.style.opacity = "0.75";
+        return true;
+      }
+      return false;
+    } else {
+      if (dataCtx.dataState.categories.findIndex((elem) => elem.name === c_name) != -1) {
+        existsWarning.current.style.display = "block";
+        existsWarning.current.style.opacity = "0.75";
+        return true;
+      }
+      return false;
+    }
+  }
 
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
+      return;
+    }
+    if (categorizationExists(nameRef.current.value)) {
       return;
     }
     if (type === "Tag") {
@@ -28,6 +56,9 @@ export default forwardRef(function CreateCategorizationDialog(
     } else if (type === "Category") {
       dataCtx.addCategory(nameRef.current.value, currentColor.current);
     }
+    nameRef.current.value = "";
+    existsWarning.current.style.opacity = "0";
+    existsWarning.current.style.display = "none";
     ref.current.close();
   }
 
@@ -73,8 +104,6 @@ export default forwardRef(function CreateCategorizationDialog(
                 color="black"
               />
               <ColorButton onClick={changeColor} color="grey" />
-              <ColorButton onClick={changeColor} color="cornsilk" />
-              <ColorButton onClick={changeColor} color="white" />
               <ColorButton onClick={changeColor} color="crimson" />
               <ColorButton onClick={changeColor} color="red" />
               <ColorButton onClick={changeColor} color="darkRed" />
@@ -93,6 +122,11 @@ export default forwardRef(function CreateCategorizationDialog(
               <ColorButton onClick={changeColor} color="sienna" />
             </div>
           </Card>
+          <p
+            ref={existsWarning}
+            className="text-red-900 dark:text-red-600 text-sm font-bold text-outline hidden">
+            {type} Already Exists
+          </p>
         </Card>
 
         <Button

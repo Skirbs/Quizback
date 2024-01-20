@@ -63,7 +63,11 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
               openDeleteConfirmation(false);
             }}
             onDelete={() => {
-              dataCtx.removeCategory(data.key);
+              if (type == "Category") {
+                dataCtx.removeCategory(data.key);
+              } else {
+                dataCtx.removeTag(data.key);
+              }
             }}
             type={type}
           />

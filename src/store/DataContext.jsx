@@ -4,9 +4,9 @@ export const DataContext = createContext({dataState: {}, addCardGroup: () => {}}
 
 // ? classes
 class CardGroup {
-  constructor(name, category, dateCreated, dateModified, sideColor, key) {
+  constructor(name, categoryName, dateCreated, dateModified, sideColor, key) {
     this.name = name;
-    this.category = category;
+    this.categoryName = categoryName;
     this.dateCreated = dateCreated;
     this.dateModified = dateModified;
     this.cardsStored = [];
@@ -70,10 +70,7 @@ function mainDataReducer(state, action) {
     return tagObject;
   }
 
-  function getTagIndexByKey(key) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+  function getTagIndexById(key, groupIndex) {
     const tagObject = stateCopy.cardGroups[groupIndex].tags.findIndex((elem) => elem.key === key);
     return tagObject;
   }
@@ -83,7 +80,7 @@ function mainDataReducer(state, action) {
     case "ADDCARDGROUP":
       const newCardGroup = new CardGroup(
         payload.name,
-        payload.category,
+        payload.categoryName,
         payload.dateCreated,
         payload.dateModified,
         payload.sideColor,
@@ -132,6 +129,15 @@ function mainDataReducer(state, action) {
     case "REMOVECATEGORY":
       const categoryIndex = getCategoryIndexById(payload.key);
       stateCopy.categories.splice(categoryIndex, 1);
+      save(stateCopy);
+      break;
+    case "REMOVETAG":
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      const tagGroupIndex = getGroupIndexById(id);
+      const tagIndex = getTagIndexById(payload.key, tagGroupIndex);
+
+      stateCopy.cardGroups[tagGroupIndex].tags.splice(tagIndex, 1);
       save(stateCopy);
       break;
   }
@@ -258,6 +264,14 @@ export default function DataContextComponent({children}) {
       },
     });
   }
+  function removeTag(key) {
+    dataDispatch({
+      type: "REMOVETAG",
+      payload: {
+        key,
+      },
+    });
+  }
 
   const contextData = {
     dataState,
@@ -269,13 +283,11 @@ export default function DataContextComponent({children}) {
     removeCardGroup,
     removeCard,
     removeCategory,
+    removeTag,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Delete Category / Tag
-// TODO: Create Category / Tag Dialog Refresh Input
-// TODO: Make sure "new Category | new Tag" name cannot be repeated
 // TODO: When tag / category gets deleted, set card to None
-// TODO: Date modified changes
+// TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist

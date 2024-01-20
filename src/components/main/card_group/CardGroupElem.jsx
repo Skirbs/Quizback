@@ -45,8 +45,10 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
 
   useEffect(() => {
     setTimeout(() => {
-      cardRef.current.style.animationDelay = "0s";
-      cardRef.current.classList.remove("animate-fade-up-bounce");
+      try {
+        cardRef.current.style.animationDelay = "0s";
+        cardRef.current.classList.remove("animate-fade-up-bounce");
+      } catch {}
     }, 200 * (index + 1));
   });
 
