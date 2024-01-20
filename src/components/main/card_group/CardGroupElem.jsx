@@ -3,7 +3,7 @@ import {UtilContext} from "../../../store/UtilContext";
 import {DataContext} from "../../../store/DataContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
-export default function CardGroupElem({data, index, ...props}) {
+export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props}) {
   const utilCtx = useContext(UtilContext);
   const dataCtx = useContext(DataContext);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -102,13 +102,16 @@ export default function CardGroupElem({data, index, ...props}) {
           <span className="material-symbols-outlined">edit</span>
           edit
         </Button>
-        <Button className="!drop-shadow-none flex-1 flex justify-center mb-2">
+        <Button
+          className="!drop-shadow-none flex-1 flex justify-center mb-2"
+          onClick={(e) => {
+            e.preventDefault();
+            onOpenDeleteDialog(data.question, data.key);
+          }}>
           <span className="material-symbols-outlined">delete</span>
           delete
         </Button>
       </Card>
     </Card>
   );
-
-  // TODO: stop setting from executing url changes
 }

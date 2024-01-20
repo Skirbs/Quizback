@@ -59,6 +59,12 @@ function mainDataReducer(state, action) {
     const groupIndex = stateCopy.cardGroups.findIndex((elem) => elem.key === key);
     return groupIndex;
   }
+  function getCardIndexById(key, cardGroupIndex) {
+    const groupIndex = stateCopy.cardGroups[cardGroupIndex].cardsStored.findIndex(
+      (elem) => elem.key === key
+    );
+    return groupIndex;
+  }
 
   switch (action.type) {
     // ? Adding methods
@@ -104,6 +110,11 @@ function mainDataReducer(state, action) {
     case "REMOVECARDGROUP":
       const groupIndex = getGroupIndexById(payload.key);
       stateCopy.cardGroups.splice(groupIndex, 1);
+      save(stateCopy);
+      break;
+    case "REMOVECARD":
+      const cardIndex = getCardIndexById(payload.key, payload.groupIndex);
+      stateCopy.cardGroups[payload.groupIndex].cardsStored.splice(cardIndex, 1);
       save(stateCopy);
       break;
   }
@@ -213,6 +224,15 @@ export default function DataContextComponent({children}) {
       },
     });
   }
+  function removeCard(key, groupIndex) {
+    dataDispatch({
+      type: "REMOVECARD",
+      payload: {
+        key,
+        groupIndex,
+      },
+    });
+  }
 
   const contextData = {
     dataState,
@@ -222,6 +242,7 @@ export default function DataContextComponent({children}) {
     addCategory,
     addTag,
     removeCardGroup,
+    removeCard,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
