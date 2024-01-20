@@ -60,10 +60,22 @@ function mainDataReducer(state, action) {
     return groupIndex;
   }
   function getCardIndexById(key, cardGroupIndex) {
-    const groupIndex = stateCopy.cardGroups[cardGroupIndex].cardsStored.findIndex(
+    const cardIndex = stateCopy.cardGroups[cardGroupIndex].cardsStored.findIndex(
       (elem) => elem.key === key
     );
-    return groupIndex;
+    return cardIndex;
+  }
+  function getCategoryIndexById(key) {
+    const tagObject = stateCopy.categories.findIndex((elem) => elem.key === key);
+    return tagObject;
+  }
+
+  function getTagIndexByKey(key) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+    const tagObject = stateCopy.cardGroups[groupIndex].tags.findIndex((elem) => elem.key === key);
+    return tagObject;
   }
 
   switch (action.type) {
@@ -115,6 +127,11 @@ function mainDataReducer(state, action) {
     case "REMOVECARD":
       const cardIndex = getCardIndexById(payload.key, payload.groupIndex);
       stateCopy.cardGroups[payload.groupIndex].cardsStored.splice(cardIndex, 1);
+      save(stateCopy);
+      break;
+    case "REMOVECATEGORY":
+      const categoryIndex = getCategoryIndexById(payload.key);
+      stateCopy.categories.splice(categoryIndex, 1);
       save(stateCopy);
       break;
   }
@@ -233,6 +250,14 @@ export default function DataContextComponent({children}) {
       },
     });
   }
+  function removeCategory(key) {
+    dataDispatch({
+      type: "REMOVECATEGORY",
+      payload: {
+        key,
+      },
+    });
+  }
 
   const contextData = {
     dataState,
@@ -243,12 +268,14 @@ export default function DataContextComponent({children}) {
     addTag,
     removeCardGroup,
     removeCard,
+    removeCategory,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Delete Groups
-// TODO: Delete Cards
+// TODO: Delete Category / Tag
+// TODO: Create Category / Tag Dialog Refresh Input
 // TODO: Make sure "new Category | new Tag" name cannot be repeated
 // TODO: When tag / category gets deleted, set card to None
 // TODO: Date modified changes
+// TODO: Return To Home If Group Id Desnt Exist

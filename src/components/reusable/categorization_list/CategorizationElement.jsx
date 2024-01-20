@@ -1,11 +1,13 @@
 import {forwardRef, useContext, useEffect, useRef, useState} from "react";
+import {UtilContext} from "../../../store/UtilContext";
+import {DataContext} from "../../../store/DataContext";
 import ConfirmationDelete from "./ConfirmationDelete";
 import CreateCategorizationDialog from "../CreateCategorizationDialog";
-import {UtilContext} from "../../../store/UtilContext";
 
 // TODO: change edit dialog header from "Edit Tag" to "Edit {name}"
 export default forwardRef(function CategorizationElement({data, type}, ref) {
   const utilCtx = useContext(UtilContext);
+  const dataCtx = useContext(DataContext);
 
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -60,6 +62,10 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
             onCancel={() => {
               openDeleteConfirmation(false);
             }}
+            onDelete={() => {
+              dataCtx.removeCategory(data.key);
+            }}
+            type={type}
           />
         )}
       </div>
