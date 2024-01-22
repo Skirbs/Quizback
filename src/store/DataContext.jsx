@@ -47,7 +47,7 @@ class Tag {
 
 // ? Reducer
 function mainDataReducer(state, action) {
-  const stateCopy = {...state};
+  let stateCopy = {...state};
   const payload = action.payload;
 
   function save(data) {
@@ -128,6 +128,14 @@ function mainDataReducer(state, action) {
       break;
     case "REMOVECATEGORY":
       const categoryIndex = getCategoryIndexById(payload.key);
+      const categoryObj = stateCopy.categories[categoryIndex];
+      stateCopy.cardGroups = stateCopy.cardGroups.map((elem) => {
+        if (categoryObj.name === elem.categoryName) {
+          elem.categoryName = "None";
+          elem.sideColor = "transparent";
+        }
+        return elem;
+      });
       stateCopy.categories.splice(categoryIndex, 1);
       save(stateCopy);
       break;
@@ -136,6 +144,16 @@ function mainDataReducer(state, action) {
       const id = urlParams.get("id");
       const tagGroupIndex = getGroupIndexById(id);
       const tagIndex = getTagIndexById(payload.key, tagGroupIndex);
+      const tagObj = stateCopy.cardGroups[tagGroupIndex].tags[tagIndex];
+      stateCopy.cardGroups[tagGroupIndex].cardsStored = stateCopy.cardGroups[
+        tagGroupIndex
+      ].cardsStored.map((elem) => {
+        if (tagObj.name === elem.tag) {
+          elem.tag = "None";
+          elem.sideColor = "transparent";
+        }
+        return elem;
+      });
 
       stateCopy.cardGroups[tagGroupIndex].tags.splice(tagIndex, 1);
       save(stateCopy);
@@ -200,7 +218,7 @@ export default function DataContextComponent({children}) {
       payload: {
         question,
         answer,
-        tagName,
+        tag: tagName,
         dateCreated,
         dateModified,
         dateNextStudy,
@@ -288,6 +306,8 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: When tag / category gets deleted, set card to None
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
+// TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
+// todo: NoOpacitychange in some buttons
+// TODO Quiz Part

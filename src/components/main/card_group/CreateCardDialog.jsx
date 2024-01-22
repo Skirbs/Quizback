@@ -15,7 +15,6 @@ export default forwardRef(function CreateCardDialog({onTag, selectedGroup}, ref)
   function submitHandler(e) {
     e.preventDefault();
     const current_date = new Date().toLocaleDateString();
-
     dataCtx.addCard(
       questionRef.current.value,
       answerRef.current.value,
