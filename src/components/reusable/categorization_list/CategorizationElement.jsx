@@ -19,9 +19,6 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
     setEditMode(state);
   }
 
-  useEffect(() => {
-    console.log(editMode);
-  });
   function EditDialog() {
     const editDialogRef = useRef();
     useEffect(() => {
@@ -32,6 +29,7 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
         header={`Edit ${type}`}
         type={type}
         editMode
+        editKey={data.key}
         onClose={() => openEdit(false)}
         ref={editDialogRef}
       />

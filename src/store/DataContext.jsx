@@ -127,16 +127,16 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
     case "REMOVECATEGORY":
-      const categoryIndex = getCategoryIndexById(payload.key);
-      const categoryObj = stateCopy.categories[categoryIndex];
+      const removeCategoryIndex = getCategoryIndexById(payload.key);
+      const removeCategoryObj = stateCopy.categories[removeCategoryIndex];
       stateCopy.cardGroups = stateCopy.cardGroups.map((elem) => {
-        if (categoryObj.name === elem.categoryName) {
+        if (removeCategoryObj.name === elem.categoryName) {
           elem.categoryName = "None";
           elem.sideColor = "transparent";
         }
         return elem;
       });
-      stateCopy.categories.splice(categoryIndex, 1);
+      stateCopy.categories.splice(removeCategoryIndex, 1);
       save(stateCopy);
       break;
     case "REMOVETAG":
@@ -156,6 +156,22 @@ function mainDataReducer(state, action) {
       });
 
       stateCopy.cardGroups[tagGroupIndex].tags.splice(tagIndex, 1);
+      save(stateCopy);
+      break;
+
+    case "EDITCATEGORY":
+      const editCategoryIndex = getCategoryIndexById(payload.key);
+      const editCategoryObj = stateCopy.categories[editCategoryIndex];
+
+      stateCopy.cardGroups = stateCopy.cardGroups.map((elem) => {
+        if (editCategoryObj.name === elem.categoryName) {
+          elem.categoryName = payload.name;
+          elem.sideColor = payload.sideColor;
+        }
+        return elem;
+      });
+      stateCopy.categories[editCategoryIndex].name = payload.name;
+      stateCopy.categories[editCategoryIndex].sideColor = payload.sideColor;
       save(stateCopy);
       break;
   }
@@ -205,7 +221,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function addCard(question, answer, tagName, dateCreated, dateModified, dateNextStudy) {
     const key = Math.random().toString(36).slice(2, -1);
     const tag = getTagObjectByName(tagName);
@@ -228,7 +243,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function addCategory(name, sideColor) {
     const key = Math.random().toString(36).slice(2, -1);
     dataDispatch({
@@ -240,7 +254,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function addTag(name, sideColor) {
     const key = Math.random().toString(36).slice(2, -1);
     const urlParams = new URLSearchParams(window.location.search);
@@ -291,6 +304,17 @@ export default function DataContextComponent({children}) {
     });
   }
 
+  function editCategory(name, sideColor, key) {
+    dataDispatch({
+      type: "EDITCATEGORY",
+      payload: {
+        name,
+        sideColor,
+        key,
+      },
+    });
+  }
+
   const contextData = {
     dataState,
     getGroupIndexById,
@@ -302,12 +326,18 @@ export default function DataContextComponent({children}) {
     removeCard,
     removeCategory,
     removeTag,
+    editCategory,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
+// TODO: Edit Groups
+// TODO: Edit Cards
+// TODO: Edit Category
+// TODO: Edit Tag
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
 // todo: NoOpacitychange in some buttons
 // TODO Quiz Part
+// TODO: Save Dark Move

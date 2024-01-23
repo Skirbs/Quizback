@@ -8,7 +8,7 @@ import ColorButton from "./ColorButton";
 import Header from "./Header";
 // TODO: Future feature: make sure name doesnt repeat
 export default forwardRef(function CreateCategorizationDialog(
-  {header, type, editMode, onClose, selectedGroup, ...props},
+  {header, type, editMode, editKey, onClose, selectedGroup, ...props},
   ref
 ) {
   const dataCtx = useContext(DataContext);
@@ -46,6 +46,8 @@ export default forwardRef(function CreateCategorizationDialog(
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
+      // TODO: Check if its category or tag
+      dataCtx.editCategory(nameRef.current.value, currentColor.current, editKey);
       return;
     }
     if (categorizationExists(nameRef.current.value)) {
