@@ -140,22 +140,22 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
     case "REMOVETAG":
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      const tagGroupIndex = getGroupIndexById(id);
-      const tagIndex = getTagIndexById(payload.key, tagGroupIndex);
-      const tagObj = stateCopy.cardGroups[tagGroupIndex].tags[tagIndex];
-      stateCopy.cardGroups[tagGroupIndex].cardsStored = stateCopy.cardGroups[
-        tagGroupIndex
+      const removeUrlParams = new URLSearchParams(window.location.search);
+      const removeTagId = removeUrlParams.get("id");
+      const removeTagGroupIndex = getGroupIndexById(removeTagId);
+      const removeTagIndex = getTagIndexById(payload.key, removeTagGroupIndex);
+      const removeTagObj = stateCopy.cardGroups[removeTagGroupIndex].tags[removeTagIndex];
+      stateCopy.cardGroups[removeTagGroupIndex].cardsStored = stateCopy.cardGroups[
+        removeTagGroupIndex
       ].cardsStored.map((elem) => {
-        if (tagObj.name === elem.tag) {
+        if (removeTagObj.name === elem.tag) {
           elem.tag = "None";
           elem.sideColor = "transparent";
         }
         return elem;
       });
 
-      stateCopy.cardGroups[tagGroupIndex].tags.splice(tagIndex, 1);
+      stateCopy.cardGroups[removeTagGroupIndex].tags.splice(removeTagIndex, 1);
       save(stateCopy);
       break;
 
@@ -172,6 +172,26 @@ function mainDataReducer(state, action) {
       });
       stateCopy.categories[editCategoryIndex].name = payload.name;
       stateCopy.categories[editCategoryIndex].sideColor = payload.sideColor;
+      save(stateCopy);
+      break;
+    case "EDITTAG":
+      const editUrlParams = new URLSearchParams(window.location.search);
+      const editTagId = editUrlParams.get("id");
+      const editTagGroupIndex = getGroupIndexById(editTagId);
+      const editTagIndex = getTagIndexById(payload.key, editTagGroupIndex);
+      const editTagObj = stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex];
+      stateCopy.cardGroups[editTagGroupIndex].cardsStored = stateCopy.cardGroups[
+        editTagGroupIndex
+      ].cardsStored.map((elem) => {
+        if (editTagObj.name === elem.tag) {
+          elem.tag = payload.name;
+          elem.sideColor = payload.sideColor;
+        }
+        return elem;
+      });
+
+      stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex].name = payload.name;
+      stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex].sideColor = payload.sideColor;
       save(stateCopy);
       break;
   }
@@ -315,6 +335,17 @@ export default function DataContextComponent({children}) {
     });
   }
 
+  function editTag(name, sideColor, key) {
+    dataDispatch({
+      type: "EDITTAG",
+      payload: {
+        name,
+        sideColor,
+        key,
+      },
+    });
+  }
+
   const contextData = {
     dataState,
     getGroupIndexById,
@@ -327,13 +358,13 @@ export default function DataContextComponent({children}) {
     removeCategory,
     removeTag,
     editCategory,
+    editTag,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
 // TODO: Edit Groups
 // TODO: Edit Cards
-// TODO: Edit Category
 // TODO: Edit Tag
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist

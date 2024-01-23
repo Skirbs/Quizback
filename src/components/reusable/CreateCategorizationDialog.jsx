@@ -46,8 +46,11 @@ export default forwardRef(function CreateCategorizationDialog(
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
-      // TODO: Check if its category or tag
-      dataCtx.editCategory(nameRef.current.value, currentColor.current, editKey);
+      if (type === "Tag") {
+        dataCtx.editTag(nameRef.current.value, currentColor.current, editKey);
+      } else {
+        dataCtx.editCategory(nameRef.current.value, currentColor.current, editKey);
+      }
       return;
     }
     if (categorizationExists(nameRef.current.value)) {
