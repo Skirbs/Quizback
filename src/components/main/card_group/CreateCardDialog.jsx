@@ -17,6 +17,16 @@ export default forwardRef(function CreateCardDialog(
 
   function submitHandler(e) {
     e.preventDefault();
+    if (editMode) {
+      dataCtx.editCard(
+        questionRef.current.value,
+        answerRef.current.value,
+        tagRef.current.value,
+        editKey
+      );
+      formRef.current.reset();
+      return;
+    }
     const current_date = new Date().toLocaleDateString();
     dataCtx.addCard(
       questionRef.current.value,

@@ -4,6 +4,7 @@ import {DataContext} from "../../../store/DataContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import CreateCardDialog from "./CreateCardDialog";
+import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props}) {
   const utilCtx = useContext(UtilContext);
   const dataCtx = useContext(DataContext);
@@ -63,16 +64,29 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
     const id = urlParams.get("id");
     const selectedGroup = dataCtx.getGroupIndexById(id);
 
+    const createTagRef = useRef();
+    function createTagHandler() {
+      createTagRef.current.open();
+    }
     return (
-      <CreateCardDialog
-        editMode
-        editKey={data.key}
-        selectedGroup={selectedGroup}
-        onClose={() => {
-          setEditMode(false);
-        }}
-        ref={editDialogRef}
-      />
+      <>
+        <CreateCategorizationDialog
+          ref={createTagRef}
+          selectedGroup={selectedGroup}
+          header="Create Tag"
+          type="Tag"
+        />
+        <CreateCardDialog
+          editMode
+          editKey={data.key}
+          selectedGroup={selectedGroup}
+          onClose={() => {
+            setEditMode(false);
+          }}
+          ref={editDialogRef}
+          onTag={createTagHandler}
+        />
+      </>
     );
   }
   return (

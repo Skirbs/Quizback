@@ -122,8 +122,8 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
     case "REMOVECARD":
-      const cardIndex = getCardIndexById(payload.key, payload.groupIndex);
-      stateCopy.cardGroups[payload.groupIndex].cardsStored.splice(cardIndex, 1);
+      const removeCardIndex = getCardIndexById(payload.key, payload.groupIndex);
+      stateCopy.cardGroups[payload.groupIndex].cardsStored.splice(removeCardIndex, 1);
       save(stateCopy);
       break;
     case "REMOVECATEGORY":
@@ -159,6 +159,17 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
 
+    case "EDITCARD":
+      console.log(payload);
+      const editCardIndex = getCardIndexById(payload.key, payload.groupIndex);
+      stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].question =
+        payload.question;
+      stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].answer = payload.answer;
+      stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].tag = payload.tag.name;
+      stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].sideColor =
+        payload.tag.sideColor;
+      save(stateCopy);
+      break;
     case "EDITCATEGORY":
       const editCategoryIndex = getCategoryIndexById(payload.key);
       const editCategoryObj = stateCopy.categories[editCategoryIndex];
@@ -324,6 +335,23 @@ export default function DataContextComponent({children}) {
     });
   }
 
+  function editCard(question, answer, tagName, key) {
+    const tag = getTagObjectByName(tagName);
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+    dataDispatch({
+      type: "EDITCARD",
+      payload: {
+        question,
+        answer,
+        tag,
+        key,
+        groupIndex,
+      },
+    });
+  }
+
   function editCategory(name, sideColor, key) {
     dataDispatch({
       type: "EDITCATEGORY",
@@ -357,18 +385,20 @@ export default function DataContextComponent({children}) {
     removeCard,
     removeCategory,
     removeTag,
+    editCard,
     editCategory,
     editTag,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Fix where edit dialog repeats twice
 // TODO: Edit Groups
 // TODO: Edit Cards
+// TODO: Automatically Fill Dialogs When Edit Mode
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
 // todo: NoOpacitychange in some buttons
 // TODO Quiz Part
 // TODO: Save Dark Move
+// TODO: ScrollBar Design
