@@ -3,10 +3,12 @@ import {UtilContext} from "../../../store/UtilContext";
 import {DataContext} from "../../../store/DataContext";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
+import CreateCardDialog from "./CreateCardDialog";
 export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props}) {
   const utilCtx = useContext(UtilContext);
   const dataCtx = useContext(DataContext);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
 
@@ -52,68 +54,98 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
     }, 200 * (index + 1));
   });
 
-  return (
-    <Card
-      ref={cardRef}
-      className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[300px] py-3 !px-2 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
-      onClick={(e) => {
-        e.stopPropagation();
-        showAnswerHandler();
-      }}
-      {...props}>
-      <span
-        style={{backgroundColor: `${data.sideColor}`}}
-        className="absolute w-1 left-0 inset-y-0 rounded-full"
+  function EditDialog() {
+    const editDialogRef = useRef();
+    useEffect(() => {
+      editDialogRef.current.open();
+    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const selectedGroup = dataCtx.getGroupIndexById(id);
+
+    return (
+      <CreateCardDialog
+        editMode
+        editKey={data.key}
+        selectedGroup={selectedGroup}
+        onClose={() => {
+          setEditMode(false);
+        }}
+        ref={editDialogRef}
       />
+    );
+  }
+  return (
+    <>
+      {editMode && <EditDialog />}
+      <Card
+        ref={cardRef}
+        className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative w-[300px] py-3 !px-2 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
+        onClick={(e) => {
+          e.preventDefault();
+          showAnswerHandler();
+        }}
+        {...props}>
+        <span
+          style={{backgroundColor: `${data.sideColor}`}}
+          className="absolute w-1 left-0 inset-y-0 rounded-full"
+        />
 
-      <div className="flex-1 flex-center flex-col">
-        {!showAnswer ? (
-          <>
-            <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-            <p className="font-medium text-center w-full break-words inline-block flex-1 flex-center">
-              {utilCtx.truncateString(`${data.question}`, 40)}
-            </p>
-          </>
-        ) : (
-          <>
-            <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-            <p className="font-medium text-center w-full break-all inline-block flex-1 flex-center">
-              {utilCtx.truncateString(`${data.answer}`, 45)}
-            </p>
-          </>
-        )}
-      </div>
+        <div className="flex-1 flex-center flex-col">
+          {!showAnswer ? (
+            <>
+              <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
+              <p className="font-medium text-center w-full break-words inline-block flex-1 flex-center">
+                {utilCtx.truncateString(`${data.question}`, 40)}
+              </p>
+            </>
+          ) : (
+            <>
+              <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
+              <p className="font-medium text-center w-full break-all inline-block flex-1 flex-center">
+                {utilCtx.truncateString(`${data.answer}`, 45)}
+              </p>
+            </>
+          )}
+        </div>
 
-      {/* <div className="self-start mt-2">
+        {/* <div className="self-start mt-2">
         <p className="text-sm opacity-80">Date Modified: 12/12/12 12:12</p>
         <p className="text-sm opacity-80">Date Added: 12/12/12 12:12</p>
       </div> */}
 
-      <button
-        className="absolute right-2 top-2 z-10"
-        onClick={(e) => {
-          e.stopPropagation();
-          setSettingVisibility(true);
-        }}>
-        <span className="material-symbols-outlined">settings</span>
-      </button>
-      <Card
-        ref={settingRef}
-        className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none">
-        <Button className="!drop-shadow-none flex-1 flex justify-center mt-2">
-          <span className="material-symbols-outlined">edit</span>
-          edit
-        </Button>
-        <Button
-          className="!drop-shadow-none flex-1 flex justify-center mb-2"
+        <button
+          className="absolute right-2 top-2 z-10"
           onClick={(e) => {
-            e.preventDefault();
-            onOpenDeleteDialog(data.question, data.key);
+            e.stopPropagation();
+            setSettingVisibility(true);
           }}>
-          <span className="material-symbols-outlined">delete</span>
-          delete
-        </Button>
+          <span className="material-symbols-outlined">settings</span>
+        </button>
+        <Card
+          ref={settingRef}
+          className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none">
+          <Button
+            className="!drop-shadow-none flex-1 flex justify-center mt-2 z-50"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setEditMode(true);
+            }}>
+            <span className="material-symbols-outlined">edit</span>
+            edit
+          </Button>
+          <Button
+            className="!drop-shadow-none flex-1 flex justify-center mb-2"
+            onClick={(e) => {
+              e.preventDefault();
+              onOpenDeleteDialog(data.question, data.key);
+            }}>
+            <span className="material-symbols-outlined">delete</span>
+            delete
+          </Button>
+        </Card>
       </Card>
-    </Card>
+    </>
   );
 }

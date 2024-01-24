@@ -5,7 +5,10 @@ import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
-export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
+export default forwardRef(function CreateGroupDialog(
+  {onCategory, editMode, editKey, onClose},
+  ref
+) {
   const dataCtx = useContext(DataContext);
   const formRef = useRef();
   const nameRef = useRef();
@@ -22,12 +25,10 @@ export default forwardRef(function CreateGroupDialog({onCategory}, ref) {
       current_date
     );
     formRef.current.reset();
-
-    // TODO: Side Color Changes depending on the category
-    // TODO: Find category value (string) on tag database
   }
+
   return (
-    <Dialog ref={ref} header="Create Study Group">
+    <Dialog ref={ref} onClose={onClose} header={`${editMode ? "Edit" : "Create"} Study Group`}>
       <form className="flex flex-col gap-2" onSubmit={submitHandler} ref={formRef}>
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>

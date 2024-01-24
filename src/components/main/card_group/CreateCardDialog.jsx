@@ -5,7 +5,10 @@ import Button from "../../reusable/Button";
 import FormInput from "../../reusable/FormInput";
 import Select from "../../reusable/Select";
 import {DataContext} from "../../../store/DataContext";
-export default forwardRef(function CreateCardDialog({onTag, selectedGroup}, ref) {
+export default forwardRef(function CreateCardDialog(
+  {onTag, selectedGroup, editMode, editKey, onClose},
+  ref
+) {
   const dataCtx = useContext(DataContext);
   const formRef = useRef();
   const questionRef = useRef();
@@ -30,7 +33,7 @@ export default forwardRef(function CreateCardDialog({onTag, selectedGroup}, ref)
   }
 
   return (
-    <Dialog ref={ref} header="Create Card">
+    <Dialog ref={ref} onClose={onClose} header={`${editMode ? "Edit" : "Create"} Card`}>
       <form className="flex flex-col gap-2" onSubmit={submitHandler} ref={formRef}>
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
