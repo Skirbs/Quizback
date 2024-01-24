@@ -117,8 +117,8 @@ function mainDataReducer(state, action) {
 
     // ? Removing methods
     case "REMOVECARDGROUP":
-      const groupIndex = getGroupIndexById(payload.key);
-      stateCopy.cardGroups.splice(groupIndex, 1);
+      const removeGroupIndex = getGroupIndexById(payload.key);
+      stateCopy.cardGroups.splice(removeGroupIndex, 1);
       save(stateCopy);
       break;
     case "REMOVECARD":
@@ -159,8 +159,14 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
 
+    case "EDITCARDGROUP":
+      const editGroupIndex = getGroupIndexById(payload.key);
+      stateCopy.cardGroups[editGroupIndex].name = payload.name;
+      stateCopy.cardGroups[editGroupIndex].categoryName = payload.categoryName;
+      stateCopy.cardGroups[editGroupIndex].sideColor = payload.sideColor;
+      save(stateCopy);
+      break;
     case "EDITCARD":
-      console.log(payload);
       const editCardIndex = getCardIndexById(payload.key, payload.groupIndex);
       stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].question =
         payload.question;
@@ -335,6 +341,19 @@ export default function DataContextComponent({children}) {
     });
   }
 
+  function editCardGroup(name, categoryName, key) {
+    const category = getCategoryObjectByName(categoryName);
+    dataDispatch({
+      type: "EDITCARDGROUP",
+      payload: {
+        name,
+        categoryName,
+        key,
+        sideColor: category.sideColor,
+      },
+    });
+  }
+
   function editCard(question, answer, tagName, key) {
     const tag = getTagObjectByName(tagName);
     const urlParams = new URLSearchParams(window.location.search);
@@ -385,6 +404,7 @@ export default function DataContextComponent({children}) {
     removeCard,
     removeCategory,
     removeTag,
+    editCardGroup,
     editCard,
     editCategory,
     editTag,
@@ -392,8 +412,8 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Edit Groups
 // TODO: Automatically Fill Dialogs When Edit Mode
+// TODO: FIx Color Picker Bug For Categorization when editing card/group
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
@@ -401,3 +421,4 @@ export default function DataContextComponent({children}) {
 // TODO Quiz Part
 // TODO: Save Dark Move
 // TODO: ScrollBar Design
+// TODO: Design the delete dialog better

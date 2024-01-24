@@ -5,6 +5,7 @@ import CreateGroupDialog from "./CreateGroupDialog";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 import {Link} from "react-router-dom";
+import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 // ? sideColor should be any css-compatible color
 export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
   const utilCtx = useContext(UtilContext);
@@ -35,18 +36,30 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
 
   function EditDialog() {
     const editDialogRef = useRef();
+    const createCategoryRef = useRef();
+    function openCategoryHandler() {
+      createCategoryRef.current.open();
+    }
     useEffect(() => {
       editDialogRef.current.open();
     });
     return (
-      <CreateGroupDialog
-        editMode
-        editKey={data.key}
-        onClose={() => {
-          setEditMode(false);
-        }}
-        ref={editDialogRef}
-      />
+      <>
+        <CreateCategorizationDialog
+          ref={createCategoryRef}
+          header="Create Category"
+          type="Category"
+        />
+        <CreateGroupDialog
+          editMode
+          editKey={data.key}
+          onCategory={openCategoryHandler}
+          onClose={() => {
+            setEditMode(false);
+          }}
+          ref={editDialogRef}
+        />
+      </>
     );
   }
 

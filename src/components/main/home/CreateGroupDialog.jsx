@@ -17,7 +17,12 @@ export default forwardRef(function CreateGroupDialog(
   function submitHandler(e) {
     e.preventDefault();
     const current_date = new Date().toLocaleDateString();
-
+    if (editMode) {
+      dataCtx.editCardGroup(nameRef.current.value, categoryRef.current.value, editKey);
+      onClose();
+      formRef.current.reset();
+      return;
+    }
     dataCtx.addCardGroup(
       nameRef.current.value,
       categoryRef.current.value,
