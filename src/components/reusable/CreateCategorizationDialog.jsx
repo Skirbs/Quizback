@@ -43,6 +43,12 @@ export default forwardRef(function CreateCategorizationDialog(
     }
   }
 
+  function setupCloseDialog() {
+    nameRef.current.value = "";
+    existsWarning.current.style.opacity = "0";
+    existsWarning.current.style.display = "none";
+    ref.current.close();
+  }
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
@@ -51,6 +57,7 @@ export default forwardRef(function CreateCategorizationDialog(
       } else {
         dataCtx.editCategory(nameRef.current.value, currentColor.current, editKey);
       }
+      setupCloseDialog();
       return;
     }
     if (categorizationExists(nameRef.current.value)) {
@@ -61,10 +68,7 @@ export default forwardRef(function CreateCategorizationDialog(
     } else if (type === "Category") {
       dataCtx.addCategory(nameRef.current.value, currentColor.current);
     }
-    nameRef.current.value = "";
-    existsWarning.current.style.opacity = "0";
-    existsWarning.current.style.display = "none";
-    ref.current.close();
+    setupCloseDialog();
   }
 
   function changeColor(e) {

@@ -363,9 +363,9 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
+// TODO: Fix where edit dialog repeats twice
 // TODO: Edit Groups
 // TODO: Edit Cards
-// TODO: Edit Tag
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
