@@ -24,6 +24,7 @@ export default forwardRef(function CreateCardDialog(
         tagRef.current.value,
         editKey
       );
+      onClose();
       formRef.current.reset();
       return;
     }
