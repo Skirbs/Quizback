@@ -1,4 +1,4 @@
-import {forwardRef, useContext, useRef} from "react";
+import {forwardRef, useContext, useEffect, useRef} from "react";
 import Dialog from "../../reusable/Dialog";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
@@ -14,6 +14,15 @@ export default forwardRef(function CreateCardDialog(
   const questionRef = useRef();
   const answerRef = useRef();
   const tagRef = useRef();
+
+  useEffect(() => {
+    if (editMode) {
+      const cardObj = dataCtx.getCardObj(editKey, selectedGroup);
+      questionRef.current.value = cardObj.question;
+      answerRef.current.value = cardObj.answer;
+      tagRef.current.value = cardObj.tag;
+    }
+  });
 
   function submitHandler(e) {
     e.preventDefault();
@@ -92,7 +101,7 @@ export default forwardRef(function CreateCardDialog(
         <Button
           className="border-2 border-neutral-300 dark:!border-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-75"
           type="submit">
-          Create
+          {`${editMode ? "Edit" : "Create"}`}
         </Button>
       </form>
     </Dialog>

@@ -230,6 +230,26 @@ export default function DataContextComponent({children}) {
     return groupIndex;
   }
 
+  function getCardObj(key, groupIndex) {
+    const cardObj = dataState.cardGroups[groupIndex].cardsStored.find((elem) => {
+      return elem.key === key;
+    });
+    return cardObj;
+  }
+
+  function getCategoryObjectById(key) {
+    const tagObject = dataState.categories.find((elem) => elem.key === key);
+    return tagObject;
+  }
+
+  function getTagObjectById(key) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+    const tagObject = dataState.cardGroups[groupIndex].tags.find((elem) => elem.key === key);
+    return tagObject;
+  }
+
   function getCategoryObjectByName(categoryName) {
     const tagObject = dataState.categories.find((elem) => elem.name === categoryName);
     return tagObject;
@@ -396,6 +416,9 @@ export default function DataContextComponent({children}) {
   const contextData = {
     dataState,
     getGroupIndexById,
+    getCardObj,
+    getCategoryObjectById,
+    getTagObjectById,
     addCardGroup,
     addCard,
     addCategory,
@@ -413,12 +436,25 @@ export default function DataContextComponent({children}) {
 }
 
 // TODO: Automatically Fill Dialogs When Edit Mode
+// TODO: Fix Bug where editing categorization allows two categorization to have the same name
+//    TODO: Edit > Change name to the same name as the other categorization
 // TODO: FIx Color Picker Bug For Categorization when editing card/group
 // TODO: Date modified changes (Use util context to get current date)
 // TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
 // todo: NoOpacitychange in some buttons
-// TODO Quiz Part
 // TODO: Save Dark Move
 // TODO: ScrollBar Design
 // TODO: Design the delete dialog better
+
+// TODO: Date modified changes (Use util context to get current date)
+//  TODO: Groups
+//   TODO: Adding Cards
+//   TODO: Editing Cards
+//   TODO: Adding Categorization
+//   TODO: Editing Categorization
+//  TODO: Cards
+//   TODO: Editing Cards
+//   TODO: Editing Categorization Of Card
+
+// TODO: Quiz Part

@@ -1,4 +1,4 @@
-import {forwardRef, useContext, useRef} from "react";
+import {forwardRef, useContext, useEffect, useRef} from "react";
 import {DataContext} from "../../../store/DataContext";
 import Dialog from "../../reusable/Dialog";
 import Card from "../../reusable/Card";
@@ -13,6 +13,14 @@ export default forwardRef(function CreateGroupDialog(
   const formRef = useRef();
   const nameRef = useRef();
   const categoryRef = useRef();
+
+  useEffect(() => {
+    if (editMode) {
+      const groupObj = dataCtx.dataState.cardGroups[dataCtx.getGroupIndexById(editKey)];
+      nameRef.current.value = groupObj.name;
+      categoryRef.current.value = groupObj.categoryName;
+    }
+  });
 
   function submitHandler(e) {
     e.preventDefault();
@@ -68,7 +76,7 @@ export default forwardRef(function CreateGroupDialog(
         <Button
           className="border-2 border-neutral-300 dark:!border-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-900 transition-all duration-75"
           type="submit">
-          Create
+          {`${editMode ? "Edit" : "Create"}`}
         </Button>
       </form>
     </Dialog>

@@ -18,6 +18,17 @@ export default forwardRef(function CreateCategorizationDialog(
   const existsWarning = useRef();
   let colorList;
   currentColor.current = currentColor.current || "black";
+  console.log(currentColor);
+
+  useEffect(() => {
+    if (editMode) {
+      if (type === "Tag") {
+        const categoryObj = dataCtx.getTagObjectById(editKey);
+        nameRef.current.value = categoryObj.name;
+      } else {
+      }
+    }
+  });
 
   function categorizationExists(c_name) {
     if (type === "Tag") {
