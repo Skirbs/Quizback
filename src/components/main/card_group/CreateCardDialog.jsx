@@ -88,6 +88,7 @@ export default forwardRef(function CreateCardDialog(
               </Select>
               <Button
                 className="!bg-neutral-300 dark:!bg-neutral-700"
+                tabIndex={-1}
                 onClick={(e) => {
                   e.preventDefault();
                   onTag();

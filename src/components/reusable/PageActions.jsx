@@ -18,7 +18,8 @@ export default function PageActions({children, isCardGroup, onCreate, onList}) {
       <>
         <Button
           onClick={onCreate}
-          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100 ">
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
+          noOpacityChange>
           <span className="material-symbols-outlined text-3xl">add</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Create Card
@@ -26,7 +27,8 @@ export default function PageActions({children, isCardGroup, onCreate, onList}) {
         </Button>
         <Button
           onClick={onList}
-          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100 ">
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
+          noOpacityChange>
           <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Tag Lists
@@ -49,7 +51,8 @@ export default function PageActions({children, isCardGroup, onCreate, onList}) {
       <>
         <Button
           onClick={onCreate}
-          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100">
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
+          noOpacityChange>
           <span className="material-symbols-outlined text-3xl">add</span>
           <p className="absolute h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Create Group
@@ -57,7 +60,8 @@ export default function PageActions({children, isCardGroup, onCreate, onList}) {
         </Button>
         <Button
           onClick={onList}
-          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100 ">
+          className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
+          noOpacityChange>
           <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Category Lists

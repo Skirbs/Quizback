@@ -1,21 +1,18 @@
 import {Link} from "react-router-dom";
-import Button from "../../reusable/Button";
+import {DataContext} from "../../../store/DataContext";
+import {useContext} from "react";
+
 // import Logo from "../../../../public/Logo.png";
 export default function Nav() {
-  /*
-  ! Future Use
-  function setDarkMode(isDark) {
-    if (isDark) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
-  } 
-  */
+  const dataCtx = useContext(DataContext);
+
+  if (dataCtx.darkMode === "true") {
+    document.documentElement.classList.add("dark");
+  }
 
   function toggleDark() {
     document.documentElement.classList.toggle("dark");
-    // TODO: Save the current status of dark mode
+    dataCtx.toggleDarkMode();
   }
   return (
     <>

@@ -1,4 +1,4 @@
-import {createContext, useReducer, useRef} from "react";
+import {createContext, useReducer, useRef, useState} from "react";
 import {json, useParams} from "react-router-dom";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
@@ -225,6 +225,7 @@ export default function DataContextComponent({children}) {
     }
   );
 
+  const [darkMode, setDarkMode] = useState(localStorage.getItem("darkmode") || "false");
   function getGroupIndexById(key) {
     const groupIndex = dataState.cardGroups.findIndex((elem) => elem.key === key);
     return groupIndex;
@@ -373,7 +374,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function editCard(question, answer, tagName, key) {
     const tag = getTagObjectByName(tagName);
     const urlParams = new URLSearchParams(window.location.search);
@@ -390,7 +390,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function editCategory(name, sideColor, key) {
     dataDispatch({
       type: "EDITCATEGORY",
@@ -401,7 +400,6 @@ export default function DataContextComponent({children}) {
       },
     });
   }
-
   function editTag(name, sideColor, key) {
     dataDispatch({
       type: "EDITTAG",
@@ -411,6 +409,14 @@ export default function DataContextComponent({children}) {
         key,
       },
     });
+  }
+
+  async function toggleDarkMode() {
+    await setDarkMode((prev) => {
+      return !prev;
+    });
+    console.log(darkMode);
+    localStorage.setItem("darkmode", darkMode === "true" ? "false" : "true");
   }
 
   const contextData = {
@@ -431,14 +437,12 @@ export default function DataContextComponent({children}) {
     editCard,
     editCategory,
     editTag,
+    darkMode,
+    toggleDarkMode,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
-// todo: NoOpacitychange in some buttons
-// TODO: Date modified changes (Use util context to get current date)
-// TODO: Save Dark Move
 // TODO: ScrollBar Design
 // TODO: Design the delete dialog better
 
@@ -453,3 +457,5 @@ export default function DataContextComponent({children}) {
 //   TODO: Editing Categorization Of Card
 
 // TODO: Quiz Part
+
+// TODO: Logo

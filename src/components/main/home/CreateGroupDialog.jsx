@@ -63,6 +63,7 @@ export default forwardRef(function CreateGroupDialog(
               </Select>
               <Button
                 className="!bg-neutral-300 dark:!bg-neutral-700"
+                tabIndex={-1}
                 onClick={(e) => {
                   e.preventDefault();
                   onCategory();
