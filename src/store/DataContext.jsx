@@ -435,14 +435,9 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Automatically Fill Dialogs When Edit Mode
-// TODO: Fix Bug where editing categorization allows two categorization to have the same name
-//    TODO: Edit > Change name to the same name as the other categorization
-// TODO: FIx Color Picker Bug For Categorization when editing card/group
-// TODO: Date modified changes (Use util context to get current date)
-// TODO: Return To Home If Group Id Desnt Exist
 // TODO: Fix UI Navigation Of Create Dialog When Pressing Tabs
 // todo: NoOpacitychange in some buttons
+// TODO: Date modified changes (Use util context to get current date)
 // TODO: Save Dark Move
 // TODO: ScrollBar Design
 // TODO: Design the delete dialog better

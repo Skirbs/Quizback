@@ -8,6 +8,8 @@ import CreateCardDialog from "./CreateCardDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 import {DataContext} from "../../../store/DataContext";
+import {Navigate} from "react-router-dom";
+
 export default function CardGroup() {
   const dataCtx = useContext(DataContext);
   const createDialogRef = useRef();
@@ -17,6 +19,9 @@ export default function CardGroup() {
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
   const selectedGroup = dataCtx.getGroupIndexById(id);
+  if (selectedGroup === -1) {
+    return <Navigate to="/" />;
+  }
 
   function createDialogHandler() {
     createDialogRef.current.open();

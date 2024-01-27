@@ -18,7 +18,9 @@ export default forwardRef(function CreateCategorizationDialog(
   const existsWarning = useRef();
   let colorList;
   currentColor.current = currentColor.current || "black";
-  console.log(currentColor);
+
+  // ? Use for editMode, It gets a copy of the value of nameRef before it changes
+  let prevName;
 
   useEffect(() => {
     if (editMode) {
@@ -33,6 +35,10 @@ export default forwardRef(function CreateCategorizationDialog(
       }
     }
   }, []);
+
+  useEffect(() => {
+    prevName = nameRef.current.value;
+  });
 
   function categorizationExists(c_name) {
     if (type === "Tag") {
@@ -67,6 +73,7 @@ export default forwardRef(function CreateCategorizationDialog(
   function submitHandler(e) {
     e.preventDefault();
     if (editMode) {
+      if (categorizationExists(nameRef.current.value) && nameRef.current.value != prevName) return;
       if (type === "Tag") {
         dataCtx.editTag(nameRef.current.value, currentColor.current, editKey);
       } else {
