@@ -443,7 +443,6 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: ScrollBar Design
 // TODO: Design the delete dialog better
 
 // TODO: Date modified changes (Use util context to get current date)

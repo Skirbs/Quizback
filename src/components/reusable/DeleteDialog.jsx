@@ -40,17 +40,18 @@ export default forwardRef(function DeleteDialog({isCard, ...props}, ref) {
 
   return (
     <Dialog ref={dialogRef} header={`Delete ${isCard ? "card" : "card group"}?`} {...props}>
-      <p className="break-words inline-block text-center w-full">
-        Are you sure you want to delete "{utilCtx.truncateString(selectedName, 16)}"?
-      </p>
-
-      <div className="flex-center gap-4 my-1">
-        <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-900" onClick={onCancel}>
-          No
-        </Button>
-        <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-900" onClick={onDelete}>
-          Yes
-        </Button>
+      <div className="bg-neutral-300 dark:bg-neutral-900 p-2 rounded-lg">
+        <p className="break-words inline-block text-center w-full">
+          Are you sure you want to delete "{utilCtx.truncateString(selectedName, 16)}"?
+        </p>
+        <div className="flex-center gap-4 my-1 ">
+          <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-800" onClick={onCancel}>
+            No
+          </Button>
+          <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-800" onClick={onDelete}>
+            Yes
+          </Button>
+        </div>
       </div>
     </Dialog>
   );
