@@ -23,12 +23,16 @@ export default forwardRef(function CreateCategorizationDialog(
   useEffect(() => {
     if (editMode) {
       if (type === "Tag") {
-        const categoryObj = dataCtx.getTagObjectById(editKey);
-        nameRef.current.value = categoryObj.name;
+        const tagObj = dataCtx.getTagObjectById(editKey);
+        nameRef.current.value = tagObj.name;
+        changeColorManual(tagObj.sideColor);
       } else {
+        const categoryObj = dataCtx.getCategoryObjectById(editKey);
+        nameRef.current.value = categoryObj.name;
+        changeColorManual(categoryObj.sideColor);
       }
     }
-  });
+  }, []);
 
   function categorizationExists(c_name) {
     if (type === "Tag") {
@@ -82,23 +86,41 @@ export default forwardRef(function CreateCategorizationDialog(
     setupCloseDialog();
   }
 
+  function changeColorManual(color) {
+    colorList = colorList || document.querySelectorAll("#categorization-color-choices *");
+    for (let colorElem of colorList) {
+      if (colorElem.style.backgroundColor === color) {
+        colorElem.classList.add(
+          "border-2",
+          "border-neutral-800",
+          "rounded-xl",
+          "dark:border-black"
+        );
+        continue;
+      }
+      colorElem.classList.remove(
+        "border-2",
+        "border-neutral-800",
+        "rounded-xl",
+        "dark:border-black"
+      );
+    }
+  }
   function changeColor(e) {
     e.preventDefault();
     colorList = colorList || document.querySelectorAll("#categorization-color-choices *");
+    e.target.classList.add("border-2", "border-neutral-800", "rounded-xl", "dark:border-black");
+    currentColor.current = e.target.style.backgroundColor;
     for (const colorElem of colorList) {
-      if (colorElem.style.backgroundColor === currentColor.current) {
+      if (colorElem.style.backgroundColor != currentColor.current) {
         colorElem.classList.remove(
           "border-2",
           "border-neutral-800",
           "rounded-xl",
           "dark:border-black"
         );
-        break;
       }
     }
-
-    e.target.classList.add("border-2", "border-neutral-800", "rounded-xl", "dark:border-black");
-    currentColor.current = e.target.style.backgroundColor;
   }
   // ? onClose is a function for CategorizationListDialog. Used for edit mode. make sure this is executed when submitting
   return (
