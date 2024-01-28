@@ -158,6 +158,7 @@ function mainDataReducer(state, action) {
         if (removeTagObj.name === elem.tag) {
           elem.tag = "None";
           elem.sideColor = "transparent";
+          elem.dateModified = currentDateStr;
         }
         return elem;
       });
@@ -185,6 +186,8 @@ function mainDataReducer(state, action) {
       stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].tag = payload.tag.name;
       stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].sideColor =
         payload.tag.sideColor;
+      stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].dateModified =
+        currentDateStr;
       stateCopy.cardGroups[payload.groupIndex].dateModified = currentDateStr;
 
       save(stateCopy);
@@ -197,6 +200,7 @@ function mainDataReducer(state, action) {
         if (editCategoryObj.name === elem.categoryName) {
           elem.categoryName = payload.name;
           elem.sideColor = payload.sideColor;
+          elem.dateModified = currentDateStr;
         }
         return elem;
       });
@@ -216,6 +220,7 @@ function mainDataReducer(state, action) {
         if (editTagObj.name === elem.tag) {
           elem.tag = payload.name;
           elem.sideColor = payload.sideColor;
+          elem.dateModified = currentDateStr;
         }
         return elem;
       });
@@ -453,14 +458,23 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Date modified changes (Use util context to get current date)
-//  TODO: Groups
-//   TODO: Adding Categorization
-//   TODO: Editing Categorization
-//  TODO: Cards
-//   TODO: Editing Cards
-//   TODO: Editing Categorization Of Card
-
 // TODO: Quiz Part
+//    TODO: Quiz Url
+//    TODO: Get all cards that are needed to be "answered"
+//        TODO: Get AT MOST 10 cards.
+//            TODO: get the cards by random
+//    TODO: Change the card "next study date" depending on the answer
+//    TODO: Add "perfectStudy" for cards. This is incremented the more the user press "I fully understand it"
+//        TODO: Dont increment if "I quite understand it"
+//        TODO: Back to 0 if "I dont understand it"
+//        TODO: perfectStudy is used to "lengthen" the next study date
 
 // TODO: Logo
+// TODO: Testing
+//    TODO: Responsiveness In Mobile
+//    TODO: Date Bugs
+//    TODO: Ui Bugs
+//    TODO: Unexpected Behaviors
+//    TODO: Url Bugs
+
+// TODO: Release ✨
