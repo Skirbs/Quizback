@@ -38,14 +38,7 @@ export default forwardRef(function CreateCardDialog(
       return;
     }
     const current_date = new Date().toLocaleDateString();
-    dataCtx.addCard(
-      questionRef.current.value,
-      answerRef.current.value,
-      tagRef.current.value,
-      current_date,
-      current_date,
-      current_date
-    );
+    dataCtx.addCard(questionRef.current.value, answerRef.current.value, tagRef.current.value);
     formRef.current.reset();
 
     // TODO: Side Color Changes depending on the category

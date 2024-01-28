@@ -1,5 +1,5 @@
-import {createContext, useReducer, useRef, useState} from "react";
-import {json, useParams} from "react-router-dom";
+import {createContext, useReducer, useRef, useState, useContext} from "react";
+import {UtilContext} from "./UtilContext";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
@@ -49,6 +49,8 @@ class Tag {
 function mainDataReducer(state, action) {
   let stateCopy = {...state};
   const payload = action.payload;
+  const currentDate = new Date();
+  const currentDateStr = currentDate.toLocaleDateString();
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
@@ -81,8 +83,8 @@ function mainDataReducer(state, action) {
       const newCardGroup = new CardGroup(
         payload.name,
         payload.categoryName,
-        payload.dateCreated,
-        payload.dateModified,
+        currentDateStr,
+        currentDateStr,
         payload.sideColor,
         payload.key
       );
@@ -94,13 +96,14 @@ function mainDataReducer(state, action) {
         payload.question,
         payload.answer,
         payload.tag,
-        payload.dateCreated,
-        payload.dateModified,
-        payload.dateNextStudy,
+        currentDateStr,
+        currentDateStr,
+        currentDate,
         payload.sideColor,
         payload.key
       );
       stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
+      stateCopy.cardGroups[payload.selectedGroup].dateModified = currentDateStr;
       save(stateCopy);
       console.log(stateCopy);
       break;
@@ -112,6 +115,7 @@ function mainDataReducer(state, action) {
     case "ADDTAG":
       const newTag = new Tag(payload.name, payload.sideColor, payload.key);
       stateCopy.cardGroups[payload.selectedGroup].tags.push(newTag);
+      stateCopy.cardGroups[payload.selectedGroup].dateModified = currentDateStr;
       save(stateCopy);
       break;
 
@@ -124,6 +128,7 @@ function mainDataReducer(state, action) {
     case "REMOVECARD":
       const removeCardIndex = getCardIndexById(payload.key, payload.groupIndex);
       stateCopy.cardGroups[payload.groupIndex].cardsStored.splice(removeCardIndex, 1);
+      stateCopy.cardGroups[payload.groupIndex].dateModified = currentDateStr;
       save(stateCopy);
       break;
     case "REMOVECATEGORY":
@@ -133,6 +138,8 @@ function mainDataReducer(state, action) {
         if (removeCategoryObj.name === elem.categoryName) {
           elem.categoryName = "None";
           elem.sideColor = "transparent";
+          elem.dateModified = currentDateStr;
+          console.log(elem.dateModified);
         }
         return elem;
       });
@@ -156,6 +163,8 @@ function mainDataReducer(state, action) {
       });
 
       stateCopy.cardGroups[removeTagGroupIndex].tags.splice(removeTagIndex, 1);
+      stateCopy.cardGroups[removeTagGroupIndex].dateModified = currentDateStr;
+
       save(stateCopy);
       break;
 
@@ -164,6 +173,8 @@ function mainDataReducer(state, action) {
       stateCopy.cardGroups[editGroupIndex].name = payload.name;
       stateCopy.cardGroups[editGroupIndex].categoryName = payload.categoryName;
       stateCopy.cardGroups[editGroupIndex].sideColor = payload.sideColor;
+      stateCopy.cardGroups[editGroupIndex].dateModified = currentDateStr;
+
       save(stateCopy);
       break;
     case "EDITCARD":
@@ -174,6 +185,8 @@ function mainDataReducer(state, action) {
       stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].tag = payload.tag.name;
       stateCopy.cardGroups[payload.groupIndex].cardsStored[editCardIndex].sideColor =
         payload.tag.sideColor;
+      stateCopy.cardGroups[payload.groupIndex].dateModified = currentDateStr;
+
       save(stateCopy);
       break;
     case "EDITCATEGORY":
@@ -209,6 +222,8 @@ function mainDataReducer(state, action) {
 
       stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex].name = payload.name;
       stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex].sideColor = payload.sideColor;
+      stateCopy.cardGroups[editTagGroupIndex].dateModified = currentDateStr;
+
       save(stateCopy);
       break;
   }
@@ -264,7 +279,7 @@ export default function DataContextComponent({children}) {
     return tagObject;
   }
 
-  function addCardGroup(name, categoryName, dateCreated, dateModified) {
+  function addCardGroup(name, categoryName) {
     const key = Math.random().toString(36).slice(2, -1);
     const category = getCategoryObjectByName(categoryName);
     dataDispatch({
@@ -272,14 +287,12 @@ export default function DataContextComponent({children}) {
       payload: {
         name,
         categoryName,
-        dateCreated,
-        dateModified,
         sideColor: category.sideColor,
         key,
       },
     });
   }
-  function addCard(question, answer, tagName, dateCreated, dateModified, dateNextStudy) {
+  function addCard(question, answer, tagName) {
     const key = Math.random().toString(36).slice(2, -1);
     const tag = getTagObjectByName(tagName);
     const urlParams = new URLSearchParams(window.location.search);
@@ -292,9 +305,6 @@ export default function DataContextComponent({children}) {
         question,
         answer,
         tag: tagName,
-        dateCreated,
-        dateModified,
-        dateNextStudy,
         selectedGroup: groupIndex,
         sideColor: tag.sideColor,
         key,
@@ -443,12 +453,8 @@ export default function DataContextComponent({children}) {
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
-// TODO: Design the delete dialog better
-
 // TODO: Date modified changes (Use util context to get current date)
 //  TODO: Groups
-//   TODO: Adding Cards
-//   TODO: Editing Cards
 //   TODO: Adding Categorization
 //   TODO: Editing Categorization
 //  TODO: Cards

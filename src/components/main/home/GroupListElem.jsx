@@ -78,8 +78,8 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
             {utilCtx.truncateString(data.name, 10)}
           </h2>
           <div>
-            <p className="text-base opacity-80">Date Modified: {data.dateCreated}</p>
-            <p className="text-base opacity-80">Date Added: {data.dateModified}</p>
+            <p className="text-base opacity-80">Date Modified: {data.dateModified}</p>
+            <p className="text-base opacity-80">Date Added: {data.dateCreated}</p>
           </div>
           <button
             className="absolute right-2 top-2 z-10"

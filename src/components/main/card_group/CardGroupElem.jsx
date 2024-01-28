@@ -123,10 +123,15 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
           )}
         </div>
 
-        {/* <div className="self-start mt-2">
-        <p className="text-sm opacity-80">Date Modified: 12/12/12 12:12</p>
-        <p className="text-sm opacity-80">Date Added: 12/12/12 12:12</p>
-      </div> */}
+        <div className="self-start mt-2 w-full flex-center px-8">
+          <p className="text-xs opacity-80 flex-1 text-center">
+            Date Modified:
+            <br /> {data.dateModified}
+          </p>
+          <p className="text-xs opacity-80 flex-1 text-center">
+            Date Added: <br /> {data.dateCreated}
+          </p>
+        </div>
 
         <button
           className="absolute right-2 top-2 z-10"
