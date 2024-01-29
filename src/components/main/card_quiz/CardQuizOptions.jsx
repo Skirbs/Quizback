@@ -1,7 +1,7 @@
 import Button from "../../reusable/Button";
 export default function CardQuizOptions() {
   return (
-    <div className="flex flex-col sm:flex-row justify-center items-stretch w-[75vw] gap-2 sm:px-24">
+    <div className="self-center flex flex-col sm:flex-row justify-center items-stretch w-[75vw] gap-2 sm:px-24">
       <Button className="flex-center flex-col rounded-lg">
         <span className="material-symbols-outlined">chevron_left</span>
       </Button>

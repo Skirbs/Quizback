@@ -98,7 +98,7 @@ function mainDataReducer(state, action) {
         payload.tag,
         currentDateStr,
         currentDateStr,
-        currentDate,
+        currentDateStr,
         payload.sideColor,
         payload.key
       );
@@ -169,6 +169,7 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
 
+    // ? Editing methods
     case "EDITCARDGROUP":
       const editGroupIndex = getGroupIndexById(payload.key);
       stateCopy.cardGroups[editGroupIndex].name = payload.name;
@@ -282,6 +283,27 @@ export default function DataContextComponent({children}) {
     const groupIndex = getGroupIndexById(id);
     const tagObject = dataState.cardGroups[groupIndex].tags.find((elem) => elem.name === tagName);
     return tagObject;
+  }
+
+  function getQuizCards() {
+    // ? Get cards
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const groupIndex = getGroupIndexById(id);
+    const cards = dataState.cardGroups[groupIndex].cardsStored;
+
+    // ? Get Date
+    const currentDate = new Date().getTime();
+    const dueCards = [];
+    // ? Get cards where their dateNextStudy has passed
+    for (const card of cards) {
+      const cardStudyDate = card.dateNextStudy;
+      const cardStudyTime = new Date(cardStudyDate);
+      if (currentDate >= cardStudyTime) {
+        dueCards.push({card, hasAnswered: false});
+      }
+    }
+    return dueCards;
   }
 
   function addCardGroup(name, categoryName) {
@@ -440,6 +462,7 @@ export default function DataContextComponent({children}) {
     getCardObj,
     getCategoryObjectById,
     getTagObjectById,
+    getQuizCards,
     addCardGroup,
     addCard,
     addCategory,
@@ -459,15 +482,18 @@ export default function DataContextComponent({children}) {
 }
 
 // TODO: Quiz Part
-//    TODO: Quiz Url
-//    TODO: Get all cards that are needed to be "answered"
+//    TODO: Quiz Url /
+//    TODO: Get all cards that are needed to be "answered" /
 //        TODO: Get AT MOST 10 cards.
 //            TODO: get the cards by random
 //    TODO: Change the card "next study date" depending on the answer
 //    TODO: Add "perfectStudy" for cards. This is incremented the more the user press "I fully understand it"
+//        TODO: Change card to hasAnswered = True to prevent more increment.
 //        TODO: Dont increment if "I quite understand it"
 //        TODO: Back to 0 if "I dont understand it"
 //        TODO: perfectStudy is used to "lengthen" the next study date
+//    TODO: Edit Card in Quiz
+//    TODO: Delete Card in Quiz
 
 // TODO: Logo
 // TODO: Testing
