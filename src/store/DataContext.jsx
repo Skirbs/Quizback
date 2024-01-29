@@ -285,7 +285,7 @@ export default function DataContextComponent({children}) {
     return tagObject;
   }
 
-  function getQuizCards() {
+  function getQuizCard() {
     // ? Get cards
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -300,10 +300,10 @@ export default function DataContextComponent({children}) {
       const cardStudyDate = card.dateNextStudy;
       const cardStudyTime = new Date(cardStudyDate);
       if (currentDate >= cardStudyTime) {
-        dueCards.push({card, hasAnswered: false});
+        dueCards.push(card);
       }
     }
-    return dueCards;
+    return dueCards[Math.floor(Math.random() * dueCards.length)];
   }
 
   function addCardGroup(name, categoryName) {
@@ -462,7 +462,7 @@ export default function DataContextComponent({children}) {
     getCardObj,
     getCategoryObjectById,
     getTagObjectById,
-    getQuizCards,
+    getQuizCard,
     addCardGroup,
     addCard,
     addCategory,

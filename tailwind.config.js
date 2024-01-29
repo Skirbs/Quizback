@@ -18,6 +18,10 @@ export default {
           "0%": {transform: "translateY(25px)", opacity: "0"},
           "100%": {transform: "translateY(0px)", opacity: "1"},
         },
+        "fade-away-up": {
+          "0%": {transform: "translateY(25px)", opacity: "1"},
+          "100%": {transform: "translateY(0px)", opacity: "0"},
+        },
         "scale-in-out-vertical": {
           "0%,100%": {scale: "1 1"},
           "50%": {scale: "1 0"},
@@ -25,6 +29,7 @@ export default {
       },
       animation: {
         "fade-up-bounce": "fade-up-bounce 0.2s cubic-bezier(.34,.79,.42,1.24) both",
+        "fade-away-up": "fade-away-up 0.2s cubic-bezier(.34,.79,.42,1.24) both",
         "scale-in-out-vertical": "scale-in-out-vertical 0.2s cubic-bezier(.34,.79,.42,1.24) both",
       },
       transitionTimingFunction: {

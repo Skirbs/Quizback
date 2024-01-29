@@ -22,7 +22,7 @@ export default function CardQuizElem({sideColor = "black", index, question, answ
   return (
     <Card
       ref={cardRef}
-      className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative min-w-[80vw] !w-[80vw] min-h-[50vh] py-5 px-8 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce rounded-full`}
+      className={`flex-center flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative min-w-full !w-full min-h-[60vh] py-5 px-8 gap-0 dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce rounded-full`}
       onClick={(e) => {
         e.stopPropagation();
         showAnswerHandler();
