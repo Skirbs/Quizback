@@ -1,5 +1,6 @@
 import {createContext, useReducer, useRef, useState, useContext} from "react";
 import {UtilContext} from "./UtilContext";
+import getSpacedRepetitionDays from "./SpacedRepetitionFormat";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
@@ -13,7 +14,6 @@ class CardGroup {
     this.tags = [{name: "None", sideColor: "transparent", key: "N"}];
     this.sideColor = sideColor;
     this.key = key;
-    console.log(key);
   }
 }
 class Card {
@@ -26,6 +26,7 @@ class Card {
     this.dateNextStudy = dateNextStudy;
     this.sideColor = sideColor;
     this.key = key;
+    this.perfectAmt = 0; // ? Amount of times user FULLY UNDERSTOOD in the quiz part. Back to 0 if didnt understand
   }
 }
 
@@ -442,16 +443,36 @@ export default function DataContextComponent({children}) {
     });
   }
 
-  function addCardStudyTime(key) {
+  function addCardStudyTime(key, proficiency) {
     const groupIndex = getGroupIndexById(getUrlId());
     const cardIndex = dataState.cardGroups[groupIndex].cardsStored.findIndex(
       (elem) => elem.key === key
     );
     const stateCopy = {...dataState};
     const currentDate = new Date().getTime();
-    const newStudyDate = new Date(currentDate + 86400000).toLocaleDateString();
+    const cardPerfectAmt = stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt;
+    let nextDayAmt; // ? How many days you have to wait again until next quiz
+    let newStudyDate;
+    switch (proficiency) {
+      case 0:
+        newStudyDate = new Date().toLocaleDateString();
+        stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = 0;
+
+        break;
+      case 1:
+        nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt - 1);
+        newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
+        break;
+      case 2:
+        nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt);
+        newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
+        stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt++;
+        break;
+    }
     stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy = newStudyDate;
-    localStorage.setItem("mainData", JSON.stringify(stateCopy));
+
+    // ? Future use
+    // ? localStorage.setItem("mainData", JSON.stringify(stateCopy));
     dataState = stateCopy;
     console.log(stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy);
   }
@@ -501,8 +522,10 @@ export default function DataContextComponent({children}) {
 //    TODO: Quiz Tag Filter
 //    TODO: Edit Card in Quiz
 //    TODO: Delete Card in Quiz
+//    TODO: Restart Space Repetition back to 0
 
 // TODO: Filter Feature
+//    TODO: Fix Card Filter (It says group lmao)
 
 // TODO: Logo
 // TODO: Testing

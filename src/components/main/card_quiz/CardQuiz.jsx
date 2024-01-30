@@ -17,15 +17,14 @@ export default function CardQuiz() {
     //  ? (2 => fully understood)
     cardElem.current.classList.add("animate-fade-away-up");
     hasAnswered.current = true;
-    dataCtx.addCardStudyTime(dueCards.key);
+    dataCtx.addCardStudyTime(dueCards.key, proficiency);
     setTimeout(() => {
       setDueCards(dataCtx.getQuizCard());
-      setTimeout(() => {
-        cardElem.current.classList.remove("animate-fade-away-up");
-      }, 200);
+      cardElem.current.classList.remove("animate-fade-away-up");
+
       setTimeout(() => {
         hasAnswered.current = false;
-      }, 600);
+      }, 100);
     }, 400);
   }
 
