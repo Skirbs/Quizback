@@ -1,6 +1,6 @@
 import {createContext, useReducer, useRef, useState, useContext} from "react";
 import {UtilContext} from "./UtilContext";
-import getSpacedRepetitionDays from "./SpacedRepetitionFormat";
+import getSpacedRepetitionDays, {SRDays} from "./SpacedRepetitionFormat";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
@@ -462,17 +462,26 @@ export default function DataContextComponent({children}) {
       case 1:
         nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt - 1);
         newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
+        if (cardPerfectAmt - 1 <= 0) {
+          stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = 0;
+        } else {
+          stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt--;
+        }
         break;
       case 2:
         nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt);
         newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
-        stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt++;
+        if (cardPerfectAmt + 1 >= SRDays.length) {
+          stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = SRDays.length - 1;
+        } else {
+          stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt++;
+        }
+
         break;
     }
     stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy = newStudyDate;
 
-    // ? Future use
-    // ? localStorage.setItem("mainData", JSON.stringify(stateCopy));
+    localStorage.setItem("mainData", JSON.stringify(stateCopy));
     dataState = stateCopy;
     console.log(stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy);
   }

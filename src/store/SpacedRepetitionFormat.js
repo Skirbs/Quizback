@@ -9,8 +9,8 @@
 // ? Format:
 // ?    2 -> 5 -> 7 -> 14 -> 21 -> 30 -> 45 -> 60 -> 90 (repeat 90 afterwards)
 
+export const SRDays = [2, 5, 7, 14, 21, 30, 45, 60, 90];
 export default function getSpacedRepetitionDays(perfectAmt) {
-  const SRDays = [2, 5, 7, 14, 21, 30, 45, 60, 90];
   if (perfectAmt < 0) {
     return 1;
   }

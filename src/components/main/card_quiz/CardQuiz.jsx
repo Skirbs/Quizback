@@ -1,13 +1,16 @@
-import {useContext, useRef, useState} from "react";
+import {useContext, useReducer, useRef, useState} from "react";
 import {DataContext} from "../../../store/DataContext";
 import CardQuizElem from "./CardQuizElem";
 import CardQuizOptions from "./CardQuizOptions";
 export default function CardQuiz() {
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
   const dataCtx = useContext(DataContext);
   const [dueCards, setDueCards] = useState(dataCtx.getQuizCard());
   const hasAnswered = useRef(false);
   const cardDiv = useRef();
   const cardElem = useRef();
+  console.log(dueCards.perfectAmt);
 
   function nextCardHandler(proficiency) {
     if (hasAnswered.current) return;
@@ -20,6 +23,8 @@ export default function CardQuiz() {
     dataCtx.addCardStudyTime(dueCards.key, proficiency);
     setTimeout(() => {
       setDueCards(dataCtx.getQuizCard());
+      forceUpdate();
+
       cardElem.current.classList.remove("animate-fade-away-up");
 
       setTimeout(() => {
@@ -45,7 +50,7 @@ export default function CardQuiz() {
                 />
               </div>
             </div>
-            <CardQuizOptions onNextCard={nextCardHandler} />
+            <CardQuizOptions onNextCard={nextCardHandler} cardPerfectAmt={dueCards.perfectAmt} />
           </>
         )}
       </div>
