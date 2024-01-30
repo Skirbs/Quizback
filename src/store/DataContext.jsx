@@ -147,9 +147,7 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
     case "REMOVETAG":
-      const removeUrlParams = new URLSearchParams(window.location.search);
-      const removeTagId = removeUrlParams.get("id");
-      const removeTagGroupIndex = getGroupIndexById(removeTagId);
+      const removeTagGroupIndex = getGroupIndexById(getUrlId());
       const removeTagIndex = getTagIndexById(payload.key, removeTagGroupIndex);
       const removeTagObj = stateCopy.cardGroups[removeTagGroupIndex].tags[removeTagIndex];
       stateCopy.cardGroups[removeTagGroupIndex].cardsStored = stateCopy.cardGroups[
@@ -210,9 +208,7 @@ function mainDataReducer(state, action) {
       save(stateCopy);
       break;
     case "EDITTAG":
-      const editUrlParams = new URLSearchParams(window.location.search);
-      const editTagId = editUrlParams.get("id");
-      const editTagGroupIndex = getGroupIndexById(editTagId);
+      const editTagGroupIndex = getGroupIndexById(payload.groupKey);
       const editTagIndex = getTagIndexById(payload.key, editTagGroupIndex);
       const editTagObj = stateCopy.cardGroups[editTagGroupIndex].tags[editTagIndex];
       stateCopy.cardGroups[editTagGroupIndex].cardsStored = stateCopy.cardGroups[
@@ -238,7 +234,7 @@ function mainDataReducer(state, action) {
 
 // ? Main Component
 export default function DataContextComponent({children}) {
-  const [dataState, dataDispatch] = useReducer(
+  let [dataState, dataDispatch] = useReducer(
     mainDataReducer,
     JSON.parse(localStorage.getItem("mainData")) || {
       categories: [{name: "None", sideColor: "transparent", key: "N"}],
@@ -247,6 +243,11 @@ export default function DataContextComponent({children}) {
   );
 
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkmode") || "false");
+  function getUrlId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    return id;
+  }
   function getGroupIndexById(key) {
     const groupIndex = dataState.cardGroups.findIndex((elem) => elem.key === key);
     return groupIndex;
@@ -265,9 +266,7 @@ export default function DataContextComponent({children}) {
   }
 
   function getTagObjectById(key) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
     const tagObject = dataState.cardGroups[groupIndex].tags.find((elem) => elem.key === key);
     return tagObject;
   }
@@ -278,18 +277,14 @@ export default function DataContextComponent({children}) {
   }
 
   function getTagObjectByName(tagName) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
     const tagObject = dataState.cardGroups[groupIndex].tags.find((elem) => elem.name === tagName);
     return tagObject;
   }
 
   function getQuizCard() {
     // ? Get cards
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
     const cards = dataState.cardGroups[groupIndex].cardsStored;
 
     // ? Get Date
@@ -302,6 +297,9 @@ export default function DataContextComponent({children}) {
       if (currentDate >= cardStudyTime) {
         dueCards.push(card);
       }
+    }
+    if (dueCards.length <= 0) {
+      return "empty";
     }
     return dueCards[Math.floor(Math.random() * dueCards.length)];
   }
@@ -322,9 +320,7 @@ export default function DataContextComponent({children}) {
   function addCard(question, answer, tagName) {
     const key = Math.random().toString(36).slice(2, -1);
     const tag = getTagObjectByName(tagName);
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
 
     dataDispatch({
       type: "ADDCARD",
@@ -351,9 +347,7 @@ export default function DataContextComponent({children}) {
   }
   function addTag(name, sideColor) {
     const key = Math.random().toString(36).slice(2, -1);
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
     dataDispatch({
       type: "ADDTAG",
       payload: {
@@ -413,9 +407,7 @@ export default function DataContextComponent({children}) {
   }
   function editCard(question, answer, tagName, key) {
     const tag = getTagObjectByName(tagName);
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get("id");
-    const groupIndex = getGroupIndexById(id);
+    const groupIndex = getGroupIndexById(getUrlId());
     dataDispatch({
       type: "EDITCARD",
       payload: {
@@ -438,14 +430,30 @@ export default function DataContextComponent({children}) {
     });
   }
   function editTag(name, sideColor, key) {
+    const id = getUrlId();
     dataDispatch({
       type: "EDITTAG",
       payload: {
         name,
         sideColor,
         key,
+        groupKey: id,
       },
     });
+  }
+
+  function addCardStudyTime(key) {
+    const groupIndex = getGroupIndexById(getUrlId());
+    const cardIndex = dataState.cardGroups[groupIndex].cardsStored.findIndex(
+      (elem) => elem.key === key
+    );
+    const stateCopy = {...dataState};
+    const currentDate = new Date().getTime();
+    const newStudyDate = new Date(currentDate + 86400000).toLocaleDateString();
+    stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy = newStudyDate;
+    localStorage.setItem("mainData", JSON.stringify(stateCopy));
+    dataState = stateCopy;
+    console.log(stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy);
   }
 
   async function toggleDarkMode() {
@@ -476,24 +484,25 @@ export default function DataContextComponent({children}) {
     editCategory,
     editTag,
     darkMode,
+    addCardStudyTime,
     toggleDarkMode,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
 
 // TODO: Quiz Part
-//    TODO: Quiz Url /
-//    TODO: Get all cards that are needed to be "answered" /
-//        TODO: Get AT MOST 10 cards.
-//            TODO: get the cards by random
 //    TODO: Change the card "next study date" depending on the answer
 //    TODO: Add "perfectStudy" for cards. This is incremented the more the user press "I fully understand it"
 //        TODO: Change card to hasAnswered = True to prevent more increment.
 //        TODO: Dont increment if "I quite understand it"
 //        TODO: Back to 0 if "I dont understand it"
 //        TODO: perfectStudy is used to "lengthen" the next study date
+//    TODO: When you cant get any more cards in getCardQuiz. Show UI Then Go Back
+//    TODO: Quiz Tag Filter
 //    TODO: Edit Card in Quiz
 //    TODO: Delete Card in Quiz
+
+// TODO: Filter Feature
 
 // TODO: Logo
 // TODO: Testing

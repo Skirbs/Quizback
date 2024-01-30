@@ -12,15 +12,17 @@ export default function UtilContextComponent({children}) {
     }
     return str;
   }
-  function getCurrentDate() {
-    const date = new Date();
-    return date;
-  }
-  function getCurrentDateString() {
-    return getCurrentDate().toLocaleDateString();
-  }
 
-  const utils = {truncateString, getCurrentDate, getCurrentDateString};
+  // ! Deprecated ! \\
+  // ! function getCurrentDate() {
+  // !   const date = new Date();
+  // !   return date;
+  // ! }
+  // ! function getCurrentDateString() {
+  // !   return getCurrentDate().toLocaleDateString();
+  // ! }
+
+  const utils = {truncateString};
 
   return <UtilContext.Provider value={utils}>{children}</UtilContext.Provider>;
 }

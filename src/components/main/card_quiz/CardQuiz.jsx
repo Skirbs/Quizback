@@ -17,30 +17,38 @@ export default function CardQuiz() {
     //  ? (2 => fully understood)
     cardElem.current.classList.add("animate-fade-away-up");
     hasAnswered.current = true;
+    dataCtx.addCardStudyTime(dueCards.key);
     setTimeout(() => {
       setDueCards(dataCtx.getQuizCard());
-      cardElem.current.classList.remove("animate-fade-away-up");
-      hasAnswered.current = false;
+      setTimeout(() => {
+        cardElem.current.classList.remove("animate-fade-away-up");
+      }, 200);
+      setTimeout(() => {
+        hasAnswered.current = false;
+      }, 600);
     }, 400);
   }
 
   return (
     <div className="flex w-fit -mt-10 h-screen">
       <div className="w-full flex-col flex-center gap-3">
-        <div
-          ref={cardDiv}
-          style={{left: "0vw"}}
-          className="flex w-0 self-start gap-2 transition-all">
-          <div ref={cardElem} className="min-w-[75vw] w-[75vw] self-center">
-            <CardQuizElem
-              question={dueCards.question}
-              answer={dueCards.answer}
-              key={dueCards.key}
-            />
-          </div>
-        </div>
-
-        <CardQuizOptions onNextCard={nextCardHandler} />
+        {dueCards === "empty" || (
+          <>
+            <div
+              ref={cardDiv}
+              style={{left: "0vw"}}
+              className="flex w-0 self-start gap-2 transition-all">
+              <div ref={cardElem} className="min-w-[75vw] w-[75vw] self-center">
+                <CardQuizElem
+                  question={dueCards.question}
+                  answer={dueCards.answer}
+                  key={dueCards.key}
+                />
+              </div>
+            </div>
+            <CardQuizOptions onNextCard={nextCardHandler} />
+          </>
+        )}
       </div>
     </div>
   );
