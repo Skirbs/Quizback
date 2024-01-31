@@ -2,6 +2,7 @@ import {useContext, useReducer, useRef, useState} from "react";
 import {DataContext} from "../../../store/DataContext";
 import CardQuizElem from "./CardQuizElem";
 import CardQuizOptions from "./CardQuizOptions";
+import FinishedQuizPopup from "./FinishedQuizPopup";
 export default function CardQuiz() {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
@@ -36,7 +37,9 @@ export default function CardQuiz() {
   return (
     <div className="flex w-fit -mt-10 h-screen">
       <div className="w-full flex-col flex-center gap-3">
-        {dueCards === "empty" || (
+        {dueCards === "empty" ? (
+          <FinishedQuizPopup />
+        ) : (
           <>
             <div
               ref={cardDiv}

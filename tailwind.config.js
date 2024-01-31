@@ -26,11 +26,16 @@ export default {
           "0%,100%": {scale: "1 1"},
           "50%": {scale: "1 0"},
         },
+        "rotate-slight-left": {
+          "0%": {rotate: "0"},
+          "100%": {rotate: "-10deg"},
+        },
       },
       animation: {
         "fade-up-bounce": "fade-up-bounce 0.2s cubic-bezier(.34,.79,.42,1.24) both",
         "fade-away-up": "fade-away-up 0.2s cubic-bezier(.34,.79,.42,1.24) both",
         "scale-in-out-vertical": "scale-in-out-vertical 0.2s cubic-bezier(.34,.79,.42,1.24) both",
+        "rotate-slight-left": "rotate-slight-left 0.5s cubic-bezier(.34,.79,.42,1.24) both",
       },
       transitionTimingFunction: {
         bounce: "cubic-bezier(.34,.57,.07,1.73)",

@@ -521,13 +521,6 @@ export default function DataContextComponent({children}) {
 }
 
 // TODO: Quiz Part
-//    TODO: Change the card "next study date" depending on the answer
-//    TODO: Add "perfectStudy" for cards. This is incremented the more the user press "I fully understand it"
-//        TODO: Change card to hasAnswered = True to prevent more increment.
-//        TODO: Dont increment if "I quite understand it"
-//        TODO: Back to 0 if "I dont understand it"
-//        TODO: perfectStudy is used to "lengthen" the next study date
-//    TODO: When you cant get any more cards in getCardQuiz. Show UI Then Go Back
 //    TODO: Quiz Tag Filter
 //    TODO: Edit Card in Quiz
 //    TODO: Delete Card in Quiz
