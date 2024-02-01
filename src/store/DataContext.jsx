@@ -55,7 +55,7 @@ function mainDataReducer(state, action) {
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
-    // console.log(stateCopy);
+    console.log(stateCopy);
   }
 
   function getGroupIndexById(key) {
@@ -519,8 +519,6 @@ export default function DataContextComponent({children}) {
 
 // TODO: Quiz Part
 //    TODO: Quiz Tag Filter
-//    TODO: Edit Card in Quiz
-//    TODO: Delete Card in Quiz
 //    TODO: Restart Space Repetition back to 0 (NOT "I dont understand it")
 
 // TODO: Show When Next Study Due
