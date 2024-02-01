@@ -4,7 +4,7 @@ import Button from "./Button";
 import {DataContext} from "../../store/DataContext";
 import {UtilContext} from "../../store/UtilContext";
 
-export default forwardRef(function DeleteDialog({isCard, ...props}, ref) {
+export default forwardRef(function DeleteDialog({isCard, onAfterDelete, ...props}, ref) {
   const dataCtx = useContext(DataContext);
   const utilCtx = useContext(UtilContext);
   const [selectedName, setSelectedName] = useState("N/A");
@@ -35,6 +35,9 @@ export default forwardRef(function DeleteDialog({isCard, ...props}, ref) {
     } else {
       dataCtx.removeCardGroup(currentKey.current);
     }
+    try {
+      onAfterDelete(); // ? This function is sometimes passed down (Mainly used for CardQuiz.jsx)
+    } catch (e) {}
     dialogRef.current.close();
   }
 

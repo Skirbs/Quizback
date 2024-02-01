@@ -55,7 +55,7 @@ function mainDataReducer(state, action) {
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
-    console.log(stateCopy);
+    // console.log(stateCopy);
   }
 
   function getGroupIndexById(key) {
@@ -106,7 +106,6 @@ function mainDataReducer(state, action) {
       stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
       stateCopy.cardGroups[payload.selectedGroup].dateModified = currentDateStr;
       save(stateCopy);
-      console.log(stateCopy);
       break;
     case "ADDCATEGORY":
       const newCategory = new Category(payload.name, payload.sideColor, payload.key);
@@ -140,7 +139,6 @@ function mainDataReducer(state, action) {
           elem.categoryName = "None";
           elem.sideColor = "transparent";
           elem.dateModified = currentDateStr;
-          console.log(elem.dateModified);
         }
         return elem;
       });
@@ -302,7 +300,8 @@ export default function DataContextComponent({children}) {
     if (dueCards.length <= 0) {
       return "empty";
     }
-    return dueCards[Math.floor(Math.random() * dueCards.length)];
+    const selectedQuizCard = dueCards[Math.floor(Math.random() * dueCards.length)];
+    return selectedQuizCard;
   }
 
   function addCardGroup(name, categoryName) {
@@ -483,14 +482,12 @@ export default function DataContextComponent({children}) {
 
     localStorage.setItem("mainData", JSON.stringify(stateCopy));
     dataState = stateCopy;
-    console.log(stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].dateNextStudy);
   }
 
   async function toggleDarkMode() {
     await setDarkMode((prev) => {
       return !prev;
     });
-    console.log(darkMode);
     localStorage.setItem("darkmode", darkMode === "true" ? "false" : "true");
   }
 
@@ -524,12 +521,15 @@ export default function DataContextComponent({children}) {
 //    TODO: Quiz Tag Filter
 //    TODO: Edit Card in Quiz
 //    TODO: Delete Card in Quiz
-//    TODO: Restart Space Repetition back to 0
+//    TODO: Restart Space Repetition back to 0 (NOT "I dont understand it")
+
+// TODO: Show When Next Study Due
+// TODO: Toggle show dates
 
 // TODO: Filter Feature
 //    TODO: Fix Card Filter (It says group lmao)
 
-// TODO: Logo
+// TODO: Logo and favicon
 // TODO: Testing
 //    TODO: Responsiveness In Mobile
 //    TODO: Date Bugs

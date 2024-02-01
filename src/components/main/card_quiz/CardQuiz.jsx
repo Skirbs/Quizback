@@ -1,17 +1,20 @@
-import {useContext, useReducer, useRef, useState} from "react";
+import {useContext, useEffect, useReducer, useRef, useState} from "react";
 import {DataContext} from "../../../store/DataContext";
 import CardQuizElem from "./CardQuizElem";
 import CardQuizOptions from "./CardQuizOptions";
 import FinishedQuizPopup from "./FinishedQuizPopup";
+import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
+import CreateCardDialog from "../card_group/CreateCardDialog";
+import DeleteDialog from "../../reusable/DeleteDialog";
 export default function CardQuiz() {
-  const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
+  const [, forceRefresh] = useReducer((x) => x + 1, 0);
   const dataCtx = useContext(DataContext);
   const [dueCards, setDueCards] = useState(dataCtx.getQuizCard());
+  const [editMode, setEditMode] = useState(false);
   const hasAnswered = useRef(false);
   const cardDiv = useRef();
   const cardElem = useRef();
-  console.log(dueCards.perfectAmt);
+  const deleteDialog = useRef();
 
   function nextCardHandler(proficiency) {
     if (hasAnswered.current) return;
@@ -22,9 +25,9 @@ export default function CardQuiz() {
     cardElem.current.classList.add("animate-fade-away-up");
     hasAnswered.current = true;
     dataCtx.addCardStudyTime(dueCards.key, proficiency);
+
     setTimeout(() => {
       setDueCards(dataCtx.getQuizCard());
-      forceUpdate();
 
       cardElem.current.classList.remove("animate-fade-away-up");
 
@@ -34,6 +37,50 @@ export default function CardQuiz() {
     }, 400);
   }
 
+  function openDeleteDialogHandle(name, key) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const selectedGroup = dataCtx.getGroupIndexById(id);
+
+    deleteDialog.current.changeData(name, key, selectedGroup);
+    deleteDialog.current.open();
+  }
+
+  function EditDialog() {
+    const editDialogRef = useRef();
+    useEffect(() => {
+      editDialogRef.current.open();
+    });
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    const selectedGroup = dataCtx.getGroupIndexById(id);
+
+    const createTagRef = useRef();
+    function createTagHandler() {
+      createTagRef.current.open();
+    }
+    return (
+      <>
+        <CreateCategorizationDialog
+          ref={createTagRef}
+          selectedGroup={selectedGroup}
+          header="Create Tag"
+          type="Tag"
+        />
+        <CreateCardDialog
+          editMode
+          editKey={dueCards.key}
+          selectedGroup={selectedGroup}
+          onClose={() => {
+            setEditMode(false);
+          }}
+          ref={editDialogRef}
+          onTag={createTagHandler}
+        />
+      </>
+    );
+  }
+
   return (
     <div className="flex w-fit -mt-10 h-screen">
       <div className="w-full flex-col flex-center gap-3">
@@ -41,15 +88,26 @@ export default function CardQuiz() {
           <FinishedQuizPopup />
         ) : (
           <>
+            <DeleteDialog
+              ref={deleteDialog}
+              onAfterDelete={() => {
+                nextCardHandler();
+              }}
+              isCard
+            />
+            {editMode && <EditDialog />}
+
             <div
               ref={cardDiv}
               style={{left: "0vw"}}
               className="flex w-0 self-start gap-2 transition-all">
               <div ref={cardElem} className="min-w-[75vw] w-[75vw] self-center">
                 <CardQuizElem
-                  question={dueCards.question}
-                  answer={dueCards.answer}
+                  sideColor={dueCards.sideColor}
+                  data={dueCards}
                   key={dueCards.key}
+                  onEdit={setEditMode}
+                  onOpenDeleteDialog={openDeleteDialogHandle}
                 />
               </div>
             </div>

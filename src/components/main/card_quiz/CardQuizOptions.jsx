@@ -1,7 +1,6 @@
 import Button from "../../reusable/Button";
 import getSpacedRepetitionDays from "../../../store/SpacedRepetitionFormat";
 export default function CardQuizOptions({onNextCard, cardPerfectAmt}) {
-  console.log(cardPerfectAmt);
   let quiteUnderstoodDays = getSpacedRepetitionDays(cardPerfectAmt - 1);
 
   const fullyUnderstoodDays = getSpacedRepetitionDays(cardPerfectAmt);

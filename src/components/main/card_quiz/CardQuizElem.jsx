@@ -2,7 +2,14 @@ import {useEffect, useRef, useState} from "react";
 import Card from "../../reusable/Card";
 import Button from "../../reusable/Button";
 
-export default function CardQuizElem({sideColor = "black", index, question, answer, ...props}) {
+export default function CardQuizElem({
+  sideColor = "black",
+  index,
+  data,
+  onEdit,
+  onOpenDeleteDialog,
+  ...props
+}) {
   const [showAnswer, setShowAnswer] = useState(false);
   const settingRef = useRef();
   const cardRef = useRef();
@@ -38,14 +45,14 @@ export default function CardQuizElem({sideColor = "black", index, question, answ
           <>
             <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Question</h2>
             <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
-              {question}
+              {data.question}
             </p>
           </>
         ) : (
           <>
             <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Answer</h2>
             <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
-              {answer}
+              {data.answer}
             </p>
           </>
         )}
@@ -74,11 +81,21 @@ export default function CardQuizElem({sideColor = "black", index, question, answ
           settingRef.current.classList.add("opacity-0");
           settingRef.current.classList.add("pointer-events-none");
         }}>
-        <Button className="!drop-shadow-none flex-1 flex justify-center mt-2">
+        <Button
+          className="!drop-shadow-none flex-1 flex justify-center mt-2"
+          onClick={(e) => {
+            e.preventDefault();
+            onEdit(true);
+          }}>
           <span className="material-symbols-outlined">edit</span>
           edit
         </Button>
-        <Button className="!drop-shadow-none flex-1 flex justify-center mb-2">
+        <Button
+          className="!drop-shadow-none flex-1 flex justify-center mb-2"
+          onClick={(e) => {
+            e.preventDefault();
+            onOpenDeleteDialog(data.question, data.key);
+          }}>
           <span className="material-symbols-outlined">delete</span>
           delete
         </Button>
