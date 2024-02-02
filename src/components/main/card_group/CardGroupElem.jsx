@@ -123,19 +123,21 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
           )}
         </div>
 
-        <div className="self-start mt-2 w-full flex-center gap-3">
-          <p className="text-xs opacity-80 text-center whitespace-nowrap">
-            Quiz Study Date:
-            <br /> {data.dateNextStudy}
-          </p>
-          <p className="text-xs opacity-80 text-center whitespace-nowrap">
-            Date Modified:
-            <br /> {data.dateModified}
-          </p>
-          <p className="text-xs opacity-80 text-center whitespace-nowrap">
-            Date Added: <br /> {data.dateCreated}
-          </p>
-        </div>
+        {dataCtx.showCardDates === "true" && (
+          <div className="self-start mt-2 w-full flex-center gap-3">
+            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+              Quiz Study Date:
+              <br /> {data.dateNextStudy}
+            </p>
+            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+              Date Modified:
+              <br /> {data.dateModified}
+            </p>
+            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+              Date Added: <br /> {data.dateCreated}
+            </p>
+          </div>
+        )}
 
         <button
           className="absolute right-2 top-2 z-10"

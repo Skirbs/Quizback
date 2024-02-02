@@ -242,6 +242,12 @@ export default function DataContextComponent({children}) {
   );
 
   const [darkMode, setDarkMode] = useState(localStorage.getItem("darkmode") || "false");
+  const [showCardDates, setShowCardDates] = useState(
+    localStorage.getItem("showCardDate") || "false"
+  );
+  const [showGroupDates, setShowGroupDates] = useState(
+    localStorage.getItem("showGroupDate") || "true"
+  );
   function getUrlId() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -484,11 +490,30 @@ export default function DataContextComponent({children}) {
     dataState = stateCopy;
   }
 
-  async function toggleDarkMode() {
-    await setDarkMode((prev) => {
-      return !prev;
+  function toggleDarkMode() {
+    setDarkMode((prev) => {
+      const alteredData = prev === "true" ? "false" : "true";
+      localStorage.setItem("darkmode", alteredData);
+      return darkMode === "true" ? "false" : "true";
     });
-    localStorage.setItem("darkmode", darkMode === "true" ? "false" : "true");
+  }
+
+  function toggleShowCardDate() {
+    setShowCardDates((prev) => {
+      const alteredData = prev === "true" ? "false" : "true";
+      localStorage.setItem("showCardDate", alteredData);
+      console.log(localStorage.getItem("showCardDate"));
+      return alteredData;
+    });
+  }
+
+  function toggleShowGroupDate() {
+    setShowGroupDates((prev) => {
+      const alteredData = prev === "true" ? "false" : "true";
+      localStorage.setItem("showGroupdDate", alteredData);
+      console.log(localStorage.getItem("showGroupdDate"));
+      return alteredData;
+    });
   }
 
   const contextData = {
@@ -510,9 +535,13 @@ export default function DataContextComponent({children}) {
     editCard,
     editCategory,
     editTag,
-    darkMode,
     addCardStudyTime,
+    darkMode,
     toggleDarkMode,
+    showCardDates,
+    toggleShowCardDate,
+    showGroupDates,
+    toggleShowGroupDate,
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
@@ -520,9 +549,6 @@ export default function DataContextComponent({children}) {
 // TODO: Quiz Part
 //    TODO: Quiz Tag Filter
 //    TODO: Restart Space Repetition back to 0 (NOT "I dont understand it")
-
-// TODO: Show When Next Study Due
-// TODO: Toggle show dates
 
 // TODO: Filter Feature
 //    TODO: Fix Card Filter (It says group lmao)

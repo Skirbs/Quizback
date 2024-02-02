@@ -77,10 +77,13 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
           <h2 className="text-left w-full text-4xl font-semibold">
             {utilCtx.truncateString(data.name, 10)}
           </h2>
-          <div>
-            <p className="text-base opacity-80">Date Modified: {data.dateModified}</p>
-            <p className="text-base opacity-80">Date Added: {data.dateCreated}</p>
-          </div>
+          {dataCtx.showGroupDates === "true" && (
+            <div>
+              <p className="text-base opacity-80">Date Modified: {data.dateModified}</p>
+              <p className="text-base opacity-80">Date Added: {data.dateCreated}</p>
+            </div>
+          )}
+
           <button
             className="absolute right-2 top-2 z-10"
             onClick={(e) => {
@@ -116,6 +119,4 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
       </Link>
     </>
   );
-
-  // TODO: stop setting from executing url changes
 }

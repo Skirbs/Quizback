@@ -28,13 +28,6 @@ export default function Home() {
     categoryListRef.current.open();
   }
 
-  // ? Data Context Functions
-  const dataCtx = useContext(DataContext);
-
-  // ? Form Method
-  function submitHandler(e) {
-    e.preventDefault();
-  }
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
