@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useRef} from "react";
 import Header from "../../reusable/Header";
 import CardOptions from "../../reusable/CardOptions";
 import PageActions from "../../reusable/PageActions";
@@ -7,13 +7,13 @@ import Filter from "./filter";
 import CreateGroupDialog from "./CreateGroupDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
-import {useContext} from "react";
-import {DataContext} from "../../../store/DataContext";
+import FilterDialog from "../../reusable/filter/FilterDialog";
 export default function Home() {
   // ? Dialog Handlers
   const createDialogRef = useRef();
   const createCategoryRef = useRef();
   const categoryListRef = useRef();
+  const filterDialogRef = useRef();
 
   // ? Dialog UI Methods
   function openCreateHandler() {
@@ -28,6 +28,10 @@ export default function Home() {
     categoryListRef.current.open();
   }
 
+  function filterDialogHandler() {
+    filterDialogRef.current.open();
+  }
+
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
@@ -36,12 +40,13 @@ export default function Home() {
         header="Create Category"
         type="Category"
       />
+      <FilterDialog ref={filterDialogRef} header="Filter Categories" type="Category" />
       <CategorizationListDialog ref={categoryListRef} header="Category List" type="Category" />
 
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} onList={categoryListHandler} />
-        <CardOptions />
+        <CardOptions openFilterHandler={filterDialogHandler} />
         <GroupList />
       </main>
     </>

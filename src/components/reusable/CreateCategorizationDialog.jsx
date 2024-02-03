@@ -6,7 +6,6 @@ import Button from "./Button";
 import FormInput from "./FormInput";
 import ColorButton from "./ColorButton";
 import Header from "./Header";
-// TODO: Future feature: make sure name doesnt repeat
 export default forwardRef(function CreateCategorizationDialog(
   {header, type, editMode, editKey, onClose, selectedGroup, ...props},
   ref
