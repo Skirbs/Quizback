@@ -4,9 +4,11 @@ import {DataContext} from "../../../store/DataContext";
 import GroupListElem from "./GroupListElem";
 import DeleteDialog from "../../reusable/DeleteDialog";
 
-export default function GroupList() {
+export default function GroupList({displayGroup = []}) {
   const dataCtx = useContext(DataContext);
   const deleteDialog = useRef();
+
+  console.log(displayGroup);
 
   function openDeleteDialogHandle(name, key) {
     deleteDialog.current.changeData(name, key);
@@ -16,7 +18,7 @@ export default function GroupList() {
     <>
       <DeleteDialog ref={deleteDialog} />
       <div className="flex flex-wrap justify-center lg:justify-start gap-2 pb-5">
-        {dataCtx.dataState.cardGroups.map((elem, i) => {
+        {displayGroup.map((elem, i) => {
           return (
             <GroupListElem
               style={{animationDelay: `${i * 0.05}s`}}

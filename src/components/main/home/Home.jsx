@@ -1,4 +1,4 @@
-import {useRef} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import Header from "../../reusable/Header";
 import CardOptions from "../../reusable/CardOptions";
 import PageActions from "../../reusable/PageActions";
@@ -8,7 +8,13 @@ import CreateGroupDialog from "./CreateGroupDialog";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 import FilterDialog from "../../reusable/filter/FilterDialog";
+import {DataContext} from "../../../store/DataContext";
 export default function Home() {
+  const dataCtx = useContext(DataContext);
+  const [displayGroup, setDisplayGroup] = useState();
+  useEffect(() => {
+    setDisplayGroup(dataCtx.dataState.cardGroups);
+  }, [dataCtx.dataState]);
   // ? Dialog Handlers
   const createDialogRef = useRef();
   const createCategoryRef = useRef();
@@ -32,6 +38,24 @@ export default function Home() {
     filterDialogRef.current.open();
   }
 
+  function applyFilterHandler(categories) {
+    if (categories.length === 0) {
+      setDisplayGroup(dataCtx.dataState.cardGroups);
+      return;
+    }
+
+    setDisplayGroup(
+      dataCtx.dataState.cardGroups.filter((elem) => {
+        for (const category of categories) {
+          if (elem.categoryName === category) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
+  }
+
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
@@ -40,14 +64,19 @@ export default function Home() {
         header="Create Category"
         type="Category"
       />
-      <FilterDialog ref={filterDialogRef} header="Filter Categories" type="Category" />
+      <FilterDialog
+        ref={filterDialogRef}
+        header="Filter Categories"
+        type="Category"
+        onApplyFilter={applyFilterHandler}
+      />
       <CategorizationListDialog ref={categoryListRef} header="Category List" type="Category" />
 
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} onList={categoryListHandler} />
         <CardOptions openFilterHandler={filterDialogHandler} />
-        <GroupList />
+        <GroupList displayGroup={displayGroup} />
       </main>
     </>
   );

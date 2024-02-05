@@ -25,6 +25,11 @@ export default function CardGroup() {
     return <Navigate to="/" />;
   }
 
+  const [displayCards, setDisplayCards] = useState([]);
+  useEffect(() => {
+    setDisplayCards(dataCtx.dataState.cardGroups[selectedGroup].cardsStored);
+  }, [dataCtx.dataState]);
+
   function createDialogHandler() {
     createDialogRef.current.open();
   }
@@ -36,6 +41,24 @@ export default function CardGroup() {
   }
   function tagListHandler() {
     tagListRef.current.open();
+  }
+
+  function applyFilterHandler(tags) {
+    if (tags.length === 0) {
+      setDisplayCards(dataCtx.dataState.cardGroups[selectedGroup].cardsStored);
+      return;
+    }
+
+    setDisplayCards(
+      dataCtx.dataState.cardGroups[selectedGroup].cardsStored.filter((elem) => {
+        for (const tag of tags) {
+          if (elem.tag === tag) {
+            return true;
+          }
+        }
+        return false;
+      })
+    );
   }
 
   return (
@@ -56,6 +79,7 @@ export default function CardGroup() {
         header="Filter Tags"
         type="Tags"
         selectedGroup={selectedGroup}
+        onApplyFilter={applyFilterHandler}
       />
 
       <CategorizationListDialog
@@ -69,7 +93,7 @@ export default function CardGroup() {
         <CardOptions openFilterHandler={filterDialogHandler} />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
-        <CardGroupList selectedGroup={selectedGroup} />
+        <CardGroupList selectedGroup={selectedGroup} displayCards={displayCards} />
       </main>
     </>
   );

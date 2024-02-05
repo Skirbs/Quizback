@@ -1,6 +1,7 @@
-import {createContext, useReducer, useRef, useState, useContext} from "react";
+import {createContext, useReducer, useRef, useState, useContext, useEffect} from "react";
 import {UtilContext} from "./UtilContext";
 import getSpacedRepetitionDays, {SRDays} from "./SpacedRepetitionFormat";
+import {data} from "autoprefixer";
 export const DataContext = createContext({dataState: {}, addCardGroup: () => {}});
 
 // ? classes
@@ -55,7 +56,6 @@ function mainDataReducer(state, action) {
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
-    console.log(stateCopy);
   }
 
   function getUrlId() {
@@ -254,6 +254,9 @@ export default function DataContextComponent({children}) {
   const [showGroupDates, setShowGroupDates] = useState(
     localStorage.getItem("showGroupDate") || "true"
   );
+
+  console.log(dataState);
+
   function getUrlId() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");

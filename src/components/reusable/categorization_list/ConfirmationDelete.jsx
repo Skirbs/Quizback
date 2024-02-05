@@ -22,10 +22,10 @@ export default forwardRef(function ConfirmationDelete({type, index, onDelete, on
       style={{zIndex: index}}>
       <p className="text-center text-xs font-semibold">Are you sure you want to remove {type}?</p>
       <div className="flex-center gap-1">
-        <Button className="text-sm" onClick={onCancel}>
+        <Button className="text-sm dark:!bg-neutral-900" onClick={onCancel}>
           No
         </Button>
-        <Button className="text-sm" onClick={onDelete}>
+        <Button className="text-sm dark:!bg-neutral-900" onClick={onDelete}>
           Yes
         </Button>
       </div>

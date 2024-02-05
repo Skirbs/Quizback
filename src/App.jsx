@@ -7,8 +7,8 @@ import DataContextComponent from "./store/DataContext";
 import UtilContextComponent from "./store/UtilContext";
 function App() {
   return (
-    <DataContextComponent>
-      <UtilContextComponent>
+    <UtilContextComponent>
+      <DataContextComponent>
         <Nav />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -16,8 +16,8 @@ function App() {
           <Route path="/quiz" element={<CardQuiz />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-      </UtilContextComponent>
-    </DataContextComponent>
+      </DataContextComponent>
+    </UtilContextComponent>
   );
 }
 

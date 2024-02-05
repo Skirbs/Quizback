@@ -41,7 +41,7 @@ export default forwardRef(function Dialog({header, children, onClose, ...props},
       </div>
       <Card className="!px-6">
         {header && (
-          <h2 className="font-semibold text-3xl border-b-2 border-neutral-500 pb-1 px-2 mb-1 text-center">
+          <h2 className="font-semibold text-3xl border-b-2 border-neutral-500 dark:border-neutral-900 pb-1 px-2 mb-1 text-center">
             {header}
           </h2>
         )}
