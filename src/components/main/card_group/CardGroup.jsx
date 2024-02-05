@@ -9,12 +9,14 @@ import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialo
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 import {DataContext} from "../../../store/DataContext";
 import {Navigate} from "react-router-dom";
-
+import FilterDialog from "../../reusable/filter/FilterDialog";
 export default function CardGroup() {
   const dataCtx = useContext(DataContext);
   const createDialogRef = useRef();
   const createTagRef = useRef();
   const tagListRef = useRef();
+
+  const filterDialogRef = useRef();
 
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
@@ -28,6 +30,9 @@ export default function CardGroup() {
   }
   function createTagHandler() {
     createTagRef.current.open();
+  }
+  function filterDialogHandler() {
+    filterDialogRef.current.open();
   }
   function tagListHandler() {
     tagListRef.current.open();
@@ -46,6 +51,13 @@ export default function CardGroup() {
         header="Create Tag"
         type="Tag"
       />
+      <FilterDialog
+        ref={filterDialogRef}
+        header="Filter Tags"
+        type="Tags"
+        selectedGroup={selectedGroup}
+      />
+
       <CategorizationListDialog
         ref={tagListRef}
         selectedGroup={selectedGroup}
@@ -54,7 +66,7 @@ export default function CardGroup() {
       />
       <main className="w-[95%] p-3">
         <Header title={`${dataCtx.dataState.cardGroups[selectedGroup].name} Cards`} />
-        <CardOptions />
+        <CardOptions openFilterHandler={filterDialogHandler} />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
         <CardGroupList selectedGroup={selectedGroup} />

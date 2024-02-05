@@ -6,7 +6,7 @@ export default function FilterElement({data, type}) {
         className="absolute opacity-0 [&:not(:checked)~span]:hidden [&:checked~span]:relative [&:checked~p]:font-medium cursor-pointer"
       />
       <span className="material-symbols-outlined">done</span>
-      <p>test</p>
+      <p>{data.name}</p>
     </label>
   );
 }

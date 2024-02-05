@@ -58,6 +58,12 @@ function mainDataReducer(state, action) {
     console.log(stateCopy);
   }
 
+  function getUrlId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    return id;
+  }
+
   function getGroupIndexById(key) {
     const groupIndex = stateCopy.cardGroups.findIndex((elem) => elem.key === key);
     return groupIndex;
