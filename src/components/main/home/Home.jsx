@@ -9,11 +9,14 @@ import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialo
 import CategorizationListDialog from "../../reusable/categorization_list/CategorizationListDialog";
 import FilterDialog from "../../reusable/filter/FilterDialog";
 import {DataContext} from "../../../store/DataContext";
+import sortDisplay from "../../reusable/sortdisplay";
 export default function Home() {
   const dataCtx = useContext(DataContext);
   const [displayGroup, setDisplayGroup] = useState();
   useEffect(() => {
-    setDisplayGroup(dataCtx.dataState.cardGroups);
+    setDisplayGroup(() => {
+      return dataCtx.dataState.cardGroups;
+    });
   }, [dataCtx.dataState]);
   // ? Dialog Handlers
   const createDialogRef = useRef();
@@ -56,6 +59,10 @@ export default function Home() {
     );
   }
 
+  function sortHandler(e) {
+    setDisplayGroup((elem) => sortDisplay(e.target.value, elem));
+  }
+
   return (
     <>
       <CreateGroupDialog ref={createDialogRef} onCategory={openCategoryHandler} />
@@ -75,7 +82,7 @@ export default function Home() {
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} onList={categoryListHandler} />
-        <CardOptions openFilterHandler={filterDialogHandler} />
+        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} />
         <GroupList displayGroup={displayGroup} />
       </main>
     </>

@@ -60,6 +60,7 @@ export default forwardRef(function CategorizationListDialog(
                 className="mx-2 px-3 flex-1 !border-2 !border-neutral-500 dark:!border-neutral-900 flex-center gap-2 hover:opacity-80 transition-[opacity] duration-75"
                 noOpacityChange
                 onClick={() => {
+                  currentFilters.current = [];
                   onApplyFilter([]);
                   uncheckAllCheckboxes();
                   ref.current.close();

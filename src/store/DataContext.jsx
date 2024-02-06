@@ -51,8 +51,17 @@ class Tag {
 function mainDataReducer(state, action) {
   let stateCopy = {...state};
   const payload = action.payload;
-  const currentDate = new Date();
-  const currentDateStr = currentDate.toLocaleDateString();
+  const d = new Date();
+  const currentDateStr =
+    [
+      d.getFullYear(),
+      (d.getMonth() + 1).toString().padStart(2, "0"),
+      d.getDate().toString().padStart(2, "0"),
+    ].join("/") +
+    " " +
+    [d.getHours().toString().padStart(2, "0"), d.getMinutes().toString().padStart(2, "0")].join(
+      ":"
+    );
 
   function save(data) {
     localStorage.setItem("mainData", JSON.stringify(data));
@@ -95,7 +104,7 @@ function mainDataReducer(state, action) {
         payload.sideColor,
         payload.key
       );
-      stateCopy.cardGroups.push(newCardGroup);
+      stateCopy.cardGroups.unshift(newCardGroup);
       save(stateCopy);
       break;
     case "ADDCARD":
@@ -105,11 +114,15 @@ function mainDataReducer(state, action) {
         payload.tag,
         currentDateStr,
         currentDateStr,
-        currentDateStr,
+        [
+          d.getFullYear(),
+          (d.getMonth() + 1).toString().padStart(2, "0"),
+          d.getDate().toString().padStart(2, "0"),
+        ].join("/"),
         payload.sideColor,
         payload.key
       );
-      stateCopy.cardGroups[payload.selectedGroup].cardsStored.push(newCard);
+      stateCopy.cardGroups[payload.selectedGroup].cardsStored.unshift(newCard);
       stateCopy.cardGroups[payload.selectedGroup].dateModified = currentDateStr;
       save(stateCopy);
       break;
@@ -466,16 +479,23 @@ export default function DataContextComponent({children}) {
     const currentDate = new Date().getTime();
     const cardPerfectAmt = stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt;
     let nextDayAmt; // ? How many days you have to wait again until next quiz
+    let nextDateObject;
     let newStudyDate;
     switch (proficiency) {
       case 0:
-        newStudyDate = new Date().toLocaleDateString();
+        newStudyDate = new Date().toISOString().replaceAll("-", "/").split("T")[0];
         stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = 0;
 
         break;
       case 1:
         nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt - 1);
-        newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
+        nextDateObject = new Date(currentDate + 86400000 * nextDayAmt);
+        newStudyDate = [
+          nextDateObject.getFullYear(),
+          (nextDateObject.getMonth() + 1).toString().padStart(2, "0"),
+          nextDateObject.getDate().toString().padStart(2, "0"),
+        ].join("/");
+
         if (cardPerfectAmt - 1 <= 0) {
           stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = 0;
         } else {
@@ -484,7 +504,13 @@ export default function DataContextComponent({children}) {
         break;
       case 2:
         nextDayAmt = getSpacedRepetitionDays(cardPerfectAmt);
-        newStudyDate = new Date(currentDate + 86400000 * nextDayAmt).toLocaleDateString();
+        nextDateObject = new Date(currentDate + 86400000 * nextDayAmt);
+        newStudyDate = [
+          nextDateObject.getFullYear(),
+          (nextDateObject.getMonth() + 1).toString().padStart(2, "0"),
+          nextDateObject.getDate().toString().padStart(2, "0"),
+        ].join("/");
+
         if (cardPerfectAmt + 1 >= SRDays.length) {
           stateCopy.cardGroups[groupIndex].cardsStored[cardIndex].perfectAmt = SRDays.length - 1;
         } else {
