@@ -15,10 +15,6 @@ export default forwardRef(function CategorizationListDialog(
       : dataCtx.dataState.cardGroups[selectedGroup].tags;
 
   const currentFilters = useRef([]); // ? These are categories or tags that is used to filter the data
-  useEffect(() => {
-    uncheckAllCheckboxes();
-    currentFilters.current = [];
-  }, [dataCtx.dataState]);
 
   function uncheckAllCheckboxes() {
     const filterCheckboxes = document.querySelectorAll(".filter-checkbox");

@@ -27,8 +27,30 @@ export default function CardGroup() {
   }
 
   const [displayCards, setDisplayCards] = useState([]);
+  const currentFilter = useRef([]);
+  const currentSort = useRef("date-modified-ascending");
   useEffect(() => {
-    setDisplayCards(dataCtx.dataState.cardGroups[selectedGroup].cardsStored);
+    setDisplayCards(() => {
+      // ? Get Cards Filtered Via Tags
+      let filteredCards;
+      if (currentFilter.current.length === 0) {
+        filteredCards = dataCtx.dataState.cardGroups[selectedGroup].cardsStored;
+      } else {
+        filteredCards = dataCtx.dataState.cardGroups[selectedGroup].cardsStored.filter((elem) => {
+          for (const tag of currentFilter.current) {
+            if (elem.tag === tag) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      // ? Sort Filtered Cards
+      let sortedCards = sortDisplay(currentSort.current, filteredCards);
+
+      return sortedCards;
+    });
   }, [dataCtx.dataState]);
 
   function createDialogHandler() {
@@ -45,25 +67,32 @@ export default function CardGroup() {
   }
 
   function applyFilterHandler(tags) {
+    currentFilter.current = tags;
+
     if (tags.length === 0) {
-      setDisplayCards(dataCtx.dataState.cardGroups[selectedGroup].cardsStored);
+      const sortedCards = sortDisplay(
+        currentSort.current,
+        dataCtx.dataState.cardGroups[selectedGroup].cardsStored
+      );
+      setDisplayCards(sortedCards);
       return;
     }
 
-    setDisplayCards(
-      dataCtx.dataState.cardGroups[selectedGroup].cardsStored.filter((elem) => {
-        for (const tag of tags) {
-          if (elem.tag === tag) {
-            return true;
-          }
+    const filteredCards = dataCtx.dataState.cardGroups[selectedGroup].cardsStored.filter((elem) => {
+      for (const tag of tags) {
+        if (elem.tag === tag) {
+          return true;
         }
-        return false;
-      })
-    );
+      }
+      return false;
+    });
+    const sortedCards = sortDisplay(currentSort.current, filteredCards);
+    setDisplayCards(sortedCards);
   }
 
   function sortHandler(e) {
     setDisplayCards((elem) => sortDisplay(e.target.value, elem));
+    currentSort.current = e.target.value;
   }
 
   return (
@@ -95,7 +124,7 @@ export default function CardGroup() {
       />
       <main className="w-[95%] p-3">
         <Header title={`${dataCtx.dataState.cardGroups[selectedGroup].name} Cards`} />
-        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Tag" />
+        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Cards" />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
         <CardGroupList selectedGroup={selectedGroup} displayCards={displayCards} />

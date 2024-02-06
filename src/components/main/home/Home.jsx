@@ -13,9 +13,29 @@ import sortDisplay from "../../reusable/sortdisplay";
 export default function Home() {
   const dataCtx = useContext(DataContext);
   const [displayGroup, setDisplayGroup] = useState();
+  const currentFilter = useRef([]);
+  const currentSort = useRef("date-modified-ascending");
   useEffect(() => {
     setDisplayGroup(() => {
-      return dataCtx.dataState.cardGroups;
+      // ? Get Groups Filtered Via Category
+      let filteredGroup;
+      if (currentFilter.current.length === 0) {
+        filteredGroup = dataCtx.dataState.cardGroups;
+      } else {
+        filteredGroup = dataCtx.dataState.cardGroups.filter((elem) => {
+          for (const category of currentFilter.current) {
+            if (elem.categoryName === category) {
+              return true;
+            }
+          }
+          return false;
+        });
+      }
+
+      // ? Sort Filtered Groups
+
+      const sortedGroup = sortDisplay(currentSort.current, filteredGroup);
+      return sortedGroup;
     });
   }, [dataCtx.dataState]);
   // ? Dialog Handlers
@@ -42,25 +62,27 @@ export default function Home() {
   }
 
   function applyFilterHandler(categories) {
+    currentFilter.current = categories;
     if (categories.length === 0) {
-      setDisplayGroup(dataCtx.dataState.cardGroups);
+      const sortedGroup = sortDisplay(currentSort.current, dataCtx.dataState.cardGroups);
+      setDisplayGroup(sortedGroup);
       return;
     }
-
-    setDisplayGroup(
-      dataCtx.dataState.cardGroups.filter((elem) => {
-        for (const category of categories) {
-          if (elem.categoryName === category) {
-            return true;
-          }
+    const filteredGroup = dataCtx.dataState.cardGroups.filter((elem) => {
+      for (const category of categories) {
+        if (elem.categoryName === category) {
+          return true;
         }
-        return false;
-      })
-    );
+      }
+      return false;
+    });
+    const sortedGroup = sortDisplay(currentSort.current, filteredGroup);
+    setDisplayGroup(sortedGroup);
   }
 
   function sortHandler(e) {
     setDisplayGroup((elem) => sortDisplay(e.target.value, elem));
+    currentSort.current = e.target.value;
   }
 
   return (
@@ -82,7 +104,7 @@ export default function Home() {
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} onList={categoryListHandler} />
-        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Category" />
+        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Groups" />
         <GroupList displayGroup={displayGroup} />
       </main>
     </>

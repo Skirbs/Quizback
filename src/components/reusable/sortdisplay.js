@@ -18,6 +18,11 @@ export default function sortDisplay(type, data) {
       return [...data.sort((a, b) => b.name.localeCompare(a.name))];
 
     // ? Cards Sort
+    case "date-quiz-ascending":
+      console.log("askdjfo");
+      return [...data.sort((a, b) => new Date(a.dateNextStudy) - new Date(b.dateNextStudy))];
+    case "date-quiz-descending":
+      return [...data.sort((a, b) => new Date(b.dateNextStudy) - new Date(a.dateNextStudy))];
     case "alphabetical-question-ascending":
       return [...data.sort((a, b) => a.question.localeCompare(b.question))];
     case "alphabetical-question-descending":
