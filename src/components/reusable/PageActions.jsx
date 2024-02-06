@@ -2,7 +2,7 @@ import {useRef} from "react";
 import Button from "./Button";
 import {Link} from "react-router-dom";
 
-export default function PageActions({children, isCardGroup, onCreate, onList}) {
+export default function PageActions({isCardGroup, onCreate, onList}) {
   const actionsRef = useRef();
 
   function toggleView() {

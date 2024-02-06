@@ -124,16 +124,16 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
         </div>
 
         {dataCtx.showCardDates === "true" && (
-          <div className="self-start mt-2 w-full flex-center gap-3">
-            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+          <div className="self-start mt-2 w-full flex-center gap-1">
+            <p className="text-[0.7rem] w-fit leading-3 opacity-80 text-center whitespace-nowrap">
               Quiz Study Date:
               <br /> {data.dateNextStudy}
             </p>
-            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+            <p className="text-[0.7rem] w-fit leading-3 opacity-80 text-center whitespace-nowrap">
               Date Modified:
               <br /> {data.dateModified}
             </p>
-            <p className="text-xs opacity-80 text-center whitespace-nowrap">
+            <p className="text-[0.7rem] w-fit leading-3 opacity-80 text-center whitespace-nowrap">
               Date Added: <br /> {data.dateCreated}
             </p>
           </div>

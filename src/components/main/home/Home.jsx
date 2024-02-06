@@ -82,7 +82,7 @@ export default function Home() {
       <main className="w-[95%] p-3">
         <Header title="Your Card Groups" />
         <PageActions onCreate={openCreateHandler} onList={categoryListHandler} />
-        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} />
+        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Category" />
         <GroupList displayGroup={displayGroup} />
       </main>
     </>

@@ -10,6 +10,7 @@ import CategorizationListDialog from "../../reusable/categorization_list/Categor
 import {DataContext} from "../../../store/DataContext";
 import {Navigate} from "react-router-dom";
 import FilterDialog from "../../reusable/filter/FilterDialog";
+import sortDisplay from "../../reusable/sortdisplay";
 export default function CardGroup() {
   const dataCtx = useContext(DataContext);
   const createDialogRef = useRef();
@@ -61,6 +62,10 @@ export default function CardGroup() {
     );
   }
 
+  function sortHandler(e) {
+    setDisplayCards((elem) => sortDisplay(e.target.value, elem));
+  }
+
   return (
     <>
       <CreateCardDialog
@@ -90,7 +95,7 @@ export default function CardGroup() {
       />
       <main className="w-[95%] p-3">
         <Header title={`${dataCtx.dataState.cardGroups[selectedGroup].name} Cards`} />
-        <CardOptions openFilterHandler={filterDialogHandler} />
+        <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Tag" />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
         <GoBack to="/" />
         <CardGroupList selectedGroup={selectedGroup} displayCards={displayCards} />
