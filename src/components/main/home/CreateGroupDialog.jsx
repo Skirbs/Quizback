@@ -77,7 +77,3 @@ export default forwardRef(function CreateGroupDialog(
     </Dialog>
   );
 });
-
-// TODO: Limit Inputs Text Length, (Name, Category)
-// TODO: For categories, make sure they dont repeat
-// TODO: For categories, have "N/A" as default category

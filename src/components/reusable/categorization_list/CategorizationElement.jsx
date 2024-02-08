@@ -4,7 +4,6 @@ import {DataContext} from "../../../store/DataContext";
 import ConfirmationDelete from "./ConfirmationDelete";
 import CreateCategorizationDialog from "../CreateCategorizationDialog";
 
-// TODO: change edit dialog header from "Edit Tag" to "Edit {name}"
 export default forwardRef(function CategorizationElement({data, type}, ref) {
   const utilCtx = useContext(UtilContext);
   const dataCtx = useContext(DataContext);

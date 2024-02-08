@@ -40,9 +40,6 @@ export default forwardRef(function CreateCardDialog(
     const current_date = new Date().toLocaleDateString();
     dataCtx.addCard(questionRef.current.value, answerRef.current.value, tagRef.current.value);
     formRef.current.reset();
-
-    // TODO: Side Color Changes depending on the category
-    // TODO: Find category value (string) on tag database
   }
 
   return (
@@ -101,7 +98,3 @@ export default forwardRef(function CreateCardDialog(
     </Dialog>
   );
 });
-
-// TODO: Limit Inputs Text Length, (Name, Category)
-// TODO: For categories, make sure they dont repeat
-// TODO: For categories, have "N/A" as default category

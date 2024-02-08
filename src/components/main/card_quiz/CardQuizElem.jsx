@@ -102,5 +102,4 @@ export default function CardQuizElem({
       </Card>
     </Card>
   );
-  // TODO: stop setting from executing url changes
 }

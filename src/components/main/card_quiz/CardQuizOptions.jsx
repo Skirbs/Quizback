@@ -12,7 +12,7 @@ export default function CardQuizOptions({onNextCard, cardPerfectAmt}) {
           onNextCard(0);
         }}>
         <p>I dont understand it</p>
-        <p className="text-xs">(Repeat next session)</p>
+        <p className="text-xs">(Repeat Later This Session)</p>
       </Button>
       <Button
         className="flex-center flex-col flex-1 rounded-lg"

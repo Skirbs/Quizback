@@ -246,6 +246,21 @@ function mainDataReducer(state, action) {
 
       save(stateCopy);
       break;
+    case "RESTARTSTUDY":
+      const restartGroupIndex = getGroupIndexById(payload.groupKey);
+      const currentDate = new Date();
+      const quizDate = [
+        currentDate.getFullYear(),
+        (currentDate.getMonth() + 1).toString().padStart(2, "0"),
+        currentDate.getDate().toString().padStart(2, "0"),
+      ].join("/");
+      const cards = stateCopy.cardGroups[restartGroupIndex].cardsStored;
+      for (const card of cards) {
+        card.dateNextStudy = quizDate;
+        card.perfectAmt = 0;
+      }
+      save(stateCopy);
+      break;
   }
   return stateCopy;
 }
@@ -525,6 +540,16 @@ export default function DataContextComponent({children}) {
     dataState = stateCopy;
   }
 
+  function restartCardStudyTime() {
+    const id = getUrlId();
+    dataDispatch({
+      type: "RESTARTSTUDY",
+      payload: {
+        groupKey: id,
+      },
+    });
+  }
+
   function toggleDarkMode() {
     setDarkMode((prev) => {
       const alteredData = prev === "true" ? "false" : "true";
@@ -571,6 +596,7 @@ export default function DataContextComponent({children}) {
     editCategory,
     editTag,
     addCardStudyTime,
+    restartCardStudyTime,
     darkMode,
     toggleDarkMode,
     showCardDates,
@@ -583,10 +609,6 @@ export default function DataContextComponent({children}) {
 
 // TODO: Quiz Part
 //    TODO: Quiz Tag Filter
-//    TODO: Restart Space Repetition back to 0 (NOT "I dont understand it")
-
-// TODO: Filter Feature
-//    TODO: Fix Card Filter (It says group lmao)
 
 // TODO: Logo and favicon
 // TODO: Testing

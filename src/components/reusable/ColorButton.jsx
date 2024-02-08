@@ -1,5 +1,4 @@
 import {forwardRef} from "react";
-//TODO: Create a "selected" parameter and change design if it is selected
 export default forwardRef(function ColorButton({color = "black", className, ...props}, ref) {
   return (
     <button
