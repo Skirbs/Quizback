@@ -33,7 +33,6 @@ export default function CardGroup() {
   const currentSort = useRef("date-modified-ascending");
   useEffect(() => {
     setDisplayCards(() => {
-      // ? Get Cards Filtered Via Tags
       let filteredCards;
       if (currentFilter.current.length === 0) {
         filteredCards = dataCtx.dataState.cardGroups[selectedGroup].cardsStored;
@@ -48,7 +47,6 @@ export default function CardGroup() {
         });
       }
 
-      // ? Sort Filtered Cards
       let sortedCards = sortDisplay(currentSort.current, filteredCards);
 
       return sortedCards;

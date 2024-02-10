@@ -39,7 +39,6 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
       setShowAnswer((prev) => !prev);
     }, 120);
 
-    // ? Code below repeats the animation
     cardRef.current.classList.remove("animate-scale-in-out-vertical");
     setTimeout(() => {
       cardRef.current.classList.add("animate-scale-in-out-vertical");
@@ -102,21 +101,21 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
         {...props}>
         <span
           style={{backgroundColor: `${data.sideColor}`}}
-          className="absolute w-1 left-0 inset-y-0 rounded-full"
+          className="absolute inset-y-0 left-0 w-1 rounded-full"
         />
 
-        <div className="flex-1 flex-center flex-col">
+        <div className="flex-col flex-1 flex-center">
           {!showAnswer ? (
             <>
-              <h2 className="break-words text-2xl text-center font-semibold">Question</h2>
-              <p className="font-medium text-center w-full break-words inline-block flex-1 flex-center">
+              <h2 className="text-2xl font-semibold text-center break-words">Question</h2>
+              <p className="flex-1 inline-block w-full font-medium text-center break-words flex-center">
                 {utilCtx.truncateString(`${data.question}`, 40)}
               </p>
             </>
           ) : (
             <>
-              <h2 className="break-words text-2xl text-center font-semibold">Answer</h2>
-              <p className="font-medium text-center w-full break-all inline-block flex-1 flex-center">
+              <h2 className="text-2xl font-semibold text-center break-words">Answer</h2>
+              <p className="flex-1 inline-block w-full font-medium text-center break-all flex-center">
                 {utilCtx.truncateString(`${data.answer}`, 45)}
               </p>
             </>
@@ -124,7 +123,7 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
         </div>
 
         {dataCtx.showCardDates === "true" && (
-          <div className="self-start mt-2 w-full flex-center gap-1">
+          <div className="self-start w-full gap-1 mt-2 flex-center">
             <p className="text-[0.7rem] w-fit leading-3 opacity-80 text-center whitespace-nowrap">
               Quiz Study Date:
               <br /> {data.dateNextStudy}
@@ -140,7 +139,7 @@ export default function CardGroupElem({data, index, onOpenDeleteDialog, ...props
         )}
 
         <button
-          className="absolute right-2 top-2 z-10"
+          className="absolute z-10 right-2 top-2"
           onClick={(e) => {
             e.stopPropagation();
             setSettingVisibility(true);
