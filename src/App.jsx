@@ -14,7 +14,7 @@ function App() {
           <Route path="/Quizback" element={<Home />} />
           <Route path="/Quizback/list" element={<CardGroup />} />
           <Route path="/Quizback/quiz" element={<CardQuiz />} />
-          <Route path="*" element={<Navigate to="/" />} />
+          <Route path="*" element={<Navigate to="/Quizback" />} />
         </Routes>
       </DataContextComponent>
     </UtilContextComponent>
