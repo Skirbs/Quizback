@@ -11,9 +11,9 @@ function App() {
       <DataContextComponent>
         <Nav />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/list" element={<CardGroup />} />
-          <Route path="/quiz" element={<CardQuiz />} />
+          <Route path="/Quizback" element={<Home />} />
+          <Route path="/Quizback/list" element={<CardGroup />} />
+          <Route path="/Quizback/quiz" element={<CardQuiz />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </DataContextComponent>

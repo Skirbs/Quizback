@@ -66,7 +66,7 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
   return (
     <>
       {editMode && <EditDialog />}
-      <Link to={`/list?id=${data.key}`}>
+      <Link to={`/Quizback/list?id=${data.key}`}>
         <Card
           className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 min-w-[300px] w-full dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
           {...props}>

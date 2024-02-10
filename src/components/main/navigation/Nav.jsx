@@ -39,8 +39,8 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="flex justify-between px-12 py-2 bg-white dark:bg-neutral-800 w-screen drop-shadow-md fixed top-0 inset-x-0 z-50">
-        <Link to="/" className="outline-none">
+      <nav className="fixed inset-x-0 top-0 z-50 flex justify-between w-screen px-12 py-2 bg-white dark:bg-neutral-800 drop-shadow-md">
+        <Link to="/Quizback" className="outline-none">
           <img alt="Logo" />
         </Link>
 

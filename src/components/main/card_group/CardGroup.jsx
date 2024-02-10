@@ -25,7 +25,7 @@ export default function CardGroup() {
   const id = urlParams.get("id");
   const selectedGroup = dataCtx.getGroupIndexById(id);
   if (selectedGroup === -1) {
-    return <Navigate to="/" />;
+    return <Navigate to="/Quizback" />;
   }
 
   const [displayCards, setDisplayCards] = useState([]);
@@ -126,7 +126,7 @@ export default function CardGroup() {
         <Header title={`${dataCtx.dataState.cardGroups[selectedGroup].name} Cards`} />
         <CardOptions openFilterHandler={filterDialogHandler} onSort={sortHandler} type="Cards" />
         <PageActions isCardGroup onCreate={createDialogHandler} onList={tagListHandler} />
-        <GoBack to="/" />
+        <GoBack to="/Quizback" />
         <CardGroupList selectedGroup={selectedGroup} displayCards={displayCards} />
       </main>
     </>

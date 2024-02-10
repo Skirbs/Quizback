@@ -14,7 +14,7 @@ export default function CardQuiz() {
   const id = urlParams.get("id");
   const selectedGroup = dataCtx.getGroupIndexById(id);
   if (selectedGroup === -1) {
-    return <Navigate to="/" />;
+    return <Navigate to="/Quizback" />;
   }
 
   const [, forceRefresh] = useReducer((x) => x + 1, 0);
