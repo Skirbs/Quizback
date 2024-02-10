@@ -18,15 +18,15 @@ export default forwardRef(function RestartStudyTimeDialog({...props}, ref) {
 
   return (
     <Dialog ref={ref} header={`Restart Quiz Study Date?`} {...props}>
-      <div className="bg-neutral-300 dark:bg-neutral-900 p-2 rounded-lg max-w-md">
-        <p className="break-words inline-block text-center w-full">
+      <div className="max-w-md p-2 rounded-lg bg-neutral-300 dark:bg-neutral-900">
+        <p className="inline-block w-full text-center break-words">
           Are you sure you want to restart Quiz Dates back to the start?
         </p>
-        <div className="flex-center gap-4 my-1 ">
+        <div className="gap-4 my-1 flex-center ">
           <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-800" onClick={onCancel}>
             No
           </Button>
-          <Button className="text-lg px-3 !bg-neutral-200 dark:!bg-neutral-800" onClick={onRestart}>
+          <Button className="text-lg !bg-neutral-200 px-3 dark:!bg-neutral-800" onClick={onRestart}>
             Yes
           </Button>
         </div>

@@ -68,14 +68,14 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
       {editMode && <EditDialog />}
       <Link to={`/list?id=${data.key}`}>
         <Card
-          className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 w-[300px] dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
+          className={`flex flex-col cursor-pointer hover:drop-shadow-lg transition-transform active:bg-neutral-50 relative py-3 pl-5 min-w-[300px] w-full dark:bg-neutral-800 hover:-translate-y-1 animate-fade-up-bounce`}
           {...props}>
           <span
             style={{backgroundColor: `${data.sideColor}`}}
-            className="absolute w-1 left-0 inset-y-0 rounded-full"
+            className="absolute inset-y-0 left-0 w-1 rounded-full"
           />
-          <h2 className="text-left w-full text-4xl font-semibold">
-            {utilCtx.truncateString(data.name, 10)}
+          <h2 className="text-4xl font-semibold text-left w-fit">
+            {utilCtx.truncateString(data.name, 9)}
           </h2>
           {dataCtx.showGroupDates === "true" && (
             <div>
@@ -85,7 +85,7 @@ export default function GroupListElem({data, onOpenDeleteDialog, ...props}) {
           )}
 
           <button
-            className="absolute right-2 top-2 z-10"
+            className="absolute z-10 right-2 top-2"
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();

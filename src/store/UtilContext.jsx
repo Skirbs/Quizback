@@ -1,12 +1,13 @@
 import {createContext} from "react";
 export const UtilContext = createContext({
   truncateString: () => {},
-  getCurrentDate: () => {},
-  getCurrentDateString: () => {},
 });
 
 export default function UtilContextComponent({children}) {
   function truncateString(str, max = 50) {
+    if (screen.width <= 600) {
+      max = Math.round(max / 1.5);
+    }
     if (str.length > max) {
       return str.slice(0, max) + "...";
     }

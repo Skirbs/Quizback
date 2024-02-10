@@ -139,13 +139,13 @@ export default forwardRef(function CreateCategorizationDialog(
             labelTitle={`${type}:`}
             ref={nameRef}
             isRequired
-            max={15}
+            max={20}
           />
-          <Card className="flex items-center flex-col !gap-0 p-1">
+          <Card className="flex items-center flex-col !gap-0 overflow-hidden p-1">
             <p className="self-start">Color:</p>
             <div
               id="categorization-color-choices"
-              className="bg-neutral-400 dark:bg-neutral-900 p-2 rounded-md overflow-x-scroll whitespace-nowrap w-56">
+              className="w-56 p-2 overflow-x-scroll rounded-md bg-neutral-400 dark:bg-neutral-900 whitespace-nowrap">
               <ColorButton
                 onClick={changeColor}
                 className="border-2 border-neutral-800 rounded-xl dark:border-black"
@@ -172,7 +172,7 @@ export default forwardRef(function CreateCategorizationDialog(
           </Card>
           <p
             ref={existsWarning}
-            className="text-red-900 dark:text-red-600 text-sm font-bold text-outline hidden">
+            className="hidden text-sm font-bold text-red-900 dark:text-red-600 text-outline">
             {type} Already Exists
           </p>
         </Card>

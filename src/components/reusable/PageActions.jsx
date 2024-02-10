@@ -23,7 +23,7 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
           onClick={onCreate}
           className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
           noOpacityChange>
-          <span className="material-symbols-outlined text-3xl">add</span>
+          <span className="text-3xl material-symbols-outlined">add</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Create Card
           </p>
@@ -32,7 +32,7 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
           onClick={onList}
           className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
           noOpacityChange>
-          <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
+          <span className="text-3xl material-symbols-outlined">format_list_bulleted</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Tag Lists
           </p>
@@ -40,7 +40,7 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
         <Link
           to={`/quiz?id=${id}`}
           className="bg-white dark:bg-neutral-800 drop-shadow-md rounded-full flex-center w-[3rem] h-[3rem] absolute inset-x-0 -top-[9.6rem] [&>p]:opacity-0 [&>p]:hover:opacity-100">
-          <span className="material-symbols-outlined text-3xl">quiz</span>
+          <span className="text-3xl material-symbols-outlined">quiz</span>
           <p className="absolute h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center">
             Quiz
           </p>
@@ -56,7 +56,7 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
           onClick={onCreate}
           className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[3.2rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
           noOpacityChange>
-          <span className="material-symbols-outlined text-3xl">add</span>
+          <span className="text-3xl material-symbols-outlined">add</span>
           <p className="absolute h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Create Group
           </p>
@@ -65,7 +65,7 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
           onClick={onList}
           className="w-[3rem] h-[3rem] absolute inset-x-0 -top-[6.4rem] [&>p]:opacity-0 [&>p]:hover:opacity-100"
           noOpacityChange>
-          <span className="material-symbols-outlined text-3xl">format_list_bulleted</span>
+          <span className="text-3xl material-symbols-outlined">format_list_bulleted</span>
           <p className="absolute w-fit h-[2rem] top-[0.5rem] right-[3.25rem] overflow-hidden p-2 rounded-md bg-white dark:bg-neutral-800 whitespace-nowrap pointer-events-none flex items-center transition-all">
             Category Lists
           </p>
@@ -77,9 +77,9 @@ export default function PageActions({isCardGroup, onCreate, onList}) {
   return (
     <div
       ref={actionsRef}
-      className="fixed z-50 right-4 bottom-4 [&:nth-child(0)]:opacity-25 [&>*]:top-0 [&>*]:transition-all [&>*]:duration-200 [&>*]:ease-out [&>*]:opacity-0">
-      <Button onClick={toggleView} className="w-[3rem] h-[3rem] z-50 relative !opacity-100">
-        <span className="material-symbols-outlined text-3xl">expand_less</span>
+      className="fixed z-20 right-4 bottom-4 [&:nth-child(0)]:opacity-25 [&>*]:top-0 [&>*]:transition-all [&>*]:duration-200 [&>*]:ease-out [&>*]:opacity-0">
+      <Button onClick={toggleView} className="w-[3rem] h-[3rem] z-20 relative !opacity-100">
+        <span className="text-3xl material-symbols-outlined">expand_less</span>
       </Button>
       {isCardGroup ? <GroupListAction /> : <CardGroupAction />}
     </div>

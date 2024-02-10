@@ -606,16 +606,3 @@ export default function DataContextComponent({children}) {
   };
   return <DataContext.Provider value={contextData}>{children}</DataContext.Provider>;
 }
-
-// TODO: Quiz Part
-//    TODO: Quiz Tag Filter
-
-// TODO: Logo and favicon
-// TODO: Testing
-//    TODO: Responsiveness In Mobile
-//    TODO: Date Bugs
-//    TODO: Ui Bugs
-//    TODO: Unexpected Behaviors
-//    TODO: Url Bugs
-
-// TODO: Release ✨

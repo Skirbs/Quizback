@@ -39,7 +39,13 @@ export default forwardRef(function CreateGroupDialog(
       <form className="flex flex-col gap-2" onSubmit={submitHandler} ref={formRef}>
         <Card className="!bg-neutral-300 dark:!bg-neutral-900 flex flex-col gap-1 py-2">
           <h3 className="text-sm opacity-95">Information:</h3>
-          <FormInput inputId="group-name" labelTitle="Group Name" isRequired ref={nameRef} />
+          <FormInput
+            inputId="group-name"
+            labelTitle="Group Name"
+            isRequired
+            ref={nameRef}
+            max={24}
+          />
           <Card>
             <label htmlFor="group-category">Category</label>
             <div className="flex gap-1w-full">

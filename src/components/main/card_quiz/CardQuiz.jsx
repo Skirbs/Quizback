@@ -6,9 +6,18 @@ import FinishedQuizPopup from "./FinishedQuizPopup";
 import CreateCategorizationDialog from "../../reusable/CreateCategorizationDialog";
 import CreateCardDialog from "../card_group/CreateCardDialog";
 import DeleteDialog from "../../reusable/DeleteDialog";
+import {Navigate} from "react-router-dom";
 export default function CardQuiz() {
-  const [, forceRefresh] = useReducer((x) => x + 1, 0);
   const dataCtx = useContext(DataContext);
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const id = urlParams.get("id");
+  const selectedGroup = dataCtx.getGroupIndexById(id);
+  if (selectedGroup === -1) {
+    return <Navigate to="/" />;
+  }
+
+  const [, forceRefresh] = useReducer((x) => x + 1, 0);
   const [dueCards, setDueCards] = useState(dataCtx.getQuizCard());
   const [editMode, setEditMode] = useState(false);
   const hasAnswered = useRef(false);
@@ -82,8 +91,8 @@ export default function CardQuiz() {
   }
 
   return (
-    <div className="flex w-fit -mt-10 h-screen">
-      <div className="w-full flex-col flex-center gap-3">
+    <div className="flex mt-3 w-fit">
+      <div className="flex-col justify-start w-full gap-3 flex-center">
         {dueCards === "empty" ? (
           <FinishedQuizPopup />
         ) : (
@@ -100,7 +109,7 @@ export default function CardQuiz() {
             <div
               ref={cardDiv}
               style={{left: "0vw"}}
-              className="flex w-0 self-start gap-2 transition-all">
+              className="flex self-start w-0 gap-2 mt-5 transition-all">
               <div ref={cardElem} className="min-w-[75vw] w-[75vw] self-center">
                 <CardQuizElem
                   sideColor={dueCards.sideColor}

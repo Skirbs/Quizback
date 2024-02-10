@@ -11,8 +11,10 @@ import {DataContext} from "../../../store/DataContext";
 import {Navigate} from "react-router-dom";
 import FilterDialog from "../../reusable/filter/FilterDialog";
 import sortDisplay from "../../reusable/sortdisplay";
+import {UtilContext} from "../../../store/UtilContext";
 export default function CardGroup() {
   const dataCtx = useContext(DataContext);
+  const utilCtx = useContext(UtilContext);
   const createDialogRef = useRef();
   const createTagRef = useRef();
   const tagListRef = useRef();

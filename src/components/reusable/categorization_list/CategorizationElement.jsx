@@ -37,10 +37,10 @@ export default forwardRef(function CategorizationElement({data, type}, ref) {
   return (
     <>
       {editMode && <EditDialog />}
-      <div className="bg-neutral-300 dark:bg-neutral-800 w-full flex-shrink-0 flex rounded gap-1 relative">
+      <div className="relative flex flex-shrink-0 w-full gap-1 rounded bg-neutral-300 dark:bg-neutral-800">
         <span className="min-w-[3px] " style={{backgroundColor: data.sideColor}} />
         <p className="text-lg">{utilCtx.truncateString(data.name, 10)}</p>
-        <div className=" flex justify-end items-center flex-1 gap-1">
+        <div className="flex items-center justify-end flex-1 gap-1 ">
           <button
             onClick={() => {
               openEdit(true);

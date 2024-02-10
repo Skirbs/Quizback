@@ -37,21 +37,21 @@ export default function CardQuizElem({
       {...props}>
       <span
         style={{backgroundColor: `${sideColor}`}}
-        className="absolute w-1 left-0 inset-y-0 rounded-full"
+        className="absolute inset-y-0 left-0 w-1 rounded-full"
       />
 
-      <div className="flex-1 flex-col flex-center gap-1 sm:gap-4">
+      <div className="flex-col flex-1 gap-1 flex-center sm:gap-4">
         {!showAnswer ? (
           <>
-            <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Question</h2>
-            <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
+            <h2 className="text-3xl font-semibold text-center break-words sm:text-5xl">Question</h2>
+            <p className="inline-block text-base font-medium text-center break-all h-fit flex-center sm:text-2xl">
               {data.question}
             </p>
           </>
         ) : (
           <>
-            <h2 className="break-words text-3xl sm:text-5xl text-center font-semibold">Answer</h2>
-            <p className="font-medium h-fit flex-center text-center text-lg sm:text-2xl">
+            <h2 className="text-3xl font-semibold text-center break-words sm:text-5xl">Answer</h2>
+            <p className="text-base font-medium text-center break-all h-fit flex-center sm:text-2xl">
               {data.answer}
             </p>
           </>
@@ -64,7 +64,7 @@ export default function CardQuizElem({
   </div> */}
 
       <button
-        className="absolute right-2 top-2 z-10"
+        className="absolute z-10 right-2 top-2"
         onClick={(e) => {
           e.stopPropagation();
           settingRef.current.classList.add("opacity-100");
@@ -75,7 +75,7 @@ export default function CardQuizElem({
       </button>
       <Card
         ref={settingRef}
-        className="absolute right-2 top-1 h-fit z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
+        className="absolute right-2 top-1 h-fit  z-50 drop-shadow-2xl flex flex-col !p-0 overflow-hidden transition-all opacity-0 pointer-events-none"
         onMouseLeave={(e) => {
           settingRef.current.classList.remove("opacity-100");
           settingRef.current.classList.add("opacity-0");

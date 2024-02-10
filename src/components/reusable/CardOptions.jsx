@@ -4,7 +4,7 @@ import RestartStudyTime from "./RestartStudyTime";
 
 export default function CardOptions({openFilterHandler, onSort, type}) {
   return (
-    <div className="flex justify-center items-center py-2 gap-1 sm:justify-end">
+    <div className="flex flex-wrap-reverse items-center justify-center gap-1 py-1 sm:justify-end">
       {type == "Cards" && <RestartStudyTime />}
       <Filter onOpenFilter={openFilterHandler} />
       <Sort onSort={onSort} type={type} />

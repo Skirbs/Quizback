@@ -34,9 +34,9 @@ export default forwardRef(function CategorizationListDialog(
 
   return (
     <Dialog ref={ref} header={header}>
-      <div className="flex flex-col gap-2 py-1.5 w-[50vw] max-w-[400px]">
+      <div className="flex flex-col gap-2 py-1.5 w-full max-w-[400px]">
         {currentData.length === 1 ? (
-          <p className="text-center text-xl font-medium">No {type} Available</p>
+          <p className="text-xl font-medium text-center">No {type} Available</p>
         ) : (
           <>
             <div className="flex-center flex-wrap w-full h-fit max-h-[250px] overflow-y-hidden gap-1">

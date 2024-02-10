@@ -17,7 +17,7 @@ export default function GroupList({displayGroup = []}) {
   return (
     <>
       <DeleteDialog ref={deleteDialog} />
-      <div className="flex flex-wrap justify-center lg:justify-start gap-2 pb-5">
+      <div className="flex flex-wrap justify-center gap-2 pb-5">
         {displayGroup.map((elem, i) => {
           return (
             <GroupListElem

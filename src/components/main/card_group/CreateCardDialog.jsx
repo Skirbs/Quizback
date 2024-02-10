@@ -51,19 +51,19 @@ export default forwardRef(function CreateCardDialog(
             ref={questionRef}
             inputId="card-question"
             labelTitle="Card Question"
-            max={50}
+            max={75}
             isRequired
           />
           <FormInput
             ref={answerRef}
             inputId="card-answer"
             labelTitle="Card Answer"
-            max={50}
+            max={75}
             isRequired
           />
           <Card>
             <label htmlFor="group-category">Tag</label>
-            <div className="flex gap-1 w-full">
+            <div className="flex w-full gap-1">
               <Select
                 className="flex-[0.5] rounded-lg !bg-neutral-200 dark:!bg-neutral-700 !w-full"
                 ref={tagRef}

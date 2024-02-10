@@ -11,7 +11,7 @@ export default function RestartStudyTime() {
   return (
     <>
       <RestartStudyTimeDialog ref={dialogRef} />
-      <Button onClick={openDialog} className="after:content-['Restart_Quiz_Dates'] tooltip">
+      <Button onClick={openDialog} className="after:content-['Restart_Quiz_Dates'] tooltip z-30">
         <span className="material-symbols-outlined">restart_alt</span>
       </Button>
     </>
